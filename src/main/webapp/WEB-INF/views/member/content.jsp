@@ -1,28 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<style>
-	div.memberClass{font-size: 20px}
-</style>
-
-
-
-
-<div id="" class="memberClass box">
+<section id="member_content">
 	
-	<h1>회원관리</h1>
-	<div style="width: 300px;margin: 0 auto;text-align: left;">
-	<ol>
-		<li><a href="${context}/member.do?action=regist&page=regist">회원가입</a></li>
-		<li><a href="${context}/member.do?action=detail&page=detail">내정보보기</a></li>
-		<li><a href="${context}/member.do?action=update&page=update">내정보수정 </a></li>
-		<li><a href="${context}/member.do?action=delete&page=delete">탈퇴 </a></li>
-		<li><a href="${context}/member.do?page=login">로그인</a></li>
-		<li><a href="${context}/member.do?action=logout&page=logout">로그아웃 </a></li>
-		<li><a href="${context}/member.do?action=list&page=list">리스트 </a></li>
-		<li><a href="${context}/member.do?page=findBy">검색</a></li>
-		<li><a href="${context}/member.do?action=count&page=count">회원수</a></li>
+	<h1></h1>
+	<article>
+	<ol id="member_content_ol">
+		<li><a id="regist" ></a></li>
+		<li><a id="detail" >내정보보기</a></li>
+		<li><a id="update" >내정보수정 </a></li>
+		<li><a id="delete" >탈퇴 </a></li>
+		<li><a id="login" >로그인</a></li>
+		<li><a id="logout" >로그아웃 </a></li>
+		<li><a id="list" >리스트 </a></li>
+		<li><a id="findBy" >검색</a></li>
+		<li><a id="count" >회원수</a></li>
 	</ol>
-	</div>
-	<a href="${context}/home.do">
-		<img src="${img}/home.png" alt="home" style="width: 30px"/>
+	</article>
+	<a id="member_content_a_home" >
+		<img id="member_content_img_home"/>
 	</a>
-</div>
+</section>
+
+

@@ -8,7 +8,7 @@ var grade = (function(){ //함수 표현식방식
 					.css('width','300px')
 					.css('margin','0 auto')
 					.css('text-align','left')
-					$('#title').css('font-size','40px');
+					//$('#title').css('font-size','40px');
 					$('#a_regist').click(function() {
 						location.href = "${context}/grade.do?page=regist";
 					});
@@ -28,10 +28,6 @@ var grade = (function(){ //함수 표현식방식
 						location.href = "${context}/grade.do?page=search";
 					});
 
-					
-				
-				
-				
 			}
 		};
 })();

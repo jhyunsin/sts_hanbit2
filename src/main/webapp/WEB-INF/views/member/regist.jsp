@@ -1,7 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<jsp:include page="../global/top.jsp"/>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+	
 	<div class="box">
 	<form action="${context}/member.do" method="post">  
 	<span class="meta">	이름  </span><input type="text" name="name"/><br/>
@@ -30,7 +28,6 @@
 		<input type="submit"  value="회원가입"/>
 		<input type="reset"  value="취소"/>
 	</form>
+</div>
 
-	</div>
-<jsp:include page="../global/footer.jsp"/>
-<jsp:include page="../global/end.jsp"/>
+

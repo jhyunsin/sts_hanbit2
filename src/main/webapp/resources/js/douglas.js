@@ -26,10 +26,10 @@ var douglas = (function(){
 	  var context = sessionStorage.getItem("context");
 	 return{
 	     init :function() {
-	   	  document.querySelector('#bt_bom').addEventListener('click', function() {move(context,'bom'); }, false);  // 콜백 함수
-		  document.querySelector('#bt_dom').addEventListener('click', function() {move(context,'dom'); }, false);
-		  document.querySelector('#bt_kaup').addEventListener('click', function() {move(context,'kaup');}, false);
-		  document.querySelector('#bt_account').addEventListener('click', function() {move(context,'account');}, false);
+	   	  $('#bt_bom').click(function() {move(context,'bom'); });  // 콜백 함수
+		  $('#bt_dom').click(function() {move(context,'dom'); });
+		  $('#bt_kaup').click(function() {move(context,'kaup');});
+		  $('#bt_account').click('click', function() {move(context,'account');});
 		 }  // 자바의 클래스 처럼 속성(은닉)과 기능으로 ..
 	 };
 	})();
@@ -51,10 +51,10 @@ var account = (function(){
 		getMoney : getMoney,
 		
 		init : function() {
-				document.querySelector('#bt_spec_show').addEventListener('click',member.spec,false);
-				document.querySelector('#bt_make_account').addEventListener('click',this.spec,false);
-				document.querySelector('#bt_deposit').addEventListener('click',this.deposit,false);
-				document.querySelector('#bt_withdraw').addEventListener('click',this.withdraw,false);
+				$('#bt_spec_show').click(member.spec());
+				$('#bt_make_account').click(this.spec());
+				$('#bt_deposit').click(this.deposit());
+				$('#bt_withdraw').click(this.withdraw());
 			},
 			spec : function(){
 				setAccountNo(Math.floor(Math.random()*899999) + 10000), ///// setter 역할

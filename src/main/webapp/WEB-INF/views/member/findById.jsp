@@ -1,8 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<jsp:include page="../global/top.jsp"/>
-<jsp:include page="../global/header.jsp"/>
-<jsp:include page="../global/navi.jsp"/>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <div class="box">
 		<h1>검색된 회원 정보</h1>
 	

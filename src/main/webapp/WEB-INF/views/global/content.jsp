@@ -1,11 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!doctype html>
-<html lang="en">
-<head>
- <meta charset="UTF-8" />
- <title>Document</title>
-</head>
-<body>
-콘텐트 샘플 적용중
-</body>
-</html>
+<section id="global_content">
+	<h2></h2><br />
+	<a id="global_content_regist"></a> <br /><br /> 
+	<a id="global_content_login"></a> <br /> <br />
+	<a id="global_content_admin"></a><br /> <br /> <br />
+</section>
