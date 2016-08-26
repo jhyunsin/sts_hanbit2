@@ -12,13 +12,13 @@ public class MemberController {
 	@RequestMapping("/main")
 	public String moveMain() {
 		logger.info("==================MemberController! goMain..");
-		return "member/content.tiles";
+		return "admin:member/content.tiles";
 	}
 	
 	@RequestMapping("/regist")
 	public String moveRegist() {
 		logger.info("MemberController! regist..");
-		return "member/regist.tiles";
+		return "public:member/regist.tiles";
 	} 
 	@RequestMapping("/detail")
 	public String moveDetail() {
@@ -33,12 +33,12 @@ public class MemberController {
 	@RequestMapping("/delete")
 	public String moveDelete() {
 		logger.info("MemberController! delete..");
-		return "member/delete.tiles";
+		return "public:member/delete.tiles";
 	} 
 	@RequestMapping("/login")
 	public String moveLogin() {
 		logger.info("MemberController! login..");
-		return "member/login.tiles";
+		return "public:member/login.tiles";
 	} 
 	@RequestMapping("/logout")
 	public String moveLogout() {
@@ -48,17 +48,17 @@ public class MemberController {
 	@RequestMapping("/list")
 	public String moveList() {
 		logger.info("MemberController! list..");
-		return "member/content.tiles";
+		return "admin:member/list.tiles";
 	} 
 	@RequestMapping("/findBy")
 	public String moveFindBy() {
 		logger.info("MemberController! findBy..");
-		return "member/findBy.tiles";
+		return "admin:member/findBy.tiles";
 	} 
 	@RequestMapping("/count")
 	public String moveCount() {
 		logger.info("MemberController! count..");
-		return "member/count.tiles";
+		return "admin:member/count.tiles";
 	} 
 
 }

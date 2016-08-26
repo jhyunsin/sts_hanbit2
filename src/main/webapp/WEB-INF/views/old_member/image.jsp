@@ -4,9 +4,10 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8" />
-	<title>Document</title>
+	<title>Insert title here</title>
+<link rel="stylesheet" href="${css}/global.css" />
 </head>
 <body>
-	<h1>regist</h1>
+<img src="${img}/koala.jpg" alt="" />
 </body>
 </html>

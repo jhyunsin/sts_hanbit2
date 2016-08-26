@@ -14,46 +14,31 @@ public class AccountController {
 	@RequestMapping("/main")
 	public String moveMain() {
 		logger.info("==================AccountController! goMain..");
-		return "bank/content.tiles";
+		return "admin:bank/content.tiles";
 	}
-	@RequestMapping("/regist")
+	@RequestMapping("/open")
 	public String moveRegist() {
-		logger.info("AccountController! regist()..");
-		return "bank/regist.tiles";
-	} 
-	@RequestMapping("/deposit")
-	public String moveDeposit() {
-		logger.info("AccountController! deposit()..");
-		return "bank/deposit.tiles";
-	} 
-	@RequestMapping("/withdraw")
-	public String moveWithdraw() {
-		logger.info("AccountController! withdraw()..");
-		return "bank/withdraw.tiles";
-	} 
-	@RequestMapping("/update")
-	public String moveUdate() {
-		logger.info("AccountController! update()..");
-		return "bank/update.tiles";
+		logger.info("AccountController! open()..");
+		return "admin:bank/open.tiles";
 	} 
 	@RequestMapping("/delete")
 	public String moveDelete() {
 		logger.info("AccountController! delete()..");
-		return "bank/delete.tiles";
+		return "admin:bank/delete.tiles";
 	} 
 	@RequestMapping("/list")
 	public String moveList() {
 		logger.info("AccountController! list()..");
-		return "bank/list.tiles";
+		return "admin:bank/list.tiles";
 	} 
-	@RequestMapping("/search")
+	@RequestMapping("/find")
 	public String moveSearch() {
-		logger.info("AccountController! search()..");
-		return "bank/search.tiles";
+		logger.info("AccountController! find()..");
+		return "admin:bank/find.tiles";
 	} 
 	@RequestMapping("/count")
 	public String moveCount() {
 		logger.info("AccountController! count()..");
-		return "bank/count.tiles";
+		return "admin:bank/count.tiles";
 	} 
 }

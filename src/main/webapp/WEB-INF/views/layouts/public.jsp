@@ -27,10 +27,7 @@
           <tiles:insertAttribute name="header" />
         </div>
       </header>
-        <nav>
-          <tiles:insertAttribute name="menu" />
-        </nav>
-        <section>
+           <section>
         <article>
           <tiles:insertAttribute name="body" />
           </article>
@@ -40,17 +37,8 @@
       </footer>
   </body>
   <script src="${js}/application.js"></script>
-  <script src="${js}/douglas.js"></script>
-  <script src="${js}/member.js"></script>
-  <script src="${js}/resig.js"></script>
-  <script src="${js}/grade.js"></script>
-  <script src="${js}/account.js"></script>
   <script>
   app.init('${context}');
-  member.init(); ///sessionStorage 를 가따쓰기 위해서.. 피라미터 안의 값을 삭제
-  douglas.init();
-  grade.init();
-  account.init();
-  
-  </script>
+
+    </script>
 </html>

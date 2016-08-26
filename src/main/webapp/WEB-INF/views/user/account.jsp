@@ -14,7 +14,7 @@
 </section>
 <section class="formbox">
 	<p> 회원 정보</p>
-이름 : 	<article id="result_name"></article>   
+	이름 : 	<article id="result_name"></article>   
 	나이 : <article id="result_age"></article>	 
 	성별 : <article id="result_gender"></article> 
 	계좌번호 : <article id="result_account"></article>
@@ -32,9 +32,6 @@
 
 
 </div>
- <jsp:include page = "../global/footer.jsp"/>
-<jsp:include page = "../global/end.jsp"/>
-<link rel="stylesheet" href="${js}/douglas.js"/>
 <script type="text/javascript">
    account.init();
 </script>

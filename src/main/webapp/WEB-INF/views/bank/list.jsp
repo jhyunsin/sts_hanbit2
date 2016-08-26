@@ -1,12 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-   
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-<h1>list</h1>
-</body>
-</html>
+<div class="box">
+<div class="panel panel-default">
+  <div class="panel-heading">학생 목록</div>
+ <table id="member_list" class="table">
+	  <tr>
+	    <th>ID</th>
+	    <th>이 름</th>
+	    <th>계좌번호</th>
+	    <th>잔액</th>
+	  </tr>
+	  <c:forEach var="member"  items="${list}">
+	  <tr>
+	    <td>${account.id}</td>
+	    <td><a href="${context}/member.do?action=find_by_id&page=find_by_id&keyword=${member.name}">
+	    	${account.name}</a></td>
+	    <td>${account.accountNo}</td>
+	    <td>${account.money}</td>
+	  </tr>
+	 </c:forEach>
+	</table>
+</div>
+</div>
