@@ -8,6 +8,6 @@ package com.hanbit.web.subject;
  */
 
 public interface SubjectService {
-	public void insert(SubjectBean s);
+	public void insert(SubjectVO s);
 	
 }

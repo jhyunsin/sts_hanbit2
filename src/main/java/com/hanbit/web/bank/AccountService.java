@@ -27,14 +27,14 @@ public interface AccountService extends CommonService {
 	public String withdraw(String withdrowInfo);
 
 	// 4수정..사용자의 요청에 의해 비번만 전환가능
-	public String updateAccount(AccountBean acc);
+	public String updateAccount(AccountVO acc);
 
 	// 5해지
 	public int deleteAccount(int AccountNo);
 
 	
 	// 7조회(계좌번호)
-	public AccountBean findByAccountNo();
+	public AccountVO findByAccountNo();
 
 	// 8 조회(이름)
 	public List<?> findBy(String name);

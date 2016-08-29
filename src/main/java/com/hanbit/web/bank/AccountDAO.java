@@ -37,7 +37,7 @@ public class AccountDAO {
 	return instance;
 }
 	
-	public int insertAccount(AccountBean acc) {
+	public int insertAccount(AccountVO acc) {
 		// 계좌개설
 		int result = 0;
 		String sql = "insert into account (id, account_no, money) "
@@ -75,7 +75,7 @@ public class AccountDAO {
 		return money;
 	}
 	
-	public void deposit(AccountBean bean) {
+	public void deposit(AccountVO bean) {
 		// 입급
 		
 		String sql = "update account set money=? where account_no = ?";
@@ -90,7 +90,7 @@ public class AccountDAO {
 		}
 	}
 	
-	public void withdraw(AccountBean acc) {
+	public void withdraw(AccountVO acc) {
 		// 출금
 		this.deposit(acc);
 		}
@@ -151,7 +151,7 @@ public class AccountDAO {
 	}
 	public List<?> selectAll() {
 		// 전체조회
-		List<AccountMemberBean> list = new ArrayList<AccountMemberBean>();
+		List<AccountMemberVO> list = new ArrayList<AccountMemberVO>();
 		String sql = "select "
 				+ "account_no as acc,"
 				+ "id as id,"
@@ -165,7 +165,7 @@ public class AccountDAO {
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
-				AccountMemberBean acc = new AccountMemberBean();
+				AccountMemberVO acc = new AccountMemberVO();
 				acc.setAccountNo(rs.getInt("ACC"));
 				acc.setId(rs.getString("ID"));
 				acc.setMoney(rs.getInt("MONEY"));
@@ -180,7 +180,7 @@ public class AccountDAO {
 		return list;
 	}
 	public Map<?, ?> selectMap() {
-		Map<String, AccountMemberBean> map = new HashMap<String,AccountMemberBean>();
+		Map<String, AccountMemberVO> map = new HashMap<String,AccountMemberVO>();
 		String sql = "select * from account_member";
 		
 		try {
@@ -188,7 +188,7 @@ public class AccountDAO {
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
-				AccountMemberBean am = new AccountMemberBean();
+				AccountMemberVO am = new AccountMemberVO();
 				am.setAccountNo(rs.getInt("ACCOUNT_NO"));
 				am.setId(rs.getString("ID"));
 				am.setMoney(rs.getInt("MONEY"));
@@ -207,7 +207,7 @@ public class AccountDAO {
 		
 		return map;
 	}
-	public int updageAccount(AccountBean acc) {
+	public int updageAccount(AccountVO acc) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

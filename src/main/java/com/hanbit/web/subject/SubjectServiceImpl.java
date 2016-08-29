@@ -20,7 +20,7 @@ public class SubjectServiceImpl implements SubjectService{
 		}
 	
 	@Override
-	public void insert(SubjectBean s) {
+	public void insert(SubjectVO s) {
 		dao.insert(s);
 		
 	}

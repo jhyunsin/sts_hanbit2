@@ -61,7 +61,7 @@ public class GradeDAO {/// 싱글톤은 DAO부터
 
 	
 	
-	public int insert(GradeBean bean) {
+	public int insert(GradeVO bean) {
 		int result = 0;
 		String sql = "insert into grade(seq,grade,java,sql,html,javascript,id,exam_date)values(seq.nextval,?,?,?,?,?,?,?)";
 		
@@ -84,7 +84,7 @@ public class GradeDAO {/// 싱글톤은 DAO부터
 		return result;
 	}
 
-	public int update(GradeBean bean) {
+	public int update(GradeVO bean) {
 	int result = 0;
 	String sql = "";
 	
@@ -109,15 +109,15 @@ public class GradeDAO {/// 싱글톤은 DAO부터
 		return result;
 	}
 
-	public List<GradeBean> list() {
+	public List<GradeVO> list() {
 
-		List<GradeBean> list = new ArrayList<GradeBean>();
+		List<GradeVO> list = new ArrayList<GradeVO>();
 		String sql = "select * from grade";
 		try {
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
-				GradeBean g = new GradeBean();
+				GradeVO g = new GradeVO();
 				g.setSeq(rs.getString("SEQ"));
 				g.setGrade(rs.getString("GRADE"));
 				g.setJava(rs.getInt("JAVA"));
@@ -137,11 +137,11 @@ public class GradeDAO {/// 싱글톤은 DAO부터
 
 	}
 
-	public List<GradeBean> findById(String id) {
+	public List<GradeVO> findById(String id) {
 		// TODO Auto-generated method stub
 
 		String sql = "select * from grade where id=?";
-		List<GradeBean> list = new ArrayList<GradeBean>();
+		List<GradeVO> list = new ArrayList<GradeVO>();
 		try {
 			Class.forName(Constants.ORACLE_DRIVER);
 //			con = DriverManager.getConnection(Constants.ORACLE_URL, Constants.USER_ID, Constants.USER_PW);
@@ -153,7 +153,7 @@ public class GradeDAO {/// 싱글톤은 DAO부터
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
-				GradeBean t = new GradeBean(
+				GradeVO t = new GradeVO(
 						rs.getString("SEQ"), 
 						rs.getString("GRADE"), 
 						rs.getInt("JAVA"),
@@ -192,9 +192,9 @@ public class GradeDAO {/// 싱글톤은 DAO부터
 		return result;
 	}
 
-	public GradeBean findBySeq(String seq) {
+	public GradeVO findBySeq(String seq) {
 		// TODO Auto-generated method stub
-		GradeBean s =  new GradeBean(); 
+		GradeVO s =  new GradeVO(); 
 		String sql = "select * from grade where seq = ?";
 		
 		try {

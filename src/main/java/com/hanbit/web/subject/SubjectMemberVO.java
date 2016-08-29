@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @story   :
  */
 
-public class SubjectMember implements Serializable{
+public class SubjectMemberVO implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 

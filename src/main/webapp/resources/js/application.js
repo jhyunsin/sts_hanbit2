@@ -31,8 +31,7 @@
 		$('#a_member').click(function() {controller.move('member','main');});
 		$('#a_grade').click(function() {controller.move('grade','main');});
 		$('#a_account').click(function() {controller.move('bank','main');});
-		$('#abc').click(function() {controller.move('global','school_info');
-		});
+		$('#abc').click(function() {controller.move('global','school_info');});
 		};
 		return{ 
 			init : init,

@@ -17,14 +17,14 @@ public class GradeServiceImpl implements GradeService {
 	}
 	
 	@Override
-	public int insert(GradeBean grade) {
+	public int insert(GradeVO grade) {
 		// 추가
 		return	dao.insert(grade);
 		 
 	}
 
 	@Override
-	public int update(GradeBean grade) {
+	public int update(GradeVO grade) {
 		// TODO Auto-generated method stub
 		return dao.update(grade);
 	}
@@ -36,22 +36,22 @@ public class GradeServiceImpl implements GradeService {
 	}
 
 	@Override
-	public List<GradeBean> list() {
+	public List<GradeVO> list() {
 		// TODO Auto-generated method stub
-	List<GradeBean> list = 	dao.list();
+	List<GradeVO> list = 	dao.list();
 		return list;
 	
 	
 	}
 
 	@Override
-	public List<GradeBean> findById(String id) {
+	public List<GradeVO> findById(String id) {
 		// TODO Auto-generated method stub
 		return dao.findById(id);
 	}
 
 	@Override
-	public GradeBean findBySeq(String seq) {
+	public GradeVO findBySeq(String seq) {
 		// TODO Auto-generated method stub
 		return dao.findBySeq(seq);
 	}

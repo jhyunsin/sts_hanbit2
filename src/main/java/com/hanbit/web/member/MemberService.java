@@ -5,7 +5,7 @@ package com.hanbit.web.member;
 
 import java.util.List;
 
-import com.hanbit.web.subject.SubjectMember;
+import com.hanbit.web.subject.SubjectMemberVO;
 import com.hanbit.web.util.CommonService;
 
 
@@ -18,27 +18,27 @@ import com.hanbit.web.util.CommonService;
  * @story :
  */
 public interface MemberService extends CommonService {
-	public String regist(MemberBean bean);
+	public String regist(MemberVO bean);
 
-	public MemberBean show();
+	public MemberVO show();
 
-	public void update(MemberBean mem);
+	public void update(MemberVO mem);
 
-	public void delete(MemberBean mem);
+	public void delete(MemberVO mem);
 
 	public int count();
 
-	public MemberBean findById(String findId);
+	public MemberVO findById(String findId);
 
-	public List<MemberBean> list();
+	public List<MemberVO> list();
 
-	public List<MemberBean> findByName(String findName);
+	public List<MemberVO> findByName(String findName);
 
-	public SubjectMember login(MemberBean member);
+	public SubjectMemberVO login(MemberVO member);
 
 	public int genderCount(String gender);	
 	
-	public void logout(MemberBean member);
+	public void logout(MemberVO member);
 	
 }
 // String sqlCreate = "create table member("

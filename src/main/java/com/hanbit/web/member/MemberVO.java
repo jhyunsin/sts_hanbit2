@@ -14,7 +14,7 @@ import java.util.Date;
  * @story :
  */
 
-public class MemberBean implements Serializable {
+public class MemberVO implements Serializable {
 	private static final long serialVersionUID = 1L;
 // 클래스 시작
 	
@@ -44,13 +44,13 @@ public class MemberBean implements Serializable {
 
 	
 
-	public MemberBean() {
+	public MemberVO() {
 		/// 기본생성자
 	}
 
 	// public final static String
 	
-	public MemberBean(String id, String pw, String name, String ssn) {// 생성자
+	public MemberVO(String id, String pw, String name, String ssn) {// 생성자
 
 		this.id = id;
 		this.pw = pw;

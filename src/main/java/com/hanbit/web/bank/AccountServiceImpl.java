@@ -24,13 +24,13 @@ public class AccountServiceImpl implements AccountService {
 }
 
 	private AccountServiceImpl() {
-	map = new HashMap<String,AccountMemberBean>();
+	map = new HashMap<String,AccountMemberVO>();
 	}
 
 	@Override
 	public String openAccount(String id) {
 		// 개설
-		AccountBean acc = new AccountBean();
+		AccountVO acc = new AccountVO();
 		acc.setAccountNo();
 		acc.setId(id);
 		acc.setMoney(0);
@@ -47,7 +47,7 @@ public class AccountServiceImpl implements AccountService {
 	public void deposit(String depositInfo) {
 		// 입금
 		String[] arr = depositInfo.split(",");
-		AccountBean acc = new AccountBean();
+		AccountVO acc = new AccountVO();
 		acc.setAccountNo(Integer.parseInt(arr[0]));
 		int money = this.restMoney(Integer.parseInt(arr[0])) + Integer.parseInt(arr[1]);
 		acc.setMoney(money);
@@ -59,7 +59,7 @@ public class AccountServiceImpl implements AccountService {
 		// 출금
 		String result = "";
 		String[] arr = withdrowInfo.split(",");
-		AccountBean acc = new AccountBean();
+		AccountVO acc = new AccountVO();
 		acc.setAccountNo(Integer.parseInt(arr[0]));
 		int restMoney = this.restMoney(Integer.parseInt(arr[0]));
 		int withdrawMoney = Integer.parseInt(arr[1]);
@@ -76,7 +76,7 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public String updateAccount(AccountBean acc) {
+	public String updateAccount(AccountVO acc) {
 		// 비밀번호 수정
 		String result = "";
 //	if (dao.fina) {
@@ -100,7 +100,7 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public AccountBean findByAccountNo() {
+	public AccountVO findByAccountNo() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -125,7 +125,7 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public Map<?, ?> map() {
-	map = new HashMap<String,AccountMemberBean>();
+	map = new HashMap<String,AccountMemberVO>();
 	map = dao.selectMap();	
 	return map;
 	}

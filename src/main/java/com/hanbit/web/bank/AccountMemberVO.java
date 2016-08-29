@@ -7,7 +7,7 @@ package com.hanbit.web.bank;
  * @story   :
  */
 
-public class AccountMemberBean {
+public class AccountMemberVO {
 	private int accountNo; // 인스턴스 변수는 초기화를 하지 않는다
 	private String name;
 	private int money;
