@@ -1,11 +1,12 @@
 package com.hanbit.web.grade;
 
 import java.util.List;
-import java.util.Scanner;
 
+import org.springframework.stereotype.Service;
+@Service
 public class GradeServiceImpl implements GradeService {
 
-	GradeDAO dao = GradeDAO.getInstance();
+	GradeDAOImpl dao = GradeDAOImpl.getInstance();
 	private static GradeServiceImpl instance = new GradeServiceImpl();
 	
 	public static GradeServiceImpl getInstance() {
@@ -38,14 +39,14 @@ public class GradeServiceImpl implements GradeService {
 	@Override
 	public List<GradeVO> list() {
 		// TODO Auto-generated method stub
-	List<GradeVO> list = 	dao.list();
+	List<GradeVO> list = dao.list();
 		return list;
 	
 	
 	}
 
 	@Override
-	public List<GradeVO> findById(String id) {
+	public GradeVO findById(String id) {
 		// TODO Auto-generated method stub
 		return dao.findById(id);
 	}

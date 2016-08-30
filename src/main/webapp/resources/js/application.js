@@ -17,13 +17,14 @@
 		var css = function(){return session.getCssPath('css');}
 		var img = function(){return session.getImgPath('img');}
 		var setContentView = function(){
-			$('#header_brand').attr('src',app.img()+'/hanbit2.jpg').css('alt','Brand').css('width','150px').css('height','50px');
+			$('#header_brand').attr('src',app.img()+'/hanbit2.jpg').css('alt','Brand').css('width','150px').css('height','50px').addClass('cursor');
 			$('#footer').addClass('bottom').addClass('footer');
 			$('#global_content').addClass('box');
 			$('#global_content a').addClass('cursor');
 			$('#global_content_regist').text('SIGN UP').click(function(){controller.move('member','regist');});
 			$('#global_content_login').text('LOG IN').click(function(){controller.move('member','login');});
 			$('#global_content_admin').text('ADMIN MODE').click(function(){admin.check();});
+			
 		};
 		var onCreate = function() {
 			setContentView();
@@ -32,6 +33,8 @@
 		$('#a_grade').click(function() {controller.move('grade','main');});
 		$('#a_account').click(function() {controller.move('bank','main');});
 		$('#abc').click(function() {controller.move('global','school_info');});
+		$('#way').click(function() {controller.move('global','way');});
+		
 		};
 		return{ 
 			init : init,
@@ -240,6 +243,9 @@
 			$('#member_regist #rd_major > label:gt(0)').addClass('radio-inline');
 			$('#member_regist #ck_subject').addClass('checkbox');
 			$('#member_regist #ck_subject > label').addClass('checkbox-inline');
+			$('#member_find_form').attr('action',sessionStorage.getItem('context')+'/member/search');
+			$('#member_find_form input[type="hidden"]').attr('name','context').attr('value',app.context());
+			
 		};
 		var onCreate = function(){
 			setContentView();	
@@ -252,6 +258,7 @@
 			$('#list').click(function(){controller.move('member','list');});
 			$('#findBy').click(function(){controller.move('member','findBy');});
 			$('#count').click(function(){controller.move('member','count');});
+			$('#member_find_form input[type="submit"]').click(function(){$('#member_find_form').submit();});
 		};
 		
 		
@@ -266,7 +273,7 @@
 			getGender : getGender,
 			init : init,
 			spec : function(){
-				setName(document.querySelector('#name').value);
+				var setName = document.querySelector('#name').value;
 				var ssn = document.querySelector('#ssn').value;
 				var result = '';
 				var now = new Date().getFullYear();

@@ -3,31 +3,32 @@ package com.hanbit.web.member;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Service;
+
 import com.hanbit.web.bank.AccountService;
 import com.hanbit.web.bank.AccountServiceImpl;
 import com.hanbit.web.subject.SubjectVO;
-import com.hanbit.web.subject.SubjectDAO;
+import com.hanbit.web.subject.SubjectDAOImpl;
 import com.hanbit.web.subject.SubjectMemberVO;
 
 
 
 
-
+@Service
 public class MemberServiceImpl implements MemberService {
 	MemberVO student = null;
 	
-	private MemberDAOImpl dao = null;
-	private SubjectDAO subjDao = SubjectDAO.getInstance();
-	private AccountService accService = AccountServiceImpl.getInstance();//// 5.6번
-	private MemberVO session;               /// 로긴정보만 담당하는 인스턴스변수
+	private MemberDAOImpl dao = MemberDAOImpl.getInstance();
+	private SubjectDAOImpl subjDao = SubjectDAOImpl.getInstance();
+	private AccountService accService = AccountServiceImpl.getInstance();
+	private MemberVO session;             
 	private static MemberServiceImpl instance = new MemberServiceImpl();
-
 	public static MemberServiceImpl getInstance() {
 		return instance;
 	}
 
 	private MemberServiceImpl() {
-	//	session = new MemberBean(); 
+		dao = MemberDAOImpl.getInstance();
 	}
 
 	@Override
@@ -91,9 +92,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public MemberVO findById(String findID) {
-		// TODO Auto-generated method stub
-//		MemberBean t = 
-//		MemberBean t2 = new MemberBean(t.getId(),t.getPw(),t.getName(),t.getSsn());
+	
 		return dao.findById(findID);
 	}
 
@@ -119,7 +118,7 @@ public class MemberServiceImpl implements MemberService {
 			sb = subjDao.findById(member.getId());
 			sm.setEmail(session.getEmail());
 			sm.setId(session.getId());
-			sm.setImg(session.getProImg());
+			sm.setImg(session.getprofileImg());
 			sm.setMajor(sb.getMajor());
 			sm.setName(session.getName());
 			sm.setPhone(session.getPhone());

@@ -17,8 +17,7 @@ import java.util.Date;
 public class MemberVO implements Serializable {
 	private static final long serialVersionUID = 1L;
 // 클래스 시작
-	
-	private String id, name, ssn, pw, regDate, gender, proImg, email,phone; // 남 m 여 w
+	private String id, name, ssn, pw, regDate, gender, profileImg, email,phone; // 남 m 여 w
 	private int birth;
 	
 	
@@ -73,12 +72,12 @@ public class MemberVO implements Serializable {
 
 	}
 
-	public String getProImg() {
-		return proImg;
+	public String getprofileImg() {
+		return profileImg;
 	}
 
-	public void setProImg(String proImg) {
-		this.proImg = proImg;
+	public void setprofileImg(String profileImg) {
+		this.profileImg = profileImg;
 	}
 
 	public int getBirth() {

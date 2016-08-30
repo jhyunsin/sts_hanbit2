@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.hanbit.web.member.MemberDAOImpl">
+<mapper namespace="mapper.subject">
  <select id="list" resultType="com.hanbit.web.member.MemberVO">
  select * from member</select>
  <select id="findById" parameterType="string" resultType="com.hanbit.web.member.MemberVO">

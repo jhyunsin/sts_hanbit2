@@ -1,16 +1,18 @@
 package com.hanbit.web.subject;
 
+import org.springframework.stereotype.Service;
+
 /**
  * @date   : 2016. 7. 26.
  * @author : 신재현
  * @file   : SubjectServiceImpl.java
  * @story   :
  */
-
+@Service
 public class SubjectServiceImpl implements SubjectService{
 
 	private static SubjectServiceImpl instance = new SubjectServiceImpl();
-	SubjectDAO dao = SubjectDAO.getInstance();
+	SubjectDAOImpl dao = SubjectDAOImpl.getInstance();
 	public static SubjectServiceImpl getInstance() {
 	return instance;
 		}

@@ -6,11 +6,11 @@
       </div>
            
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">학교소개</a></li>
+        <li><a id="abc" href="#">학교소개</a></li>
        
-          </ul>
-   	   <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">오시는길</a></li>
+        </ul>
+   	   <ul class="nav navbar-nav navbar-right"> 
+        <li><a id="way" href="#">오시는길</a></li>
        
           </ul>
         

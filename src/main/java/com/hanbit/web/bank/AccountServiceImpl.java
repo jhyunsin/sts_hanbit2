@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Service;
+
 
 
 /**
@@ -15,8 +17,9 @@ import java.util.Map;
  * @file   : AccountServiceIMmpl.java
  * @story  : 계좌 인터페이스
   */
+@Service
 public class AccountServiceImpl implements AccountService {
-	AccountDAO dao = AccountDAO.getInstance();
+	AccountDAOImpl dao = AccountDAOImpl.getInstance();
 	private Map<?,?> map ; ///인스턴스변수  ---- private을 걸어야 은닉화
 	private static AccountServiceImpl instance = new AccountServiceImpl();
 	public static AccountServiceImpl getInstance() {
