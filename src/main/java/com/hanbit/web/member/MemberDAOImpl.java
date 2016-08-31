@@ -119,8 +119,8 @@ public class MemberDAOImpl implements MemberDAO{
 			// TODO Auto-generated method stub
 			boolean loginOk = false;
 			if (param.getId()!=null
-					&& param.getPw()!=null 
-					&& this.existId(param.getId())) {
+					&& param.getPw()!=null && this.existId(param.getId())
+					) {
 				MemberVO member = this.findById(param.getId());
 				if (member.getPw().equals(param.getPw())) {//멤버에서 넘어온 비번과 지금 비번이 같다면...
 				loginOk = true;
@@ -130,9 +130,19 @@ public class MemberDAOImpl implements MemberDAO{
 		}
 	@Override
 		public boolean existId(String id){
+		boolean flag = false;
 		SqlSession session = sqlSessionFactory.openSession();
-		int temp = session.selectOne("",id);
-		return false;
+		try{
+			int temp = session.selectOne(NAMESPACE + "existId",id);
+		if (temp==1) {flag = true;} 
+		}
+		finally{
+		session.close();	
+		}
+		return flag;
+		
+				
+		
 		}
 	@Override
 		public int findId(String id) {

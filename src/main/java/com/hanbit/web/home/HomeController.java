@@ -33,17 +33,17 @@ public class HomeController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		
-		return "public:global/content.tiles";
+		return "public:public/content.tiles";
 	}
-	@RequestMapping("/global/school_info")
+	@RequestMapping("/public/school_info")
 	public String moveSchoolInfo(){
 		logger.info("HomeController! school_info..");
-		return "public:global/school_info.tiles";
+		return "public:public/school_info.tiles";
 	}
-	@RequestMapping("/global/way")
+	@RequestMapping("/public/way")
 	public String moveWay(){
 		logger.info("HomeController! way..");
-		return "public:global/way.tiles";
+		return "public:public/way.tiles";
 	}
 
 }

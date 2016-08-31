@@ -1,12 +1,14 @@
 package com.hanbit.web.bank;
 
+import org.springframework.stereotype.Component;
+
 /**
  * @date   : 2016. 7. 8.
  * @author : 신재현
  * @file   : AccountMemberBean.java
  * @story   :
  */
-
+@Component
 public class AccountMemberVO {
 	private int accountNo; // 인스턴스 변수는 초기화를 하지 않는다
 	private String name;

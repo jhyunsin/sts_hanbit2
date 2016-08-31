@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.springframework.stereotype.Repository;
+
 import com.hanbit.web.util.Constants;
 
 
@@ -17,6 +19,7 @@ import com.hanbit.web.util.Constants;
  * @story   :
  */
 
+@Repository
 public class SubjectDAOImpl {
 	Connection con = null;
 	Statement stmt = null;

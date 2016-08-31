@@ -17,7 +17,7 @@
 		var css = function(){return session.getCssPath('css');}
 		var img = function(){return session.getImgPath('img');}
 		var setContentView = function(){
-			$('#header_brand').attr('src',app.img()+'/hanbit2.jpg').css('alt','Brand').css('width','150px').css('height','50px').addClass('cursor');
+			$('#header_brand').attr('src',app.img()+'/default/hanbit2.jpg').css('alt','Brand').css('width','150px').css('height','50px').addClass('cursor');
 			$('#footer').addClass('bottom').addClass('footer');
 			$('#global_content').addClass('box');
 			$('#global_content a').addClass('cursor');
@@ -470,7 +470,7 @@ var nav = (function(){
 	var init = function(){onCreate();};
 	var setContentView = function(){
 
-	$('#nav ul').addClass('list_style_none').addClass('over_hidden').addClass('bg_color_black').css('margin','0').css('padding','0');
+	$('#nav ul').addClass('list_style_none').addClass('over_hidden').addClass('bg_color_blue').css('margin','0').css('padding','0');
 	$('#nav li').addClass('float_left').addClass('display_inline').css('border-right','1px').css('solid','#bbb');
 	$('#nav li:last-child').addClass('border_right_none');
 	$('#nav .active').addClass('bg_color_black');

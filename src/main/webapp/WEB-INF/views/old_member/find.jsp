@@ -51,5 +51,3 @@
 		</a>
 
 	</div>
-<jsp:include page="../global/footer.jsp"/>
-<jsp:include page="../global/end.jsp"/>

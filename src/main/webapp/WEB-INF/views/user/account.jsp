@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<jsp:include page="../global/header.jsp"/>
-<jsp:include page="../global/navi.jsp"/>
+
 <script src="${js}/douglas.js"></script>
 <div id = "container" style="width:100%">
  <h2  style="margin:0 auto;width:250px">CREATOR 학습장</h2>

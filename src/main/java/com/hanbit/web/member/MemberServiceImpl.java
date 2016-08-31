@@ -3,6 +3,7 @@ package com.hanbit.web.member;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hanbit.web.bank.AccountService;
@@ -16,19 +17,19 @@ import com.hanbit.web.subject.SubjectMemberVO;
 
 @Service
 public class MemberServiceImpl implements MemberService {
-	MemberVO student = null;
 	
-	private MemberDAOImpl dao = MemberDAOImpl.getInstance();
-	private SubjectDAOImpl subjDao = SubjectDAOImpl.getInstance();
-	private AccountService accService = AccountServiceImpl.getInstance();
-	private MemberVO session;             
-	private static MemberServiceImpl instance = new MemberServiceImpl();
-	public static MemberServiceImpl getInstance() {
-		return instance;
-	}
-
+	
+	private MemberDAOImpl dao; 
+	private SubjectDAOImpl subjDao;
+	@Autowired private MemberVO member; /// getInstance 가 아닌 new 로 만드는 것들은 모드 Autowired 로 처리한다 이것이 문법이다
+	@Autowired private SubjectVO sb;
+	@Autowired private SubjectMemberVO sm;
+	@Autowired private AccountServiceImpl accService;
+	
+	
 	private MemberServiceImpl() {
 		dao = MemberDAOImpl.getInstance();
+		subjDao = SubjectDAOImpl.getInstance();
 	}
 
 	@Override
@@ -54,7 +55,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public MemberVO show() {
 		// 2보기
-		return session;
+		return member;
 	}
 
 	@Override
@@ -62,7 +63,7 @@ public class MemberServiceImpl implements MemberService {
 		// 3수정
 		int result = dao.update(mem);
 		if (result ==1) {
-			session = this.findById(mem.getId());
+			member = this.findById(mem.getId());
 		System.out.println("업데이트결과 성공");
 		}else{
 			System.out.println("업데이트결과 실패");
@@ -77,7 +78,7 @@ public class MemberServiceImpl implements MemberService {
 		String result = "";
 		if (dao.delete(mem) ==1) {
 			result = "삭제성공";
-			session = null;
+			member = null;
 		} else {
 			result = "삭제실패";
 		}	
@@ -113,25 +114,26 @@ public class MemberServiceImpl implements MemberService {
 		SubjectMemberVO sm = new SubjectMemberVO();
 		SubjectVO sb = new SubjectVO();
 		if (dao.login(member)) {
-			session = dao.findById(member.getId());
-			accService.map();
+			member = dao.findById(member.getId());
+			System.out.println("서비스로그인 하는 중..ID :" +member.getId());
+//			accService.map();
 			sb = subjDao.findById(member.getId());
-			sm.setEmail(session.getEmail());
-			sm.setId(session.getId());
-			sm.setImg(session.getprofileImg());
+			sm.setEmail(member.getEmail());
+			sm.setId(member.getId());
+			sm.setImg(member.getprofileImg());
 			sm.setMajor(sb.getMajor());
-			sm.setName(session.getName());
-			sm.setPhone(session.getPhone());
-			sm.setPw(session.getPw());
-			sm.setReg(session.getRegDate());
-			sm.setSsn(session.getSsn());
+			sm.setName(member.getName());
+			sm.setPhone(member.getPhone());
+			sm.setPw(member.getPw());
+			sm.setReg(member.getRegDate());
+			sm.setSsn(member.getSsn());
 			sm.setSubjects(sb.getSubjects());
 			
 		} else {
-				session.setId("fail");
+				sm.setId("fail");
 		}
 			
-		System.out.println("서비스로그인결과 ?" +session.getId());
+		System.out.println("서비스로그인결과 ?" +sm.getId());
 		return sm;
 	}
 
@@ -144,9 +146,9 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void logout(MemberVO member) {
 		
-		if (member.getId().equals(session.getId()) && 
-				member.getPw().equals(session.getPw())) {
-			session = null;
+		if (member.getId().equals(member.getId()) && 
+				member.getPw().equals(member.getPw())) {
+			member = null;
 		}
 		
 	}

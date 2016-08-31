@@ -3,10 +3,10 @@
 <tiles-definitions>
   <definition name="public" template="/WEB-INF/views/layouts/public.jsp">
     <put-attribute name="title" value="한빛아카데미" />
-    <put-attribute name="header" value="/WEB-INF/views/global/header.jsp" />
-    <put-attribute name="menu" value="/WEB-INF/views/global/navi.jsp" />
+    <put-attribute name="header" value="/WEB-INF/views/public/header.jsp" />
+    <put-attribute name="menu" value="/WEB-INF/views/pubic/nav.jsp" />
     <put-attribute name="body" value="" />
-    <put-attribute name="footer" value="/WEB-INF/views/global/footer.jsp" />
+    <put-attribute name="footer" value="/WEB-INF/views/public/footer.jsp" />
   </definition>
    <definition name="public:*/*.tiles" extends="public">
     <put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp" />
@@ -15,9 +15,8 @@
   <definition name="user" template="/WEB-INF/views/layouts/user.jsp">
     <put-attribute name="title" value="사용자화면" />
     <put-attribute name="header" value="/WEB-INF/views/user/header.jsp" />
-    <put-attribute name="menu" value="/WEB-INF/views/user/navi.jsp" />
     <put-attribute name="body" value="" />
-    <put-attribute name="footer" value="/WEB-INF/views/global/footer.jsp" />
+    <put-attribute name="footer" value="/WEB-INF/views/public/footer.jsp" />
   </definition>
    <definition name="user:*/*.tiles" extends="user">
     <put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp" />
@@ -26,9 +25,9 @@
   <definition name="admin" template="/WEB-INF/views/layouts/admin.jsp">
     <put-attribute name="title" value="관리자화면" />
     <put-attribute name="header" value="/WEB-INF/views/admin/header.jsp" />
-    <put-attribute name="menu" value="/WEB-INF/views/admin/navi.jsp" />
+    <put-attribute name="menu" value="/WEB-INF/views/admin/nav.jsp" />
     <put-attribute name="body" value="" />
-    <put-attribute name="footer" value="/WEB-INF/views/global/footer.jsp" />
+    <put-attribute name="footer" value="/WEB-INF/views/public/footer.jsp" />
   </definition>
    <definition name="admin:*/*.tiles" extends="admin">
     <put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp" />

@@ -2,13 +2,15 @@ package com.hanbit.web.grade;
 
 import java.io.Serializable;
 
+import org.springframework.stereotype.Component;
+
 /**
  * @date   : 2016. 7. 6.
  * @author : 신재현
  * @file   : GradeMemberBean.java
  * @story   :
  */
-
+@Component
 public class GradeMemberVO implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
