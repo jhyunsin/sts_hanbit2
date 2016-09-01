@@ -133,7 +133,7 @@ public class MemberServiceImpl implements MemberService {
 				sm.setId("fail");
 		}
 			
-		System.out.println("서비스로그인결과 ?" +sm.getId());
+		System.out.println("서비스로그인결과 : " +sm.getId());
 		return sm;
 	}
 

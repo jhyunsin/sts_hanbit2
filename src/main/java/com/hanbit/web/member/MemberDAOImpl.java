@@ -140,9 +140,6 @@ public class MemberDAOImpl implements MemberDAO{
 		session.close();	
 		}
 		return flag;
-		
-				
-		
 		}
 	@Override
 		public int findId(String id) {
