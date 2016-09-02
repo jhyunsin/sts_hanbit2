@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="${css}/douglas.css"/>
 <div id = "container">
 <section class="formbox">
-   <form name="form">
+   <form name="form" class="box">
       <p>카우푸 지수 구하기</p>
       <p>이름</p> <input type = "text" name="name" id="name" value=""/>
       <p>키</p> <input type = "text" name="height" id="height" value=""/>

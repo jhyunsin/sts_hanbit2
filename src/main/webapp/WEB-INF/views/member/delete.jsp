@@ -1,36 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet" href="${css}/global.css" />
-</head>
-<body>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <div class="box">
-<embed src="${context}/img/star.gif">
-<h1>탈퇴 페이지</h1>
-
-<form action="${context}/member.do" method="post">  
-	<input type="hidden" name="id" value = "${delete.id} }"/>
-	<span class="meta">PW</span> <input type="text" name="pw"/><br/>
-
-	<p></p><br />
-   <input type="hidden" name = "action" value="delete"/>
-	<input type="hidden" name = "directory" value="member"/>
-	<input type="hidden" name = "page" value="main"/>
-
-
-<a href="${context}/member.do"><br /><br />
-<img src="${img}/member.png" alt="member" style="width:30px" /></a>
-<a href="${context}/index.do">
-		<img src="${img}/home.png" alt="member" style="width:30px" />
-		</a>
-</form>
+	<h3>탈퇴하려면 비밀번호를 입력해주세요</h3>
+	<div style="padding: 20px"></div>
+	<form id="member_delete_form" class="navbar-form navbar-center" role="search">
+	<embed style="width: 50px; height: 50px" src="${img}/default/star.gif">
+		<div class="form-group">
+			<input type="text" class="form-control" placeholder="PASSWORD">
+		</div>
+		<input type="submit" class="btn btn-default" value="탈퇴"/>
+	</form>
 </div>
-
-</body>
-</html>

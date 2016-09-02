@@ -24,7 +24,7 @@ public class AccountController {
 	@RequestMapping("/delete")
 	public String moveDelete() {
 		logger.info("AccountController! delete()..");
-		return "admin:bank/delete.tiles";
+		return "admin:bank/open.tiles";
 	} 
 	@RequestMapping("/list")
 	public String moveList() {
@@ -41,4 +41,14 @@ public class AccountController {
 		logger.info("AccountController! count()..");
 		return "admin:bank/count.tiles";
 	} 
+	@RequestMapping("/detail")
+	public String moveDetail() {
+		logger.info("AccountController! detail()..");
+		return "admin:bank/detail.tiles";
+	} 
+	@RequestMapping("/transaction")
+	public String moveTransaction() {
+		logger.info("GO TO {}", "transaction");
+		return "user:bank/transaction.tiles";
+	}
 }

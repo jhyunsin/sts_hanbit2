@@ -13,12 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class HomeController {
-	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)// post
 	public String home(Locale locale, Model model) {
 		 //syso 역할
@@ -34,10 +29,16 @@ public class HomeController {
 		logger.info("HomeController! school_info..");
 		return "public:public/school_info.tiles";
 	}
-	@RequestMapping("/public/way")
+	@RequestMapping("/public/contact")
 	public String moveWay(){
 		logger.info("HomeController! way..");
-		return "public:public/way.tiles";
+		return "public:public/contact.tiles";
 	}
+	@RequestMapping("/public/free_board")
+	public String free_board(){
+		logger.info("HomeController! free_board..");
+		return "public:public/free_board.tiles";
+	}
+
 
 }

@@ -1,72 +1,55 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<link rel="stylesheet" href="${css}/global.css" />
-<link rel="stylesheet" href="${css}/member.css" />
+
 <div class="box">
-		<h1>회원정보 수정</h1>
+		<h1>회원상세정보</h1>
 	
 		
-		<form action="${context}/member.do" method="post">
-		<table id="member_detail">
+		<table id="member_detail" class="table">
 				<tr>
 				<td rowspan="5" style="width:30%">
-				<img src="${img}/member.do" alt="W3Schools.com" width="104"
+				<img src="${img}/default/home.png" alt="proImg" width="104"
 			height="142"></td>
-				<td style="width:20%" class="font_bold bg_color_yellow">ID</td>
-				<td style="width:40%">${detail.id}</td>
-				
+				<td style="width:20%" class="font_bold">ID</td>
+				<td style="width:40%">${member.id}</td>
 			</tr>
 			<tr>
 				
-				<td class="font_bold bg_color_yellow">이 름</td>
-				<td>${detail.name}</td>
+				<td class="font_bold">이 름</td>
+				<td>${member.name}</td>
 			</tr>
+			
 			<tr>
 				
-				<td class="font_bold bg_color_yellow">비밀번호</td>
-				<td><input type="text" name="pw" 
-				value= "${detail.pw}" /></td>
-				
+				<td class="font_bold">성 별</td>
+				<td>남자</td>
 			</tr>
 			<tr>
-				
-				<td class="font_bold bg_color_yellow">성 별</td>
-				<td>${detail.gender}</td>
-			</tr>
-			<tr>
-				<td class="font_bold bg_color_yellow">이메일</td>
-				<td><input type="text" name="email" 
-				value= "${detail.email}" /></td>
+				<td class="font_bold">이메일</td>
+				<td colspan="2">${member.email}</td>
 				
 			</tr>
 			<tr>
-				<td class="font_bold bg_color_yellow">생년월일</td>
-				<td colspan="2">${detail.birth}</td>
+				<td class="font_bold">전공과목</td>
+				<td colspan="2"></td>
+				
 			</tr>
 			<tr>
-				<td class="font_bold bg_color_yellow">등록일</td>
-				<td colspan="2">${detail.regDate}</td>
+				<td class="font_bold">수강과목</td>
+				<td colspan="2"></td>
+				
+			</tr>
+			<tr>
+				<td class="font_bold">생년월일</td>
+				<td colspan="2"></td>
+			</tr>
+			<tr>
+				<td class="font_bold">등록일</td>
+				<td colspan="2"></td>
 				
 			</tr>
 		</table>
 		
-		<input type="hidden" name = "action" value= "update"/>
-		<input type="hidden" name = "directory" value="member"/>
-		<input type="hidden" name = "page" value="detail"/>
-		<input type="hidden" name="id" value="${detail.id}"/>
-		<div style="margin:0 auto">
-		<input type="submit" value="수정" />
-		<input type="reset" value="취소" />
-		</div>
-		</form>
 		
 		<br /> 
-		<p>
-			
-		</p>
-<a href="${context}/member.do"><br /><br />
-<img src="${img}/member.png" alt="member" style="width:30px" /></a>
-<a href="${context}/index.do">
-		<img src="${img}/home.png" alt="member" style="width:30px" />
-		</a>
-
 	</div>
+

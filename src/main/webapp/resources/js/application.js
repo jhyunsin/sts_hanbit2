@@ -1,7 +1,6 @@
 // var application = (function(){})(); iife 패턴
 	var app = (function(){
 		var init = function(context) {
-		
 		session.init(context);
 		onCreate();
 		nav.init();
@@ -56,9 +55,9 @@
 		 var setPass = function(pass){this._pass = pass;};
 		 var init = function(){onCreate();};
 		 var setContentView = function(){
-			 	$('#admin_content #member_mgmt').attr('src',app.img()+'/membermm.png').css('height','400px');
-			 	$('#admin_content #grade_mgmt').attr('src',app.img()+'/grademm.png').css('height','400px');
-			 	$('#admin_content #account_mgmt').attr('src',app.img()+'/bankmm.jpg').css('height','400px');
+			 	$('#admin_content #member_mgmt').attr('src',app.img()+'/default/membermm.png').css('height','400px');
+			 	$('#admin_content #grade_mgmt').attr('src',app.img()+'/default/grademm.png').css('height','400px');
+			 	$('#admin_content #account_mgmt').attr('src',app.img()+'/default/bankmm.jpg').css('height','400px');
 			 	$('#admin_content h3').addClass('text_center')
 			 	
 		 	};
@@ -73,6 +72,14 @@
 			 $('#admin_nav #account_mgmt #delete').click(function(){;controller.move('bank','delete');});
 			 $('#admin_nav #account_mgmt #find').click(function(){controller.move('bank','find');});
 			 $('#admin_nav #account_mgmt #count').click(function(){controller.move('bank','count');});
+			 
+			 $('#admin_nav #grade_mgmt #list').click(function(){controller.move('grade','list');});
+			 $('#admin_nav #grade_mgmt #regist').click(function(){controller.move('grade','regist');});
+			 $('#admin_nav #grade_mgmt #update').click(function(){controller.move('grade','update');});
+			 $('#admin_nav #grade_mgmt #delete').click(function(){controller.move('grade','delete');});
+			 $('#admin_nav #grade_mgmt #count').click(function(){controller.move('grade','count');});
+			 $('#admin_nav #grade_mgmt #find').click(function(){controller.move('grade','find');});
+		 
 		 };
 		 return {
 			 init : init,
@@ -438,16 +445,28 @@
 	})();
 	
 	var controller = (function(){
-		var _page,_directory;
+		var _page,_directory,key;
 		var setPage = function(page){this._page = page;};
+		var setKey = function(key){this._key = key;};
 		var getPage = function(){return this._page;};
+		var getKey = function(){return this._key;};
 		var setDirectory = function(directory){this._directory = directory;};
 		var getDirectory = function(){return this._directory;};
+		
 		return{
 			setPage : setPage,
 			getPage : getPage,
 			setDirectory : setDirectory,
 			getDirectory : getDirectory,
+			setKey : setKey,
+			getKey : getKey,
+			moveWithKey : function(directory,page,key){
+				setDirectory(directory);
+				setPage(page);
+				setKey(key);
+				location.href = 
+					app.context()+'/'+getDirectory()+'/'+getPage()+'?key='+getKey();
+			},
 			move : function(directory,page){
 				setDirectory(directory);
 				setPage(page);

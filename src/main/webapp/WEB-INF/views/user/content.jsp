@@ -17,7 +17,7 @@
 <link rel="stylesheet" type="text/css" href="${font}/eleganticons/et-icons.css">
 <!-- Main style -->
 <link rel="stylesheet" type="text/css" href="${css}/cardio.css">
-	<section id="services" class="box section-padded">
+<section id="user_content_service" class="box section-padded">
 		<div>
 			<div class="row text-center title">
 				<h2>Services</h2>
@@ -25,29 +25,29 @@
 			</div>
 			<div class="row services">
 				<div class="col-md-4">
-					<div class="service">
-						<div class="icon-holder">
-							<img src="${img}/icons/heart-blue.png" alt="" class="icon">
-						</div>
-						<h4 class="heading">Kuap INDEX</h4>
-						<p class="description">A elementum ligula lacus ac quam ultrices a scelerisque praesent vel suspendisse scelerisque a aenean hac montes.</p>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="service">
+					<div id="kaup" class="service">
 						<div class="icon-holder">
 							<img src="${img}/icons/guru-blue.png" alt="" class="icon">
 						</div>
-						<h4 class="heading">G.B.O</h4>
+						<h4 class="heading">KAUP INDEX</h4>
 						<p class="description">A elementum ligula lacus ac quam ultrices a scelerisque praesent vel suspendisse scelerisque a aenean hac montes.</p>
 					</div>
 				</div>
 				<div class="col-md-4">
-					<div class="service">
+					<div id="rock_scissor_paper" class="service">
+						<div class="icon-holder">
+							<img src="${img}/icons/heart-blue.png" alt="" class="icon">
+						</div>
+						<h4 class="heading">ROCK SCISSOR PAPER</h4>
+						<p class="description">A elementum ligula lacus ac quam ultrices a scelerisque praesent vel suspendisse scelerisque a aenean hac montes.</p>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div id="lotto" class="service">
 						<div class="icon-holder">
 							<img src="${img}/icons/weight-blue.png" alt="" class="icon">
 						</div>
-						<h4 class="heading">lotto</h4>
+						<h4 class="heading">LOTTO DRAWING</h4>
 						<p class="description">A elementum ligula lacus ac quam ultrices a scelerisque praesent vel suspendisse scelerisque a aenean hac montes.</p>
 					</div>
 				</div>
@@ -55,59 +55,62 @@
 		</div>
 		<div class="cut cut-bottom"></div>
 	</section>
-	<section id="team" class="section gray-bg">
+	<section id="user_content_subject" class="section gray-bg">
 		<div class="container">
 			<div class="row title text-center">
-				<h2 class="margin-top">전공과목</h2>
+				<h2 class="margin-top">Major Subject</h2>
 				<h4 class="light muted">TOP 3</h4>
 			</div>
 			<div class="row">
 				<div class="col-md-4">
-					<div class="team text-center">
-						<div class="cover" style="background:url('${img}/team/team-cover1.jpg'); background-size:cover;">
+					<div id="major_subject_1" class="team text-center">
+						<div class="cover" style="background:url('${img}/team/java-cover.jpg'); background-size:cover;">
 							<div class="overlay text-center">
-								<h3 class="white">$69.00</h3>
+								<h3 class="white">Java </h3>
 								<h5 class="light light-white">1 - 5 sessions / month</h5>
 							</div>
 						</div>
-						<img src="${img}/default/lighthouse.jpg" alt="Team Image" class="avatar" style="width:120px;height:120px">
+						<img src="${img}/team/java.jpg" alt="Java Image" class="avatar" style="width: 120px" height="120px">
 						<div class="title">
 							<h4>JAVA</h4>
-							<h5 class="muted regular">server program language</h5>
+							<h5 class="muted regular">Server Program Language</h5>
 						</div>
-						<button data-toggle="modal" data-target="#modal1" class="btn btn-blue-fill">Sign Up Now</button>
+						<input type="hidden" name="major_subject_1" value="java"/>
+						<input type="button" data-toggle="modal" data-target="#modal1" class="btn btn-blue-fill" value="과목 정보"/>
 					</div>
 				</div>
 				<div class="col-md-4">
-					<div class="team text-center">
-						<div class="cover" style="background:url('${img}/team/team-cover2.jpg'); background-size:cover;">
+					<div id="major_subject_2" class="team text-center">
+						<div class="cover" style="background:url('${img}/team/javascript-cover.jpg'); background-size:cover;">
 							<div class="overlay text-center">
-								<h3 class="white">$69.00</h3>
+								<h3 class="white">Javascript</h3>
 								<h5 class="light light-white">1 - 5 sessions / month</h5>
 							</div>
 						</div>
-						<img src="${img}/default/lee.jpg" alt="Team Image" class="avatar" style="width:120px;height:120px">
+						<img src="${img}/team/javascript.jpg" alt="Javascript Image" class="avatar" style="width: 120px" height="120px">
 						<div class="title">
-							<h4>JAVASCRIPT</h4>
-							<h5 class="muted regular">UI program</h5>
+							<h4>Javascript</h4>
+							<h5 class="muted regular">UI Program Language</h5>
 						</div>
-						<a href="#" data-toggle="modal" data-target="#modal1" class="btn btn-blue-fill ripple">Sign Up Now</a>
+						<input type="hidden" name="major_subject_2"/>
+						<input type="button" data-toggle="modal" data-target="#modal1" class="btn btn-blue-fill" value="과목 정보"/>
 					</div>
 				</div>
 				<div class="col-md-4">
-					<div class="team text-center">
-						<div class="cover" style="background:url('${img}/team/team-cover3.jpg'); background-size:cover;">
+					<div id="major_subject_3" class="team text-center">
+						<div class="cover" style="background:url('${img}/team/sql-cover.jpg'); background-size:cover;">
 							<div class="overlay text-center">
-								<h3 class="white">$69.00</h3>
+								<h3 class="white">SQL</h3>
 								<h5 class="light light-white">1 - 5 sessions / month</h5>
 							</div>
 						</div>
-						<img src="${img}/default/tulips.jpg" alt="Team Image" class="avatar" style="width:120px;height:120px">
+						<img src="${img}/team/sql.jpg" alt="SQL Image" class="avatar" style="width: 120px" height="120px">
 						<div class="title">
 							<h4>SQL</h4>
-							<h5 class="muted regular">data management language</h5>
+							<h5 class="muted regular">Database Management Language</h5>
 						</div>
-						<a href="#" data-toggle="modal" data-target="#modal1" class="btn btn-blue-fill ripple">Sign Up Now</a>
+						<input type="hidden" name="major_subject_3"/>
+						<input type="button" data-toggle="modal" data-target="#modal1" class="btn btn-blue-fill" value="과목 정보"/>
 					</div>
 				</div>
 			</div>
@@ -119,3 +122,14 @@
 <script src="${js}/typewriter.js"></script>
 <script src="${js}/jquery.onepagenav.js"></script>
 <script src="${js}/main.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('#user_content #kaup').addClass('cursor').click(function(){controller.move("member", "kaup");});	
+	$('#user_content #rock_scissor_paper').addClass('cursor').click(function(){controller.move("member", "rock_scissor_paper");});	
+	$('#user_content #lotto').addClass('cursor').click(function(){controller.move("member", "lotto");});
+	var key = $('#user_content_subject #major_subject_1 input[type="hidden"]').val();
+	$('#user_content_subject #major_subject_1 input[type="button"]').click(function(){controller.moveWithKey('subject', 'detail', key);});
+	$('#user_content #major_subject_2').click(function(){});
+	$('#user_content #major_subject_3').click(function(){});
+});
+</script>

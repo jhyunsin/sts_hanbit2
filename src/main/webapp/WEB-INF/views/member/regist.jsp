@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 	<section id="member_regist">
-	<form  id="member_regist_form" action="${context}/member.do" method="post">  
+	<form  id="member_regist_form">  
   
   <div><label for="exampleInputEmail1">이름</label>
   <div><input type="text" class="form-control" id="username" placeholder="NAME"></div></div>

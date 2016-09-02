@@ -3,7 +3,7 @@
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
-      <img id="header_brand">
+      <a id="go_user_home"><img id="header_brand"></a>
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
@@ -18,18 +18,18 @@
       <ul class="nav navbar-nav">
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">내 계좌<span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">계좌 정보</a></li>
-            <li><a href="#">계좌 생성</a></li>
-            <li><a href="#">입 출금 </a></li>
-            <li><a href="#">계좌 해지 </a></li>
+          <ul id="account" class="dropdown-menu">
+            <li><a>계좌 정보</a></li>
+            <li><a>계좌 생성</a></li>
+            <li><a>입 출금 </a></li>
+            <li><a>계좌 해지 </a></li>
           </ul>
         </li>
          <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">내 성적<span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">성적 목록</a></li>
-            <li><a href="#">성적 조회</a></li>
+          <ul id="grade" class="dropdown-menu">
+            <li><a>최근성적보기</a></li>
+            <li><a>지난성적보기</a></li>
           </ul>
         </li>
       </ul>
@@ -47,7 +47,10 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#">비밀번호 변경</a></li>
+            <li><a id="a_mypage">마이페이지</a></li>
+            <li><a id="a_detail">내정보보기</a></li>
+            <li><a id="a_update">내 정보 수정</a></li>
+            <li><a id="a_delete">회원 탈퇴</a></li>
           </ul>
         </li>
       </ul>
@@ -57,10 +60,19 @@
 </nav>
 <script type="text/javascript">
 $(function(){
-	$('#user_header').css('height','50px');
-	$('.navbar-header').css('height','50px');
-	$('#logout').addClass('cursor').click(function() {
-		controller.move('member','login');
-	});
+ $('#go_user_home').click(function(){controller.move('member', 'content');});
+ $('#user_header').css('height','50px');
+ $('#user_header #a_mypage').click(function(){controller.move('member', 'content');});
+ $('#user_header #a_detail').click(function(){controller.move('member', 'detail');});
+ $('#user_header #a_update').click(function(){controller.move('member', 'update');});
+ $('#user_header #a_delete').click(function(){controller.move('member', 'delete');});
+ $('.navbar-header').css('height','50px');
+ $('#user_header #logout').click(function(){controller.home();});
+ $("#user_header #account li:eq(0) a").click(function(){alert('계좌목록클릭');controller.move('bank', 'detail');}); 
+ $("#user_header #account li:eq(1) a").click(function(){controller.move('bank', 'open');});
+ $("#user_header #account li:eq(2) a").click(function(){controller.move('bank', 'transaction');}); 
+ $("#user_header #account li:eq(3) a").click(function(){controller.move('bank', 'delete');}); 
+ $("#user_header #grade li:eq(0) a").click(function(){alert('성적목록클릭');controller.move('grade', 'detail');}); 
+ $("#user_header #grade li:eq(1) a").click(function(){controller.move('grade', 'find');}); 
 });
 </script>
