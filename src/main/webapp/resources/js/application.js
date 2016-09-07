@@ -33,7 +33,13 @@
 		$('#a_account').click(function() {controller.move('bank','main');});
 		$('#abc').click(function() {controller.move('global','school_info');});
 		$('#way').click(function() {controller.move('global','way');});
-		
+		$('#free_board_table .name').click(function(){alert('name');controller.moveWithKey('member','a_detail','lee');});
+		$('#free_board_table .regist').click(function(){alert('regist');controller.moveWithKey('grade','regist','lee');});
+		$('#free_board_table .update').click(function(){alert('regist');controller.moveWithKey('grade','update','lee');});
+		$('#go_public_home').click(function(){controller.home();});
+		$('#school_info').click(function(){controller.move('public','school_info');});
+		$('#contact').click(function(){controller.move('public','contact');});
+		$('#free_board').click(function(){controller.move('public','free_board');});
 		};
 		return{ 
 			init : init,
@@ -59,7 +65,9 @@
 			 	$('#admin_content #grade_mgmt').attr('src',app.img()+'/default/grademm.png').css('height','400px');
 			 	$('#admin_content #account_mgmt').attr('src',app.img()+'/default/bankmm.jpg').css('height','400px');
 			 	$('#admin_content h3').addClass('text_center')
-			 	
+			 
+				$('#admin_nav').css('height','50px');
+				
 		 	};
 		 var onCreate = function(){
 			 setContentView();
@@ -79,7 +87,13 @@
 			 $('#admin_nav #grade_mgmt #delete').click(function(){controller.move('grade','delete');});
 			 $('#admin_nav #grade_mgmt #count').click(function(){controller.move('grade','count');});
 			 $('#admin_nav #grade_mgmt #find').click(function(){controller.move('grade','find');});
-		 
+				
+				$('#grade_mgmt #regist').click(function(){alert('등록을 위해 회원리스트로 이동합니다');controller.move('member','list');});
+				$('#grade_mgmt #update').click(function(){alert('수정을 위해 회원리스트로 이동합니다');controller.move('member','list');});
+				$('#account_mgmt #list').click(function(){controller.move('bank','list');});
+				$('#account_mgmt #find').click(function(){controller.move('bank','find');});
+				$('#account_mgmt #count').click(function(){controller.move('bank','count');});
+			 
 		 };
 		 return {
 			 init : init,
@@ -107,6 +121,8 @@
 		var init = function(){onCreate();}; //생성자
 		var setContentView = function(){
 			$('#bank_content_img_home').attr('src',app.img()+'/home.png').css('width','30px');
+			 $('#user_header').css('height','50px');
+			 $('.navbar-header').css('height','50px');
 		}; // UI
 		var onCreate = function(){ // 이벤트 리스너
 			setContentView();  
@@ -122,6 +138,18 @@
 				$('#b_list').click(function(){controller.move('bank','list');});
 				$('#b_search').click(function(){controller.move('bank','search');});
 				$('#b_count').click(function(){controller.move('bank','count');});
+				 $('#user_header #logout').click(function(){controller.home();});
+				 $("#user_header #account li:eq(0) a").click(function(){alert('계좌목록클릭');controller.move('bank', 'detail');}); 
+				 $("#user_header #account li:eq(1) a").click(function(){controller.move('bank', 'open');});
+				 $("#user_header #account li:eq(2) a").click(function(){controller.move('bank', 'transaction');}); 
+				 $("#user_header #account li:eq(3) a").click(function(){controller.move('bank', 'delete');}); 
+				 $("#user_header #grade li:eq(0) a").click(function(){alert('성적목록클릭');controller.move('grade', 'detail');}); 
+				 $("#user_header #grade li:eq(1) a").click(function(){controller.move('grade', 'find');}); 
+				 $('#user_header #a_mypage').click(function(){controller.move('member', 'content');});
+				 $('#user_header #a_detail').click(function(){controller.move('member', 'detail');});
+				 $('#user_header #a_update').click(function(){controller.move('member', 'update');});
+				 $('#user_header #a_delete').click(function(){controller.move('member', 'delete');});
+				 $('#go_user_home').click(function(){controller.move('member', 'content');});
 //				
 //				$('#bank_content_a_home').click(function(){controller.home();});
 //				$('#bank_content').addClass('box').css('font-size' ,'20px');
@@ -163,6 +191,9 @@
 			$('#bt_make_account').click(this.spec());
 			$('#bt_deposit').click(this.deposit());
 			$('#bt_withdraw').click(this.withdraw());
+			$('#account_list_table .name').click(function(){alert('name');controller.moveWithKey('account','a_detail','lee');});
+			$('#account_list_table .regist').click(function(){alert('regist');controller.moveWithKey('account','regist','lee');});
+			$('#account_list_table .update').click(function(){alert('regist');controller.moveWithKey('account','update','lee');});
 		};
 		return { 
 			setAccountNo : setAccountNo,
@@ -252,7 +283,8 @@
 			$('#member_regist #ck_subject > label').addClass('checkbox-inline');
 			$('#member_find_form').attr('action',sessionStorage.getItem('context')+'/member/search');
 			$('#member_find_form input[type="hidden"]').attr('name','context').attr('value',app.context());
-			
+			$('#member_login_form').attr('method','post').attr('action',sessionStorage.getItem('context')+'/member/login');
+			$('#member_login_form input[type=hidden]').attr('value',app.context());
 		};
 		var onCreate = function(){
 			setContentView();	
@@ -266,6 +298,10 @@
 			$('#findBy').click(function(){controller.move('member','findBy');});
 			$('#count').click(function(){controller.move('member','count');});
 			$('#member_find_form input[type="submit"]').click(function(){$('#member_find_form').submit();});
+			$('#member_list_table .name').click(function(){alert('name');controller.moveWithKey('member','a_detail','lee');});
+			$('#member_list_table .regist').click(function(){alert('regist');controller.moveWithKey('grade','regist','lee');});
+			$('#member_list_table .update').click(function(){alert('regist');controller.moveWithKey('grade','update','lee');});
+			$('#member_login_form input[type=submit]').click(function() {$('#member_login_form').submit();});
 		};
 		
 		
@@ -398,24 +434,15 @@
 			$('#g_list').click(function(){controller.move('grade','list');});
 			$('#g_count').click(function(){controller.move('grade','count');});
 			$('#g_search').click(function(){controller.move('grade','search');});
-			$('#a_regist').click(function() {
-				location.href = "${context}/grade.do?page=regist";
-			});
-			$('#a_update').click(function() {
-				location.href = "${context}/grade.do?page=update";
-			});
-			$('#a_delete').click(function() {
-				location.href = "${context}/grade.do?page=delete";
-			});
-			$('#a_list').click(function() {
-				location.href = "${context}/grade.do?page=list";
-			});
-			$('#a_count').click(function() {
-				location.href = "${context}/grade.do?page=count";
-			});
-			$('#a_search').click(function() {
-				location.href = "${context}/grade.do?page=search";
-			});
+			$('#a_regist').click(function() {location.href = "${context}/grade.do?page=regist";});
+			$('#a_update').click(function() {location.href = "${context}/grade.do?page=update";});
+			$('#a_delete').click(function() {location.href = "${context}/grade.do?page=delete";});
+			$('#a_list').click(function() {location.href = "${context}/grade.do?page=list";});
+			$('#a_count').click(function() {location.href = "${context}/grade.do?page=count";});
+			$('#a_search').click(function() {location.href = "${context}/grade.do?page=search";});
+			$('#grade_list_table .name').click(function(){alert('name');controller.moveWithKey('member','a_detail','lee');});
+			$('#grade_list_table .regist').click(function(){alert('regist');controller.moveWithKey('grade','regist','lee');});
+			$('#grade_list_table .update').click(function(){alert('regist');controller.moveWithKey('grade','update','lee');});
 		};
 		
 		return {

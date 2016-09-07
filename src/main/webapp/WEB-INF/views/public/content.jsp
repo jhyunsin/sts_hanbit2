@@ -8,8 +8,3 @@
 	
 </section>
 </div>
-<script>
-$(function() {
-	$('#text').click(function(){controller.move('public','slider')});
-});
-</script>

@@ -58,21 +58,3 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-<script type="text/javascript">
-$(function(){
- $('#go_user_home').click(function(){controller.move('member', 'content');});
- $('#user_header').css('height','50px');
- $('#user_header #a_mypage').click(function(){controller.move('member', 'content');});
- $('#user_header #a_detail').click(function(){controller.move('member', 'detail');});
- $('#user_header #a_update').click(function(){controller.move('member', 'update');});
- $('#user_header #a_delete').click(function(){controller.move('member', 'delete');});
- $('.navbar-header').css('height','50px');
- $('#user_header #logout').click(function(){controller.home();});
- $("#user_header #account li:eq(0) a").click(function(){alert('계좌목록클릭');controller.move('bank', 'detail');}); 
- $("#user_header #account li:eq(1) a").click(function(){controller.move('bank', 'open');});
- $("#user_header #account li:eq(2) a").click(function(){controller.move('bank', 'transaction');}); 
- $("#user_header #account li:eq(3) a").click(function(){controller.move('bank', 'delete');}); 
- $("#user_header #grade li:eq(0) a").click(function(){alert('성적목록클릭');controller.move('grade', 'detail');}); 
- $("#user_header #grade li:eq(1) a").click(function(){controller.move('grade', 'find');}); 
-});
-</script>

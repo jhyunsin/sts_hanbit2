@@ -48,11 +48,4 @@
 		</div>
 	</section>
 </div>	
-<script type="text/javascript">
-$(function() {
-	$('#free_board_table .name').click(function(){alert('name');controller.moveWithKey('member','a_detail','lee');});
-	$('#free_board_table .regist').click(function(){alert('regist');controller.moveWithKey('grade','regist','lee');});
-	$('#free_board_table .update').click(function(){alert('regist');controller.moveWithKey('grade','update','lee');});
-});
 
-</script>

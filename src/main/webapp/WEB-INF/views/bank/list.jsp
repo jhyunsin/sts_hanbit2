@@ -50,11 +50,4 @@
 		</div>
 	</section>
 </div>	
-<script type="text/javascript">
-$(function() {
-	$('#account_list_table .name').click(function(){alert('name');controller.moveWithKey('account','a_detail','lee');});
-	$('#account_list_table .regist').click(function(){alert('regist');controller.moveWithKey('account','regist','lee');});
-	$('#account_list_table .update').click(function(){alert('regist');controller.moveWithKey('account','update','lee');});
-});
 
-</script>

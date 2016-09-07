@@ -14,9 +14,6 @@
 		<li><a id="b_count">통장수</a></li>
 	</ol>
 	</article>
-
 		<a id="bank_content_a_home">
 		<img id="bank_content_img_home" alt="home"/></a>
-	
-
 </section>

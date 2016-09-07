@@ -31,13 +31,3 @@
     </ul>
   </li>
 </ul>
-<script type="text/javascript">
-$(function(){
-	$('#grade_mgmt #regist').click(function(){alert('등록을 위해 회원리스트로 이동합니다');controller.move('member','list');});
-	$('#grade_mgmt #update').click(function(){alert('수정을 위해 회원리스트로 이동합니다');controller.move('member','list');});
-	$('#admin_nav').css('height','50px');
-	$('#account_mgmt #list').click(function(){controller.move('bank','list');});
-	$('#account_mgmt #find').click(function(){controller.move('bank','find');});
-	$('#account_mgmt #count').click(function(){controller.move('bank','count');});
-});
-</script>

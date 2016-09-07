@@ -27,7 +27,7 @@
   </div></nav>
   <script>
   $(function(){
-		$('#go_admin_home').click(function() {controller.move('admin','main');});
+	  $('#go_admin_home').click(function() {controller.move('admin','main');});
 		$('#admin_header').css('height','50px');
 		$('.navbar-header').css('height','50px');
 		$('#admin_header #exit').addClass('cursor');

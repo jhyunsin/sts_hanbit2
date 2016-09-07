@@ -62,11 +62,4 @@
 		</div>
 	</section>
 </div>	
-<script type="text/javascript">
-$(function() {
-	$('#member_list_table .name').click(function(){alert('name');controller.moveWithKey('member','a_detail','lee');});
-	$('#member_list_table .regist').click(function(){alert('regist');controller.moveWithKey('grade','regist','lee');});
-	$('#member_list_table .update').click(function(){alert('regist');controller.moveWithKey('grade','update','lee');});
-});
 
-</script>
