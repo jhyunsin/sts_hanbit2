@@ -30,7 +30,7 @@ public class MemberController {
 		System.out.println("옵션: "+option);
 		System.out.println("context : "+context);
 		System.out.println("== NAME == "+member.getName());
-		System.out.println("이미지:"+member.getprofileImg());
+		System.out.println("이미지:"+member.getProfileImg());
 		model.addAttribute("member",member);
 		model.addAttribute("img", context+ "/resources/img");
 		return "admin:member/detail.tiles";

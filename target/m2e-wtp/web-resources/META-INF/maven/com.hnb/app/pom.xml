@@ -38,6 +38,7 @@
 		<commons-io-version>2.4</commons-io-version>
 		<tiles-version>3.0.5</tiles-version>
 		<commons-el-version>1.0</commons-el-version>
+		<lombok-version>1.16.8</lombok-version>
 	</properties>
 	<dependencies>
 		<!-- Spring -->
@@ -303,6 +304,13 @@
 			<artifactId>commons-el</artifactId>
 			<version>${commons-el-version}</version>
 		</dependency>
+	<!-- lombok -->
+<dependency>
+    <groupId>org.projectlombok</groupId>
+    <artifactId>lombok</artifactId>
+    <version>${lombok-version}</version>
+</dependency>
+		
 	</dependencies>
 	<build>
 		<plugins>
