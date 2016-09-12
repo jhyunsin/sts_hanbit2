@@ -183,7 +183,7 @@ public class MemberDTO implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "학생 [이메일 : "+email+"아이디=" + id + ", 이름=" + name + "," + ssn + ", 비밀번호=****" + " 등록일=" + regDate + ", gender="
+		return "학생 [이메일 : "+email+"아이디=" + id + ", 이름=" + name + "," + ssn + ", 비밀번호="+ pw + " 등록일=" + regDate + ", gender="
 				+ gender + ", birth=" + birth + "]";
 	}
 

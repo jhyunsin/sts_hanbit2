@@ -38,6 +38,7 @@ public interface MemberService extends CommonService {
 	
 	public void logout(MemberDTO member);
 	
+	public MemberDTO login(MemberDTO member);
 }
 // String sqlCreate = "create table member("
 // + "id varchar2(20) primary key,"

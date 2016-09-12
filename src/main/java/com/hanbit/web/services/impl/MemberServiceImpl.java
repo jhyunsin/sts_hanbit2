@@ -3,6 +3,7 @@ package com.hanbit.web.services.impl;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +23,16 @@ import com.hanbit.web.services.MemberService;
 public class MemberServiceImpl implements MemberService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
+	@Autowired private SqlSession sqlSession;
 	@Autowired private MemberDTO member; /// getInstance 가 아닌 new 로 만드는 것들은 모드 Autowired 로 처리한다 이것이 문법이다
 	@Autowired private SubjectDTO sb;
 	@Qualifier private MemberMapper memberMapper;
 	
+	
 	@Override
 	public String regist(MemberDTO bean) {
 		// 1등록
+		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
 		String msg = "";
 		MemberDTO temp = this.findById(bean.getId());
 		if (temp==null) {
@@ -49,6 +53,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public MemberDTO show() {
 		// 2보기
+		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
 		memberMapper.count();
 		return member;
 	}
@@ -56,6 +61,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void update(MemberDTO mem) {
 		// 3수정
+		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
 		int result = 0;
 		if (result ==1) {
 			member = this.findById(mem.getId());
@@ -70,6 +76,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void delete(MemberDTO mem) {
 		// 4삭제
+		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
 		String result = "";
 	
 		
@@ -78,24 +85,27 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int count() {
 		// 컨트롤러에서 int count = service.count(); 만들고 서비스 / 임플 까지 타고 타고옴
+		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
 		return 0;//토스
 	}
 
 	@Override
 	public MemberDTO findById(String findID) {
-	
-		return null;
+		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
+		return memberMapper.findById(findID);
 	}
 
 	@Override
 	public List<MemberDTO> list() {
 		// TODO Auto-generated method stub
+		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
 		return null;
 	}
 
 	@Override
 	public List<MemberDTO> findByName(String findName) {
 		// TODO Auto-generated method stub
+		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
 		return null;
 	}
 		
@@ -104,12 +114,13 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int genderCount(String gender) {
 		// TODO Auto-generated method stub
+		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
 		return 0;
 	}
 
 	@Override
 	public void logout(MemberDTO member) {
-		
+		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
 		if (member.getId().equals(member.getId()) && 
 				member.getPw().equals(member.getPw())) {
 			member = null;
@@ -120,13 +131,29 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public List<?> findBy(String keyword) {
 		// TODO Auto-generated method stub
+		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
 		return null;
 	}
 
 	@Override
 	public Map<?, ?> map() {
 		// TODO Auto-generated method stub
+		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
 		return null;
+	}
+
+	@Override
+	public MemberDTO login(MemberDTO member) {
+		logger.info("MemberService login ID == {}",member.toString());
+		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
+		MemberDTO mem = mapper.findById(member.getId());
+			if (member.getPw().equals(mem.getPw())) {
+			logger.info("MemberService login IS","SUCCESS");
+			return mem;
+		}
+		mem.setId("NONE");
+		logger.info("MemberService login IS","FAIL");
+		return mem;
 	}
 	
 	}

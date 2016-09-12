@@ -8,15 +8,18 @@
  <select id="findById" parameterType="string" resultType="com.hanbit.web.domains.MemberDTO">
  <!-- select * from member where id=#{id} -->
  select 
- id as id,
+ mem_id as id,
  pw as pw,
  name as name,
+ gender as gender,
  reg_date as regDate,
  ssn as ssn,
  email as email,
  profile_img as profileImg,
- phone as phone
-  from member where id = #{id}
+ role as role, 
+ phone as phone,
+ major_seq as major_seq
+ from member where mem_id = #{id}
   </select>
  <select id="findByname" parameterType="string" resultType="com.hanbit.web.domains.MemberDTO">
  select * from member where name=#{name}</select>

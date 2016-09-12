@@ -47,13 +47,19 @@ public class MemberController {
 		MemberDTO member = new MemberDTO();
 		member.setId(id);
 		member.setPw(pw);
-		model.addAttribute("user",null);
-		model.addAttribute("context",context);
-		model.addAttribute("js", context+ "/resources/js");
-		model.addAttribute("css", context+ "/resources/css");
-		model.addAttribute("img", context+ "/resources/img");
-	
-		return "user:user/content.tiles";
+		member = service.login(member);
+		if (member.getId().equals("NONE")) {
+			logger.info("COntroller LOGIN","FAIL");
+			return "public:member/login.tiles";
+		}else{
+			logger.info("COntroller LOGIN","SUCCESS");
+			model.addAttribute("user",member);
+			model.addAttribute("context",context);
+			model.addAttribute("js", context+ "/resources/js");
+			model.addAttribute("css", context+ "/resources/css");
+			model.addAttribute("img", context+ "/resources/img");
+			return "user:user/content.tiles";
+		}
 	}
 	//---move----
 	@RequestMapping("/main")
