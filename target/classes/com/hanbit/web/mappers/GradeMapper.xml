@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hanbit.web.mappers.GradeMapper">
+ <select id="list" resultType="com.hanbit.web.domains.GradeDTO">
+ select * from grade</select>
+ <select id="findById" parameterType="string" resultType="com.hanbit.web.domains.GradeDTO">
+ select * from grade where id=#{id}</select>
+ <select id="findBySeq" parameterType="string" resultType="com.hanbit.web.domains.GradeDTO">
+ select * from grade where seq = #{seq}</select>
+ <select id="count" resultType="int" parameterType="string">
+ select count(*) as count from grade where exam_date = #{examDate}</select>
+<insert id="insert" parameterType="com.hanbit.web.domains.GradeDTO">
+insert into grade(seq,grade,java,sql,html,javascript,id,exam_date)values(seq.nextval,#{grade},#{java},#{sql},#{html},#{javascript},#{id},#{examDate})</insert>
+ <update id="update" parameterType="com.hanbit.web.domains.GradeDTO">
+  update grade set java = #{java}, sql = #{sql}, html = #{html}, javascript = #{javascript} where seq = #{seq}</update>
+<delete id="delete" parameterType="int">
+delete from grade where seq = #{seq}</delete>
+</mapper>
+
+
+
+
+

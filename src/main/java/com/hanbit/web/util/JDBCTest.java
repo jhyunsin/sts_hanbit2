@@ -23,7 +23,7 @@ public class JDBCTest { //연결을 확인하는 작업
 		Connection con = null;
 		Statement stmt = null;
 		ResultSet rs = null;
-		String sql = "select name,ssn from member where id = 'con'", result = "";// 안에 무슨 테이블이 있냐??
+		String sql = "select name,ssn from member where mem_id = 'lee'", result = "";// 안에 무슨 테이블이 있냐??
 		List<String> list = new ArrayList<String>();
 		try {
 			Class.forName(Constants.ORACLE_DRIVER);
