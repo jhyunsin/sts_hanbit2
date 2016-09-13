@@ -1,4 +1,5 @@
 select * from tab;
+select * from member;
 -- select sequence_owner, sequence_name from dba_sequences where sequence_owner = 'GKSQLC';
 drop sequence seq;
 --CREATE

@@ -24,7 +24,7 @@ public class MemberController {
 			@RequestParam("search_option")String option,
 			@RequestParam("context")String context,
 			Model model){
-		MemberDTO member =  service.findById(keyword);
+		MemberDTO member =  service.findById(keyword); 
 		logger.info("MemberController! findBy id : {}",member.getName());
 		System.out.println("검색어: "+keyword);
 		System.out.println("옵션: "+option);
@@ -47,6 +47,7 @@ public class MemberController {
 		MemberDTO member = new MemberDTO();
 		member.setId(id);
 		member.setPw(pw);
+		logger.info("DB에서 온 SSn {}",member.getSsn());
 		member = service.login(member);
 		if (member.getId().equals("NONE")) {
 			logger.info("COntroller LOGIN","FAIL");

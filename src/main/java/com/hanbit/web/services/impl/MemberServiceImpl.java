@@ -24,7 +24,7 @@ public class MemberServiceImpl implements MemberService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 	@Autowired private SqlSession sqlSession;
-	@Autowired private MemberDTO member; /// getInstance 가 아닌 new 로 만드는 것들은 모드 Autowired 로 처리한다 이것이 문법이다
+	@Qualifier private MemberDTO member; /// getInstance 가 아닌 new 로 만드는 것들은 모드 Autowired 로 처리한다 이것이 문법이다
 	@Autowired private SubjectDTO sb;
 	@Qualifier private MemberMapper memberMapper;
 	
@@ -147,7 +147,7 @@ public class MemberServiceImpl implements MemberService {
 		logger.info("MemberService login ID == {}",member.toString());
 		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
 		MemberDTO mem = mapper.findById(member.getId());
-			if (member.getPw().equals(mem.getPw())) {
+			if (mem.getPw().equals(member.getPw())) {
 			logger.info("MemberService login IS","SUCCESS");
 			return mem;
 		}

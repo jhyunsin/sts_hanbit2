@@ -18,7 +18,7 @@
  profile_img as profileImg,
  role as role, 
  phone as phone,
- major_seq as major_seq
+ major_seq as majorSeq
  from member where mem_id = #{id}
   </select>
  <select id="findByname" parameterType="string" resultType="com.hanbit.web.domains.MemberDTO">

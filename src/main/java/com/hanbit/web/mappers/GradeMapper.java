@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.hanbit.web.domains.GradeDTO;
-@Repository
 public interface GradeMapper {
 
 public int insert(GradeDTO bean);
