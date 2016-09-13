@@ -47,7 +47,6 @@ public class MemberController {
 		MemberDTO member = new MemberDTO();
 		member.setId(id);
 		member.setPw(pw);
-		logger.info("DB에서 온 SSn {}",member.getSsn());
 		member = service.login(member);
 		if (member.getId().equals("NONE")) {
 			logger.info("COntroller LOGIN","FAIL");

@@ -144,15 +144,15 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public MemberDTO login(MemberDTO member) {
-		logger.info("MemberService login ID == {}",member.toString());
 		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
 		MemberDTO mem = mapper.findById(member.getId());
 			if (mem.getPw().equals(member.getPw())) {
-			logger.info("MemberService login IS","SUCCESS");
+			logger.info("MemberService login IS : {}","SUCCESS");
+			logger.info("MemberService login ID == {}",mem.toString());
 			return mem;
 		}
 		mem.setId("NONE");
-		logger.info("MemberService login IS","FAIL");
+		logger.info("MemberService login IS : {}","FAIL");
 		return mem;
 	}
 	

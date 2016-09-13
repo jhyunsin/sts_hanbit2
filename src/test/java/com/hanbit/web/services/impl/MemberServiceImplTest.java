@@ -27,4 +27,9 @@ public class MemberServiceImplTest {
   System.out.println(member.getName());
   assertEquals(member.getName(), "제임스 고슬링");
  }
+@Test
+public void testFindbyId(){
+	 MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
+	 
+}
 }
