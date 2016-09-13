@@ -15,10 +15,14 @@ import lombok.Setter;
  */
 @Component
 @Data
-public class SubjectDTO{
+public class ExamDTO{
+	
+	
+	@Getter @Setter private int examSeq;
+	@Getter @Setter private int score;
 	@Getter @Setter private int subjSeq;
-	@Getter @Setter private String subjName;
 	@Getter @Setter private String id;
+	@Getter @Setter private String term;
 	
 
 }

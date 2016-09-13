@@ -72,24 +72,19 @@ CREATE TABLE Exam(
        CONSTRAINT member_exam_fk FOREIGN KEY (mem_id) REFERENCES Member(mem_id) ON DELETE CASCADE 
 ); 
 
-
-
-
-
-
 CREATE or replace VIEW Major_view 
 AS 
 SELECT 
- m.major_seq as major_seq,
- m.title AS major_title,
- u.mem_id AS mem_id,
+ m.major_seq as majorSeq,
+ m.title AS majorTitle,
+ u.mem_id AS id,
  u.pw AS pw,
  u.name AS name,
  u.gender AS gender,
- u.reg_date AS reg_date,
+ u.reg_date AS regDate,
  u.ssn AS ssn,
  u.email AS email,
- u.profile_img AS profime_img,
+ u.profile_img AS profileImg,
  u.role AS role,
  u.phone AS phone
 FROM Major m, Member u 
@@ -98,22 +93,23 @@ WHERE m.major_seq = u.major_seq;
 CREATE or replace VIEW Grade_view
 AS
 SELECT 
- u.mem_id AS mem_id,
+ u.mem_id AS id,
  u.pw AS pw,
  u.name AS name,
  u.gender AS gender,
- u.reg_date AS reg_date,
+ u.reg_date AS regDate,
  u.ssn AS ssn,
  u.email AS email,
- u.profile_img AS profime_img,
+ u.profile_img AS profileImg,
  u.role AS role,
+ u.birth AS birth,
  u.phone AS phone,
- g.grade_seq AS grade_seq,
+ g.grade_seq AS gradeSeq,
  g.grade AS grade,
  g.term AS term,
- s.subj_seq AS subj_seq,
- s.subj_name AS subj_name,
- x.exam_seq AS exam_seq,
+ s.subj_seq AS subjSeq,
+ s.subj_name AS subjName,
+ x.exam_seq AS examSeq,
  x.score AS score
 FROM Member u, Grade g, Subject s, Exam x 
 WHERE u.mem_id = g.mem_id AND u.mem_id = s.mem_id AND u.mem_id = x.mem_id;
@@ -121,20 +117,20 @@ WHERE u.mem_id = g.mem_id AND u.mem_id = s.mem_id AND u.mem_id = x.mem_id;
 CREATE or replace VIEW Board_view
 AS
 SELECT 
- u.mem_id AS mem_id,
+u.mem_id AS id,
  u.pw AS pw,
  u.name AS name,
  u.gender AS gender,
- u.reg_date AS reg_date,
+ u.reg_date AS regDate,
  u.ssn AS ssn,
  u.email AS email,
- u.profile_img AS profime_img,
+ u.profile_img AS profileImg,
  u.role AS role,
  u.phone AS phone,
  b.title AS title,
- b.art_seq AS art_seq,
+ b.art_seq AS artSeq,
  b.category AS category,
- b.reg_date AS write_date,
+ b.reg_date AS writeDate,
  b.content AS content
 FROM Member u, Board b  
 WHERE u.mem_id = b.mem_id;

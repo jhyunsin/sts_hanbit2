@@ -24,6 +24,10 @@ import lombok.Setter;
 @Data
 public class MemberDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
+	
+	
+	
+	
 	@Getter @Setter private String id;
 	@Getter @Setter private String name;
 	@Getter @Setter private String ssn;
@@ -33,6 +37,7 @@ public class MemberDTO implements Serializable {
 	@Getter @Setter private String profileImg;
 	@Getter @Setter private String email;
 	@Getter @Setter private String phone;
+	@Getter @Setter private String role;
 	@Getter @Setter private int birth;
 	
 	
