@@ -5,7 +5,7 @@
 <mapper namespace="com.hanbit.web.mappers.MemberMapper">
  <select id="list" resultType="com.hanbit.web.domains.MemberDTO">
  select * from member</select>
- <select id="findById" parameterType="string" resultType="com.hanbit.web.domains.MemberDTO">
+ <select id="findOne" parameterType="com.hanbit.web.domains.Command" resultType="com.hanbit.web.domains.MemberDTO">
  <!-- select * from member where id=#{id} -->
  select 
  mem_id as id,
@@ -19,7 +19,7 @@
  role as role, 
  phone as phone,
  major_seq as majorSeq
- from member where mem_id = #{id}
+ from member where ${option} = #{keyword}
   </select>
  <select id="findByname" parameterType="string" resultType="com.hanbit.web.domains.MemberDTO">
  select * from member where name=#{name}</select>

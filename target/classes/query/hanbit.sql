@@ -1,5 +1,10 @@
 select * from tab;
 select * from member;
+alter table member modify ssn varchar2(10) UNIQUE;
+alter table member modify phone varchar2(13) UNIQUE;
+alter table subject modify subj_name varchar2(20) UNIQUE;
+alter table board modify category varchar2(20) UNIQUE;
+
 -- select sequence_owner, sequence_name from dba_sequences where sequence_owner = 'GKSQLC';
 drop sequence seq;
 --CREATE
@@ -24,7 +29,7 @@ DROP TABLE exam cascade constraint;
 
 CREATE TABLE Major(
        major_seq INT CONSTRAINT major_pk PRIMARY KEY,
-       title VARCHAR2(20) NOT NULL
+       title VARCHAR2(20) NOT NULL UNIQUE
 );   
 CREATE TABLE Member(
   mem_id VARCHAR2(20) CONSTRAINT member_pk PRIMARY KEY,
@@ -32,11 +37,11 @@ CREATE TABLE Member(
   name VARCHAR2(20) NOT NULL,
   gender VARCHAR2(10) NOT NULL,
   reg_date VARCHAR2(20) NOT NULL,
-  ssn VARCHAR2(10) NOT NULL,
+  ssn VARCHAR2(10) NOT NULL UNIQUE,
   email VARCHAR2(30),
   profile_img VARCHAR2(100) DEFAULT 'default.jpg',
   role VARCHAR2(10) DEFAULT 'STUDENT',
-  phone VARCHAR2(13) NOT NULL,
+  phone VARCHAR2(13) NOT NULL UNIQUE,
   major_seq INT,
   CONSTRAINT gender_ck CHECK (gender IN ('MALE', 'FEMALE')),
   CONSTRAINT major_member_fk FOREIGN KEY (major_seq) REFERENCES Major(major_seq) ON DELETE CASCADE 
@@ -50,7 +55,7 @@ CREATE TABLE Grade(
 );
 CREATE TABLE Board(
        art_seq INT CONSTRAINT board_pk PRIMARY KEY,
-       category VARCHAR2(20) NOT NULL,
+       category VARCHAR2(20) NOT NULL UNIQUE,
        title VARCHAR2(30) DEFAULT 'NO TITLE',
        reg_date VARCHAR2(20) NOT NULL,
        content VARCHAR2(100) DEFAULT 'NO CONTENT',
@@ -59,7 +64,7 @@ CREATE TABLE Board(
 );  
 CREATE TABLE Subject(
        subj_seq INT CONSTRAINT subject_pk PRIMARY KEY,
-       subj_name VARCHAR2(20) NOT NULL,
+       subj_name VARCHAR2(20) NOT NULL UNIQUE,
        mem_id VARCHAR2(20) NOT NULL,
        CONSTRAINT member_subject_fk FOREIGN KEY (mem_id) REFERENCES Member(mem_id) ON DELETE CASCADE 
 );
@@ -235,7 +240,7 @@ UPDATE member SET email='hong@test.com' WHERE id = 'you';
 UPDATE member SET email= id||'@test.com';
 UPDATE member SET profile_img= id||'.jpg';
 UPDATE member SET reg_date = '2015-03-03' WHERE reg_date is null;
-UPDATE member SET reg_date = '2013-06-29' WHERE id = 'ogong';
+UPDATE member SET phone = '010-3333-3333' WHERE mem_id = 'hong';
 --delete
 DELETE FROM member WHERE id = 'qqq';
 

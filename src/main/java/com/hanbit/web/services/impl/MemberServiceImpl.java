@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.hanbit.web.controllers.AdminController;
+import com.hanbit.web.domains.Command;
 import com.hanbit.web.domains.MemberDTO;
 import com.hanbit.web.domains.SubjectDTO;
 import com.hanbit.web.mappers.MemberMapper;
@@ -34,7 +35,7 @@ public class MemberServiceImpl implements MemberService {
 		// 1등록
 		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
 		String msg = "";
-		MemberDTO temp = this.findById(bean.getId());
+		MemberDTO temp = this.findOne(null);
 		if (temp==null) {
 			System.out.println(bean.getId()+ "가 존재하지 않음,가입가능한 ID");
 			int result = 0;
@@ -64,7 +65,7 @@ public class MemberServiceImpl implements MemberService {
 		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
 		int result = 0;
 		if (result ==1) {
-			member = this.findById(mem.getId());
+			member = this.findOne(null);
 		System.out.println("업데이트결과 성공");
 		}else{
 			System.out.println("업데이트결과 실패");
@@ -90,9 +91,9 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public MemberDTO findById(String findID) {
+	public MemberDTO findOne(Command command) {
 		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
-		return memberMapper.findById(findID);
+		return mapper.findOne(command);
 	}
 
 	@Override
@@ -145,7 +146,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public MemberDTO login(MemberDTO member) {
 		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
-		MemberDTO mem = mapper.findById(member.getId());
+		MemberDTO mem = mapper.findOne(null);
 			if (mem.getPw().equals(member.getPw())) {
 			logger.info("MemberService login IS : {}","SUCCESS");
 			logger.info("MemberService login ID == {}",mem.toString());

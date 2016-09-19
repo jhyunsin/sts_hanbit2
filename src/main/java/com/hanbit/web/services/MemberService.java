@@ -5,6 +5,9 @@ package com.hanbit.web.services;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
+import com.hanbit.web.domains.Command;
 import com.hanbit.web.domains.MemberDTO;
 import com.hanbit.web.util.CommonService;
 
@@ -17,8 +20,10 @@ import com.hanbit.web.util.CommonService;
  * @file : StudentService.java
  * @story :
  */
+@Component
 public interface MemberService extends CommonService {
 	public String regist(MemberDTO bean);
+	public MemberDTO findOne(Command command);
 
 	public MemberDTO show();
 
@@ -28,7 +33,6 @@ public interface MemberService extends CommonService {
 
 	public int count();
 
-	public MemberDTO findById(String findId);
 
 	public List<MemberDTO> list();
 

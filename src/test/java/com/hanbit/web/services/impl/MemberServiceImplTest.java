@@ -23,7 +23,7 @@ public class MemberServiceImplTest {
  @Test
  public void login() {
   MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
-  member = mapper.findById("prof_james");
+  member = mapper.findOne(null);
   System.out.println(member.getName());
   assertEquals(member.getName(), "제임스 고슬링");
  }

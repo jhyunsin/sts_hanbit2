@@ -5,11 +5,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.hanbit.web.domains.Command;
 import com.hanbit.web.domains.MemberDTO;
 import com.hanbit.web.services.impl.MemberServiceImpl;
 
@@ -19,20 +21,23 @@ import com.hanbit.web.services.impl.MemberServiceImpl;
 public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	@Autowired MemberServiceImpl service;
-	@RequestMapping("/search")
-	public String find(@RequestParam("keyword") String keyword,
-			@RequestParam("search_option")String option,
-			@RequestParam("context")String context,
+	@Autowired Command command;
+	@RequestMapping("/search/{option}/{keyword}")
+	public MemberDTO find(@PathVariable("option") String option,
+			@PathVariable("keyword")String keyword,
 			Model model){
-		MemberDTO member =  service.findById(keyword); 
-		logger.info("MemberController! findBy id : {}",member.getName());
-		System.out.println("검색어: "+keyword);
-		System.out.println("옵션: "+option);
-		System.out.println("context : "+context);
-		System.out.println("== NAME == "+member.getName());
-		System.out.println("이미지:"+member.getProfileImg());
-		model.addAttribute("member",member);
-		model.addAttribute("img", context+ "/resources/img");
+		logger.info("TO SEARCH KEYWORD IS {} : "+keyword);
+		logger.info("TO SEARCH OPTION IS {} : "+option);
+		command.setKeyword(keyword);
+		command.setOption(option);
+		return service.findOne(command);
+	}
+	@RequestMapping(value="/count/{condition}",method=RequestMethod.GET,
+			consumes="application/json")
+	public String count(@PathVariable String condition,Model model){
+		logger.info("TO COUNT CONDITION IS : {}",condition);
+		int count = service.count(); 
+		model.addAttribute("count",count);
 		return "admin:member/detail.tiles";
 	}
 	@RequestMapping(value="/login", method=RequestMethod.POST)
