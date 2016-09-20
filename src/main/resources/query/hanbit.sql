@@ -26,11 +26,12 @@ DROP TABLE Grade cascade constraint;
 DROP TABLE Board cascade constraint;
 DROP TABLE subject cascade constraint;
 DROP TABLE exam cascade constraint;
-
+--- 테이블 생성순서 1
 CREATE TABLE Major(
        major_seq INT CONSTRAINT major_pk PRIMARY KEY,
        title VARCHAR2(20) NOT NULL UNIQUE
 );   
+--- 테이블 생성순서 2
 CREATE TABLE Member(
   mem_id VARCHAR2(20) CONSTRAINT member_pk PRIMARY KEY,
   pw VARCHAR2(20) NOT NULL,
@@ -44,8 +45,9 @@ CREATE TABLE Member(
   phone VARCHAR2(13) NOT NULL UNIQUE,
   major_seq INT,
   CONSTRAINT gender_ck CHECK (gender IN ('MALE', 'FEMALE')),
-  CONSTRAINT major_member_fk FOREIGN KEY (major_seq) REFERENCES Major(major_seq) ON DELETE CASCADE 
-          );
+  CONSTRAINT major_member_fk FOREIGN KEY (major_seq) REFERENCES Major(major_seq) ON DELETE CASCADE
+  );
+  --- 테이블 생성순서 3        
 CREATE TABLE Grade(
         grade_seq INT CONSTRAINT grade_pk PRIMARY KEY,
         grade VARCHAR2(5) NOT NULL,

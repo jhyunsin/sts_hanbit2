@@ -1,19 +1,5 @@
-Skip to content
-This repository
-Search
-Pull requests
-Issues
-Gist
- @jhyunsin
- Watch 1
-  Star 0
-  Fork 4 pakjkwan/sts_160822
- Code  Issues 0  Pull requests 0  Projects 0  Wiki  Pulse  Graphs
-Branch: restful Find file Copy pathsts_160822/src/main/resources/query/hanbit.sql
-fd37582  4 minutes ago
-@hanbitweekend hanbitweekend sp reload
-1 contributor
-RawBlameHistory     522 lines (511 sloc)  15.8 KB
+-- 메타
+select object_name from user_procedures order by object_name asc;
 -- CREATE
 DROP SEQUENCE seq;
 DROP SEQUENCE art_seq;
@@ -85,6 +71,8 @@ CREATE TABLE Exam(
 	CONSTRAINT subject_exam_fk FOREIGN KEY (subj_seq) REFERENCES Subject(subj_seq) ON DELETE CASCADE,
 	CONSTRAINT member_exam_fk FOREIGN KEY (mem_id) REFERENCES Member(mem_id) ON DELETE CASCADE
 );
+
+-- VIEW
 CREATE OR REPLACE VIEW Major_view
 AS
 SELECT 
@@ -161,19 +149,19 @@ DROP PROCEDURE HANBIT.SELECT_MAJOR;
 @DESC : 전공
 ==============================
 */
--- DEF_INSERT_MAJOR
+-- SP_INSERT_MAJOR
 CREATE OR REPLACE PROCEDURE insert_major(sp_title IN Major.title%TYPE) AS
 BEGIN
 	INSERT INTO Major(major_seq,title) VALUES(major_seq.nextval,sp_title);
 END insert_major;
 -- EXE_INSERT_MAJOR
 EXEC HANBIT.INSERT_MAJOR('컴퓨터공학');
--- DEF_COUNT_MAJOR
+-- SP_COUNT_MAJOR
 CREATE OR REPLACE PROCEDURE count_major(sp_count OUT NUMBER) AS 
 BEGIN SELECT COUNT(*) into sp_count FROM Major;END count_major;
 -- EXE_COUNT_MAJOR
 DECLARE sp_count NUMBER;BEGIN count_major(sp_count);DBMS_OUTPUT.put_line ('전공 수량 : '||sp_count);END;
--- DEF_FIND_BY_MAJOR_SEQ
+-- SP_FIND_BY_MAJOR_SEQ
 CREATE OR REPLACE PROCEDURE find_by_major_seq(
 	sp_major_seq IN OUT Major.major_seq%TYPE,
 	sp_title OUT Major.title%TYPE,
@@ -202,7 +190,7 @@ BEGIN
  find_by_major_seq(sp_major_seq,sp_title,sp_result);
   DBMS_OUTPUT.put_line (sp_result);
  END;
--- DEF_ALL_MAJOR(CURSOR VERSION)
+-- SP_ALL_MAJOR(CURSOR VERSION)
 CREATE OR REPLACE PROCEDURE HANBIT.all_major(
     major_cur OUT SYS_REFCURSOR
 ) IS
@@ -224,7 +212,7 @@ BEGIN
   END LOOP;
   CLOSE sp_cursor;
 END;
--- DEF_ALL_MAJOR(CLOB VERSION)
+-- SP_ALL_MAJOR(CLOB VERSION)
 CREATE OR REPLACE PROCEDURE HANBIT.all_major(
     sp_result OUT CLOB
 ) AS
@@ -254,14 +242,14 @@ BEGIN
 END all_major;
 -- EXE_ALL_MAJOR(CLOB VERSION)
 DECLARE sp_result CLOB; BEGIN all_major(sp_result);DBMS_OUTPUT.PUT_LINE(sp_result);END; 
--- DEF_UPDATE_MAJOR
+-- SP_UPDATE_MAJOR
 CREATE OR REPLACE PROCEDURE update_major(
   sp_major_seq IN Major.major_seq%TYPE,
   sp_title IN Major.title%TYPE
 )AS BEGIN UPDATE Major SET title = sp_title WHERE major_seq = sp_major_seq;END update_major;
 -- EXE_UPDATE_MAJOR
 BEGIN update_major(1002,'경영학부');END;
--- DEF_DELETE_MAJOR
+-- SP_DELETE_MAJOR
 CREATE OR REPLACE PROCEDURE delete_major(sp_major_seq IN Major.major_seq%TYPE)AS 
 BEGIN DELETE FROM Major WHERE major_seq = sp_major_seq; END;
 -- EXE_DELETE_MAJOR
@@ -274,7 +262,7 @@ BEGIN delete_major(1006); END;
 @DESC : 교수
 ==============================
 */
--- DEF_INSERT_PROF
+-- SP_INSERT_PROF
 CREATE OR REPLACE PROCEDURE insert_prof(
 	sp_mem_id IN Member.mem_id%TYPE,
 	sp_pw IN Member.pw%TYPE,
@@ -293,19 +281,19 @@ BEGIN
 END insert_prof;
 -- EXE_INSERT_PROF
 EXEC HANBIT.INSERT_PROF('prof_x','1','찰스','MALE','2010-06-01','700101-1','prof_x@test.com','default.jpg','PROF','010-1234-5678');
--- DEF_COUNT_PROF
+-- SP_COUNT_PROF
 CREATE OR REPLACE PROCEDURE count_prof(sp_count OUT NUMBER) AS 
 BEGIN SELECT COUNT(*) into sp_count FROM Member WHERE role='PROF';END count_prof;
 -- EXE_COUNT_PROF
 DECLARE sp_count NUMBER;BEGIN count_prof(sp_count);DBMS_OUTPUT.put_line ('교수 인원 : '||sp_count||' 명');END;
--- DEF_EXIST_MEMBER_ID
+-- SP_EXIST_MEMBER_ID
 CREATE OR REPLACE PROCEDURE exist_member_id(
     sp_mem_id IN Member.mem_id%TYPE,
     sp_count OUT NUMBER
 )AS BEGIN SELECT COUNT(*) INTO sp_count FROM Member WHERE mem_id = sp_mem_id;END exist_member_id;
 -- EXE_EXIST_MEMBER_ID
 DECLARE sp_mem_id VARCHAR2(30) := 'hong';sp_count NUMBER;BEGIN exist_member_id(sp_mem_id,sp_count);DBMS_OUTPUT.put_line ('조회결과는  : '||sp_count||' 명');END;
--- DEF_FIND_BY_PROF_ID
+-- SP_FIND_BY_PROF_ID
 CREATE OR REPLACE PROCEDURE find_by_prof_id(
 	sp_prof_id IN Member.mem_id%TYPE,
 	sp_prof OUT Member%ROWTYPE
@@ -319,7 +307,7 @@ BEGIN
  find_by_prof_id(sp_prof_id,sp_prof);
   DBMS_OUTPUT.put_line (sp_prof.name);
  END;
- -- DEF_ALL_PROF(CURSOR VERSION)
+ -- SP_ALL_PROF(CURSOR VERSION)
 CREATE OR REPLACE PROCEDURE HANBIT.all_prof(
     prof_cur OUT SYS_REFCURSOR
 ) IS
@@ -340,7 +328,7 @@ BEGIN
   END LOOP;
   CLOSE sp_cursor;
 END;
--- DEF_UPDATE_PROF
+-- SP_UPDATE_PROF
 CREATE OR REPLACE PROCEDURE update_prof(
   sp_prof_id IN Member.mem_id%TYPE,
   sp_pw IN Member.pw%TYPE,
@@ -350,7 +338,7 @@ CREATE OR REPLACE PROCEDURE update_prof(
 , phone = sp_phone WHERE mem_id = sp_prof_id;END update_prof;
 -- EXE_UPDATE_PROF
 BEGIN update_prof('profx','1','change@test.com','101-9999-9999');END;
--- DEF_DELETE_PROF
+-- SP_DELETE_PROF
 CREATE OR REPLACE PROCEDURE delete_prof(sp_prof_id IN Member.mem_id%TYPE)AS 
 BEGIN DELETE FROM Member WHERE mem_id = sp_prof_id; END;
 -- EXE_DELETE_PROF
@@ -363,7 +351,7 @@ BEGIN delete_prof('profx'); END;
 @DESC : 학생
 ==============================
 */
--- DEF_INSERT_STUDENT
+-- SP_INSERT_STUDENT
 CREATE OR REPLACE PROCEDURE insert_student(
 	sp_mem_id IN Member.mem_id%TYPE,
 	sp_pw IN Member.pw%TYPE,
@@ -383,12 +371,12 @@ BEGIN
 END insert_student;
 -- EXE_INSERT_STUDENT
 EXEC HANBIT.INSERT_STUDENT('hong','1','홍길동','MALE','2016-06-01','800101-1','hong@test.com','default.jpg','STUDENT','010-1234-5678','1001');
--- DEF_COUNT_STUDENT
+-- SP_COUNT_STUDENT
 CREATE OR REPLACE PROCEDURE count_student(sp_count OUT NUMBER) AS 
 BEGIN SELECT COUNT(*) into sp_count FROM Member WHERE role='STUDENT'; commit; END count_student;
 -- EXE_COUNT_STUDENT
 DECLARE sp_count NUMBER;BEGIN count_student(sp_count);DBMS_OUTPUT.put_line ('학생 인원 : '||sp_count||' 명');END;
--- DEF_FIND_BY_STUDENT_ID
+-- SP_FIND_BY_STUDENT_ID
 CREATE OR REPLACE PROCEDURE find_by_student_id(
 	sp_student_id IN Member.mem_id%TYPE,
 	sp_student OUT Member%ROWTYPE
@@ -402,7 +390,7 @@ BEGIN
  find_by_student_id(sp_student_id,sp_student);
   DBMS_OUTPUT.put_line (sp_student.name);
  END;
- -- DEF_ALL_STUDENT(CURSOR VERSION)
+ -- SP_ALL_STUDENT(CURSOR VERSION)
 CREATE OR REPLACE PROCEDURE HANBIT.all_student(
     student_cur OUT SYS_REFCURSOR
 ) IS
@@ -424,7 +412,7 @@ BEGIN
   END LOOP;
   CLOSE sp_cursor;
 END;
--- DEF_UPDATE_STUDENT
+-- SP_UPDATE_STUDENT
 CREATE OR REPLACE PROCEDURE update_student(
   sp_student_id IN Member.mem_id%TYPE,
   sp_pw IN Member.pw%TYPE,
@@ -433,7 +421,7 @@ CREATE OR REPLACE PROCEDURE update_student(
 )AS BEGIN UPDATE Member SET pw = sp_pw , email = sp_email , phone = sp_phone WHERE mem_id = sp_student_id;END update_student;
 -- EXE_UPDATE_STUDENT
 BEGIN update_student('profx','1','change@test.com','101-9999-9999');END;
--- DEF_DELETE_STUDENT
+-- SP_DELETE_STUDENT
 CREATE OR REPLACE PROCEDURE delete_student(sp_student_id IN Member.mem_id%TYPE)AS BEGIN DELETE FROM Member WHERE mem_id = sp_student_id; END;
 -- EXE_DELETE_STUDENT
 BEGIN delete_prof('profx'); END;
@@ -445,7 +433,7 @@ BEGIN delete_prof('profx'); END;
 @DESC : 과목
 =============================
 */
--- DEF_INSERT_SUBJECT
+-- SP_INSERT_SUBJECT
 CREATE OR REPLACE PROCEDURE insert_subject(
 	sp_subj_name IN Subject.subj_name%TYPE,
 	sp_mem_id IN Subject.mem_id%TYPE
@@ -464,7 +452,7 @@ EXEC HANBIT.INSERT_SUBJECT('java','profx');
 @DESC : 시험
 ============================
 */
--- DEF_INSERT_EXAM
+-- SP_INSERT_EXAM
 CREATE OR REPLACE PROCEDURE insert_exam(
 	sp_exam_seq IN Exam.exam_seq%TYPE,
 	sp_term IN Exam.term%TYPE,
@@ -484,7 +472,7 @@ END insert_exam;
 @DESC : 성적
 ============================
 */
--- DEF_INSERT_GRADE
+-- SP_INSERT_GRADE
 CREATE OR REPLACE PROCEDURE insert_grade(
 	sp_grade_seq IN Grade.grade_seq%TYPE,
 	sp_grade IN Grade.grade%TYPE,
@@ -503,7 +491,7 @@ END insert_grade;
 @DESC : QNA
 =============================
 */
--- DEF_INSERT_QNA	
+-- SP_INSERT_QNA	
 CREATE OR REPLACE PROCEDURE insert_qna(
 	sp_art_seq IN Board.art_seq%TYPE,
 	sp_category IN Board.category%TYPE,
@@ -524,7 +512,7 @@ END insert_qna;
 @DESC : 공지사항
 =============================
 */
--- DEF_INSERT_NOTICE
+-- SP_INSERT_NOTICE
 CREATE OR REPLACE PROCEDURE insert_notice(
 	sp_art_seq IN Board.art_seq%TYPE,
 	sp_category IN Board.category%TYPE,
@@ -538,5 +526,3 @@ BEGIN
 END insert_notice;
 Contact GitHub API Training Shop Blog About
 © 2016 GitHub, Inc. Terms Privacy Security Status Help
-------------
-select object_name from user_procedures order by object_name asc;

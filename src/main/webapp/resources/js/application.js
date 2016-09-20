@@ -1,5 +1,6 @@
 // var application = (function(){})(); iife 패턴
-	var app = (function(){
+
+var app = (function(){
 		var init = function(context) {
 		session.init(context);
 		onCreate();
@@ -8,7 +9,6 @@
 		user.init();
 		admin.init();
 		account.init();
-		kaup.init();
 		grade.init();
 		};
 		var context = function() {return session.getContextPath();}
@@ -20,10 +20,9 @@
 			$('#footer').addClass('bottom').addClass('footer');
 			$('#global_content').addClass('box');
 			$('#global_content a').addClass('cursor');
-			$('#global_content_regist').text('SIGN UP').click(function(){controller.move('member','regist');});
-			$('#global_content_login').text('LOG IN').click(function(){controller.move('member','login');});
+			$('#global_content_regist').text('SIGN UP').click(function(){member.pub_regist();});
+			$('#global_content_login').text('LOG IN').click(function(){member.pub_login_form();}); ///
 			$('#global_content_admin').text('ADMIN MODE').click(function(){admin.check();});
-			
 		};
 		var onCreate = function() {
 			setContentView();
@@ -117,12 +116,16 @@
 		     }
 		 };
 		})();
-		var user = (function(){
+
+	var user = (function(){
+		 var key = $('#user_content_subject #major_subject_1 input[type="hidden"]').val();
 		var init = function(){onCreate();}; //생성자
 		var setContentView = function(){
 			$('#bank_content_img_home').attr('src',app.img()+'/home.png').css('width','30px');
 			 $('#user_header').css('height','50px');
 			 $('.navbar-header').css('height','50px');
+			 $('#user_content #rock_scissor_paper').addClass('cursor').click(function(){controller.move("member", "rock_scissor_paper");});	
+				$('#user_content #lotto').addClass('cursor').click(function(){controller.move("member", "lotto");});
 		}; // UI
 		var onCreate = function(){ // 이벤트 리스너
 			setContentView();  
@@ -150,23 +153,10 @@
 				 $('#user_header #a_update').click(function(){controller.move('member', 'update');});
 				 $('#user_header #a_delete').click(function(){controller.move('member', 'delete');});
 				 $('#go_user_home').click(function(){controller.move('member', 'content');});
-//				
-//				$('#bank_content_a_home').click(function(){controller.home();});
-//				$('#bank_content').addClass('box').css('font-size' ,'20px');
-//				$('#bank_content > article').css('width','300px')
-//				.addClass('center').addClass('text_left');
-//				$('#bank_content > article').css('font-size' ,'17px').addClass('cursor');
-//				
-//				$('#bank_content > h1').text('BANK MGMT');
-//				$('#bank_content_ol > li > a').addClass('remove_underline');
-//				$('#bank_content_ol > li:first > a').text('개설');
-//				$('#bank_content_ol > li:nth(1) > a').text('입금');
-//				$('#bank_content_ol > li:nth(2) > a').text('출금');
-//				$('#bank_content_ol > li:nth(3) > a').text('비번수정');
-//				$('#bank_content_ol > li:nth(4) > a').text('해지');
-//				$('#bank_content_ol > li:nth(5) > a').text('목록');
-//				$('#bank_content_ol > li:nth(6) > a').text('조회(이름)');
-//				$('#bank_content_ol > li:nth(7) > a').text('통장수');
+				 $('#user_content #kaup').addClass('cursor').click(function(){controller.move("member", "kaup");});	
+					$('#user_content_subject #major_subject_1 input[type="button"]').click(function(){controller.moveWithKey('subject', 'detail', key);});
+					$('#user_content #major_subject_2').click(function(){});
+					$('#user_content #major_subject_3').click(function(){});
 		
 		}; 
 		return{
@@ -237,7 +227,6 @@
 				}
 		};
 	})();
-
 
 	var member = (function(){
 		var _ssn,_name,_gender,_age;
@@ -350,55 +339,192 @@
 				document.querySelector('#result_age').innerHTML=getAge();
 				document.querySelector('#result_gender').innerHTML=getGender();
 				// 인스턴스 변수 선언하고 게터 세터 하고 끌고 오는 방식하고 똑같다
+			},
+			pub_login_form : function(){
+				var view = ' <div class="box">'
+					 +' <form id="member_login_form" class="form-signin">'
+					 +'<h2 class="form-signin-heading">Please sign in</h2>'
+					 +' <label for="inputEmail" class="sr-only">USER ID</label>'
+					 +' <input id="id" type="text" name="id" class="form-control" placeholder="User ID" required autofocus>'
+					 +'<label for="inputPassword" class="sr-only">Password</label>'
+					 +'   <input id="pw" type="password" name="pw" id="inputPassword" class="form-control" placeholder="Password" required>'
+					 +' <input type="hidden" name="context">'
+					 +'  <div class="checkbox">'
+					 +' <label><input type="checkbox" name="remember_me" value="remember-me"> Remember me</label>'
+					 +'</div> <input id="login_btn" class="btn btn-lg btn-primary btn-block" type="submit" value="Sign in"/> </form></div>';
+				$('#pub_article').html(view);
+				$('#login_btn').click(function(e){
+					e.preventDefault();
+					$.ajax({
+						url : app.context()+'/member/login',
+						type : 'POST',
+						data : {'id':$('#id').val(),'pw':$('#pw').val()},
+						dataType : 'json',
+						success : function(data){
+							if (data.id==='NONE') {
+								alert('잘못된 정보입니다');	
+							} else {
+								alert('사랑합니다 '+data.name+'님');
+							var view = '<section id="user_content_service" class="box section-padded">'
+						+'<div>'
+						+'<div class="row text-center title">'
+						+'<h2>Services</h2>'
+						+'<h4 class="light muted">Achieve the best results with our wide variety of training options!</h4>'
+						+'</div>'
+						+'<div class="row services">'
+						+'<div class="col-md-4">'
+						+'<div id="kaup" class="service">'
+						+'<div class="icon-holder">'
+						+'<img src="'+app.img()+'/icons/guru-blue.png" alt="" class="icon">'
+						+'</div>'
+						+'<h4 class="heading">KAUP INDEX</h4>'
+						+'<p class="description">A elementum ligula lacus ac quam ultrices a scelerisque praesent vel suspendisse scelerisque a aenean hac montes.</p>'
+						+'</div>'
+						+'</div>'
+						+'<div class="col-md-4">'
+						+'<div id="rock_scissor_paper" class="service">'
+						+'<div class="icon-holder">'
+						+'<img src="'+app.img()+'/icons/heart-blue.png" alt="" class="icon">'
+						+'</div>'
+						+'<h4 class="heading">ROCK SCISSOR PAPER</h4>'
+						+'<p class="description">A elementum ligula lacus ac quam ultrices a scelerisque praesent vel suspendisse scelerisque a aenean hac montes.</p>'
+						+'</div>'
+						+'</div>'
+						+'<div class="col-md-4">'
+						+'<div id="lotto" class="service">'
+						+'<div class="icon-holder">'
+						+'<img src="'+app.img()+'/icons/weight-blue.png" alt="" class="icon">'
+						+'</div>'
+						+'<h4 class="heading">LOTTO DRAWING</h4>'
+						+'<p class="description">A elementum ligula lacus ac quam ultrices a scelerisque praesent vel suspendisse scelerisque a aenean hac montes.</p>'
+						+'</div>'
+						+'</div>'
+						+'</div>'
+						+'</div>'
+						+'<div class="cut cut-bottom"></div>'
+						+'</section>'
+						+'<section id="user_content_subject" class="section gray-bg">'
+						+'<div class="container">'
+						+'<div class="row title text-center">'
+						+'<h2 class="margin-top">Major Subject</h2>'
+						+'<h4 class="light muted">TOP 3</h4>'
+						+'</div>'
+						+'<div class="row">'
+						+'<div class="col-md-4">'
+						+'<div id="major_subject_1" class="team text-center">'
+						+'<div class="cover" style="background:url('+app.img()+'/team/java-cover.jpg); background-size:cover;">'
+						+'<div class="overlay text-center">'
+						+'<h3 class="white">Java </h3>'
+						+'<h5 class="light light-white">1 - 5 sessions / month</h5>'
+						+'</div>'
+						+'</div>'
+						+'<img src="'+app.img()+'/team/java.jpg" alt="Java Image" class="avatar" style="width: 120px" height="120px">'
+						+'<div class="title">'
+						+'<h4>JAVA</h4>'
+						+'<h5 class="muted regular">Server Program Language</h5>'
+						+'</div>'
+						+'<input type="hidden" name="major_subject_1" value="java"/>'
+						+'<input type="button" data-toggle="modal" data-target="#modal1" class="btn btn-blue-fill" value="과목 정보"/>'
+						+'</div>'
+						+'</div>'
+						+'<div class="col-md-4">'
+						+'<div id="major_subject_2" class="team text-center">'
+						+'<div class="cover" style="background:url('+app.img()+'/team/javascript-cover.jpg); background-size:cover;">'
+						+'<div class="overlay text-center">'
+						+'<h3 class="white">Javascript</h3>'
+						+'<h5 class="light light-white">1 - 5 sessions / month</h5>'
+						+'</div>'
+						+'</div>'
+						+'<img src="'+app.img()+'/team/javascript.jpg" alt="Javascript Image" class="avatar" style="width: 120px" height="120px">'
+						+'<div class="title">'
+						+'<h4>Javascript</h4>'
+						+'<h5 class="muted regular">UI Program Language</h5>'
+						+'</div>'
+						+'<input type="hidden" name="major_subject_2"/>'
+						+'<input type="button" data-toggle="modal" data-target="#modal1" class="btn btn-blue-fill" value="과목 정보"/>'
+						+'</div>'
+						+'</div>'
+						+'<div class="col-md-4">'
+						+'<div id="major_subject_3" class="team text-center">'
+						+'<div class="cover" style="background:url('+app.img()+'/team/sql-cover.jpg); background-size:cover;">'
+						+'<div class="overlay text-center">'
+						+'<h3 class="white">SQL</h3>'
+						+'<h5 class="light light-white">1 - 5 sessions / month</h5>'
+						+'</div>'
+						+'</div>'
+						+'<img src="'+app.img()+'/team/sql.jpg" alt="SQL Image" class="avatar" style="width: 120px" height="120px">'
+						+'<div class="title">'
+						+'<h4>SQL</h4>'
+						+'<h5 class="muted regular">Database Management Language</h5>'
+						+'</div>'
+						+'<input type="hidden" name="major_subject_3"/>'
+						+'<input type="button" data-toggle="modal" data-target="#modal1" class="btn btn-blue-fill" value="과목 정보"/>'
+						+'</div>'
+						+'</div>'
+						+'</div>'
+						+'</div>'
+						+'</section>';
+							//$('#pub_header').html(view);
+							$('#pub_article').html(view);
+							}
+						},
+						error : function(xhr,status,msg){
+							alert('로그인실패이유'+msg);
+						}
+					});
+				});
+			},
+			pub_regist : function() {
+				var view = '<section id="member_regist">'
+			  +'<form  id="member_regist_form">'
+	  		  +'<div><label for="exampleInputEmail1">이름</label>'
+			  +'<div><input type="text" class="form-control" id="username" placeholder="NAME"></div></div>'
+			  +'<div ><label for="exampleInputEmail1">ID</label>'
+			  +'<div><input type="text" id="id" placeholder="ID"></div></div>'
+			  +'<div><label for="exampleInputEmail1">비밀번호</label>'
+			  +'<div><input type="password" id="password" placeholder="PASSWORD"></div></div>'
+			  +'<div><label for="exampleInputEmail1">SSN</label>'
+			  +'<div><input type="text" id="ssn" placeholder="ex)800101-2"></div></div>'
+			  +'<div><label for="exampleInputEmail1">EMAIL</label>'
+			  +'<div><input type="text" id="email" placeholder="EMAIL"></div></div>'
+			  +'<div ><label for="exampleInputEmail1">PHONE</label>'
+			  +'<div><input type="text" id="phone" placeholder="PHONE"></div></div>'
+			  +'<div id="rd_major">'
+			  +'<label for="exampleInputEmail1">전공</label><br />' 
+			  +'<div>'
+			  +'<label> <input type="radio" name="major" value="computer">컴공학부</label>' 
+			  +'<label> <input type="radio" name="major" value="mgmt">경영학부</label>' 
+			  +'<label> <input type="radio" name="major" value="math">수학부</label>' 
+			  +'<label> <input type="radio" name="major" value="eng">영문학부</label>'
+			  +'</div>'
+			  +'</div>'
+			  +'<div>'
+			  +'<label for="exampleInputEmail1">수강과목</label><br/>'
+			  +'<div>'
+			  +'<div id="ck_subject" >'
+			  +'<label> <input type="checkbox" name="subject" value="java"> JAVA</label>' 
+			  +'<label> <input type="checkbox" name="subject" value="sql">SQL</label>' 
+			  +'<label> <input type="checkbox" name="subject" value="cpp">C++</label>' 
+			  +'<label> <input type="checkbox" name="subject" value="python">파이썬</label>'
+			  +'<label> <input type="checkbox" name="subject" value="cpp">델파이</label>' 
+			  +'<label> <input type="checkbox" name="subject" value="html">HTML</label> '
+			  +'</div>'
+			  +'</div>'
+			  +'</div>'
+			  +'<br /><br />'
+			  +'<input type="hidden" name = "action" value="regist"/>'
+			  +'<input type="hidden" name = "page" value="login"/>'
+			  +'<input id="bt_join" type="submit"  value="회원가입"/>'
+			  +'<input id="bt_cancel" type="reset"  value="취소"/>'
+			  +'<br /><br /><br />'
+			  +'<p><a id="member_content_a_home" ><img id="member_content_img_home"/></a></p>'
+			  +'</form>'
+			  +'</section>';
+				$('#pub_article').empty().append(view);
+				member.init();
 			}
 		};
 	})();
-
-	/*kaup*/
-		
-	var kaup = (function(){
-		var init = function(){onCreate();};
-		var setContentView = function(){};
-		var onCreate = function(){
-			setContentview();
-			var kaup_calc = document.querySelector('#kaup_calc');kaup_calc.addEventListener('click',this.calc,false);
-		};
-			
-		return{
-				init : init,
-				calc : function (){
-					var name=document.querySelector('#name').value;
-					var height=document.getElementById('height').value;
-					var weight=document.getElementById('weight').value;
-					console.log('name'+ name);
-					console.log('height'+ height);
-					console.log('weight'+ weight);
-					var result='';
-					var kaup = weight / (height / 100) / (height / 100);
-
-					if (kaup < 18.5) {
-						result = "저체중";
-					} else if (18.5 < kaup && kaup < 22.9) {
-						result = "정상체중";
-					} else if (23.0 < kaup && kaup < 24.9) {
-						result = "위험체중";
-					} else if (25.0 < kaup && kaup < 29.9) {
-						result = "비만1단계";
-					} else if (40 > kaup && kaup > 30) {
-						result = "비만2단계";
-					} else if (kaup > 40) {
-						result = "비만3단계";
-					}
-
-					document.getElementById('result').innerHTML='"'+name+'"'+'님의 카우푸결과 : '+result;
-
-					//	return name + "의 BMI지수는 " + Double.parseDouble(String.format("%.2f", kaup)) + "이고, " + result + "이다";
-
-				}
-				
-			};
-				
-			})();
 	
 	var grade = (function(){
 		var init = function(){onCreate();};

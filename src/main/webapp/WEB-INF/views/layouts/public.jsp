@@ -13,6 +13,23 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+	<link rel="apple-touch-icon" sizes="57x57" href="${img}/favicons/apple-touch-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="${img}/favicons/apple-touch-icon-60x60.png">
+<link rel="icon" type="image/png" href="${img}/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="${img}/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="manifest" href="${img}/favicons/manifest.json">
+<link rel="shortcut icon" href="${img}/favicons/favicon.ico">
+<link rel="stylesheet" type="text/css" href="${css}/normalize.css">
+<link rel="stylesheet" type="text/css" href="${css}/owl.css">
+<link rel="stylesheet" type="text/css" href="${css}/animate.css">
+<link rel="stylesheet" type="text/css" href="${css}/font/font-awesome-4.1.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="${font}/eleganticons/et-icons.css">
+<link rel="stylesheet" type="text/css" href="${css}/cardio.css">
+<script src="${js}/owl.carousel.min.js"></script>
+<script src="${js}/wow.min.js"></script>
+<script src="${js}/typewriter.js"></script>
+<script src="${js}/jquery.onepagenav.js"></script>
+<script src="${js}/main.js"></script>
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<!-- Optional theme -->
@@ -23,16 +40,16 @@
    </head>
   <body>
       <header>
-        <div>
+        <div id="pub_header">
           <tiles:insertAttribute name="header" />
         </div>
       </header>
            <section>
-        <article>
+        <article id="pub_article">
           <tiles:insertAttribute name="body" />
           </article>
         </section>
-      <footer>
+      <footer id="pub_footer">
           <tiles:insertAttribute name="footer" />
       </footer>
   </body>
