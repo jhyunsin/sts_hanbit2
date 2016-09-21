@@ -252,7 +252,8 @@ var app = (function(){
 			$('#member_regist').addClass('box');
 			$('#member_regist #bt_join').addClass('btn').addClass('btn-primary');
 			$('#member_regist #bt_cancel').addClass('btn').addClass('btn-danger');
-	//
+			$('#member_regist #check_dup').addClass('btn').addClass('btn-danger');////////////
+				//
 			$('#member_regist_form').addClass('form-horizontal');
 			$('#member_regist_form > div').addClass('form-group').addClass('form-group-lg');
 			$('#member_regist_form > div > label').addClass('col-sm-2').addClass('control-label');
@@ -442,8 +443,7 @@ var app = (function(){
 						+'</section>';
 							$('#pub_header').empty().load(app.context()+'/member/logined/header');
 							$('#pub_article').html(view);
-							$('#logout').html(view);
-							
+							//// .on은 다중적인 이벤트를 발생시킬때 쓴당
 							}
 						},
 						error : function(xhr,status,msg){
@@ -458,7 +458,7 @@ var app = (function(){
 	  		  +'<div><label for="exampleInputEmail1">이름</label>'
 			  +'<div><input type="text" class="form-control" id="username" placeholder="NAME"></div></div>'
 			  +'<div ><label for="exampleInputEmail1">ID</label>'
-			  +'<div><input type="text" id="id" placeholder="ID"></div></div>'
+			  +'<div id="id_box"><input type="text" id="id" placeholder="USER_ID"><input type="button" id="check_dup" name="check_dup" value="중복체크"/></div></div>'
 			  +'<div><label for="exampleInputEmail1">비밀번호</label>'
 			  +'<div><input type="password" id="password" placeholder="PASSWORD"></div></div>'
 			  +'<div><label for="exampleInputEmail1">SSN</label>'
@@ -490,8 +490,6 @@ var app = (function(){
 			  +'</div>'
 			  +'</div>'
 			  +'<br /><br />'
-			  +'<input type="hidden" name = "action" value="regist"/>'
-			  +'<input type="hidden" name = "page" value="login"/>'
 			  +'<input id="bt_join" type="submit"  value="회원가입"/>'
 			  +'<input id="bt_cancel" type="reset"  value="취소"/>'
 			  +'<br /><br /><br />'
@@ -500,6 +498,24 @@ var app = (function(){
 			  +'</section>';
 				$('#pub_article').empty().append(view);
 				member.init();
+				$('#check_dup').click(function(){
+					$.ajax({
+						url : app.context()+'/member/check_dup/'+$('#id').val(),
+						success : function(data){
+							alert('중복체크결과'+data.message)
+							if (data.flag==="TRUE") {
+								$('#id_box').html('<input type="text" id="id" placeholder="'+data.message+'"><input type="button" id="check_dup" name="check_dup" value="다시조회"/>');
+								member.init();
+							} else {
+								$('#id_box').html('<input type="text" id="id" placeholder="'+data.message+'"><input type="button" id="check_dup" name="check_dup" value="중복체크"/>');
+								member.init();
+							}
+							},
+						error : function(x,s,e){
+							alert('id 중복체크에러')
+							}
+					});
+				});
 			}
 		};
 	})();

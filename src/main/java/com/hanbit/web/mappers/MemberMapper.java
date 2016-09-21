@@ -15,7 +15,7 @@ public interface MemberMapper {
 	public List<MemberDTO> findByname(String name);
 	public int count();
 	public boolean login(MemberDTO param);
-	public boolean existId(String id);
+	public int existId(String id);
 	public int findId(String id);
 	public int genderCount(String gender);
 }

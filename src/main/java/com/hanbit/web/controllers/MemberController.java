@@ -17,6 +17,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.hanbit.web.domains.Command;
 import com.hanbit.web.domains.MemberDTO;
+import com.hanbit.web.domains.Retval;
 import com.hanbit.web.services.impl.MemberServiceImpl;
 
 @Controller  
@@ -27,6 +28,7 @@ public class MemberController {
 	@Autowired MemberDTO member;
 	@Autowired MemberServiceImpl service;
 	@Autowired Command command;
+	@Autowired Retval retval;
 	@RequestMapping("/search/{option}/{keyword}")
 	public MemberDTO find(@PathVariable("option") String option,
 			@PathVariable("keyword")String keyword,
@@ -76,10 +78,25 @@ public class MemberController {
 		return "admin:member/content.tiles";
 	}
 	
-	@RequestMapping("/regist")
-	public String moveRegist() {
-		logger.info("GO TO {}","regist");
-		return "public:member/regist.tiles";
+	@RequestMapping("/signup")
+	public @ResponseBody Retval signup() {
+		logger.info("SIGN UP {}","EXEUTE");
+		
+		return retval;
+	} 
+	@RequestMapping("/check_dup/{id}")
+	public @ResponseBody Retval CheckDup(@PathVariable String id) {
+		logger.info("CHECK DUP {}","EXEUTE");
+		if (service.existId(id)==1) {
+			retval.setFlag("TRUE");
+			retval.setMessage("입력하신 ID 사용할수 없습니다");
+		}else{
+			retval.setFlag("FALSE");
+			retval.setMessage("입력하신 ID는 사용가능합니다");
+		}
+		logger.info("RETVAL FLAG IS {}",retval.getFlag());
+		logger.info("RETVAL MSG IS {}",retval.getMessage());
+		return retval;
 	} 
 	@RequestMapping("/a_detail")
 	public String moveDetail(@RequestParam("key")String key) {
@@ -109,11 +126,11 @@ public class MemberController {
 		return "public:member/login.tiles";
 	} 
 	@RequestMapping("/logout")
-	public String moveLogout(SessionStatus status) {
+	public String logout(SessionStatus status) {
 		logger.info("GO TO {}","LOGOUT");
 		status.setComplete();
 		logger.info("SESSUIN IS {}","CLEAR");
-		return "public:member/logout.tiles";
+		return "redirect:/";
 	} 
 	@RequestMapping("/list")
 	public String moveList() {

@@ -161,6 +161,13 @@ public class MemberServiceImpl implements MemberService {
 		return mem;
 		}
 		}
+
+	@Override
+	public int existId(String id) {
+		logger.info("MemberService exitId ID IS : {}",id);
+		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
+		return mapper.existId(id);
+	}
 	
 	}
 
