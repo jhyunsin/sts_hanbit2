@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.hanbit.web.domains.Command;
 import com.hanbit.web.domains.MemberDTO;
@@ -36,6 +37,11 @@ public class MemberController {
 		command.setOption(option);
 		return service.findOne(command);
 	}
+	@RequestMapping("/logined/header")
+	public String loginedHeader(){
+		logger.info("TO COUNT CONDITION IS : {}","LOGINED_HEADER");
+		return "user/header.jsp";
+	}
 	@RequestMapping(value="/count/{option}",method=RequestMethod.GET,consumes="application/json")
 	public Model count(@PathVariable("option") String option,Model model){
 		logger.info("TO COUNT CONDITION IS : {}",option);
@@ -52,19 +58,15 @@ public class MemberController {
 		logger.info("로그인시 넘어온 pw {}",pw);
 		member.setId(id);
 		member.setPw(pw);
-		member = service.login(member);
+		//member = service.login(member);
+		MemberDTO user = service.login(member);
 		if (member.getId().equals("NONE")) {
 			logger.info("COntroller LOGIN","FAIL");
-			return member;
+			return user;
 		}else{
 			logger.info("COntroller LOGIN","SUCCESS");
-			String context = (String) session.getAttribute("context");
-			//			model.addAttribute("user",member);
-//			model.addAttribute("context",context);
-//			model.addAttribute("js", context+ "/resources/js");
-//			model.addAttribute("css", context+ "/resources/css");
-//			model.addAttribute("img", context+ "/resources/img");
-			return member;
+			session.setAttribute("user", user);
+			return user;
 		}
 	}
 	//---move---- // 
@@ -107,9 +109,11 @@ public class MemberController {
 		return "public:member/login.tiles";
 	} 
 	@RequestMapping("/logout")
-	public String moveLogout() {
-		logger.info("GO TO {}","logout");
-		return "member/logout.tiles";
+	public String moveLogout(SessionStatus status) {
+		logger.info("GO TO {}","LOGOUT");
+		status.setComplete();
+		logger.info("SESSUIN IS {}","CLEAR");
+		return "public:member/logout.tiles";
 	} 
 	@RequestMapping("/list")
 	public String moveList() {

@@ -1,4 +1,4 @@
-// var application = (function(){})(); iife 패턴
+// var application = (function(){})(); IIfe 패턴
 
 var app = (function(){
 		var init = function(context) {
@@ -21,7 +21,7 @@ var app = (function(){
 			$('#global_content').addClass('box');
 			$('#global_content a').addClass('cursor');
 			$('#global_content_regist').text('SIGN UP').click(function(){member.pub_regist();});
-			$('#global_content_login').text('LOG IN').click(function(){member.pub_login_form();}); ///
+			$('#global_content_login').text('LOG IN').click(function(){member.pub_login_form();});
 			$('#global_content_admin').text('ADMIN MODE').click(function(){admin.check();});
 		};
 		var onCreate = function() {
@@ -51,9 +51,7 @@ var app = (function(){
 		////// 다른 jsp 에서 가져다 쓰기 위해서 app 의 리턴값으로 설정해 주면 
 		///  	app.init / app.context 형식으로 불러올 수 있다
 		}
-		
 	})();
-
 	var admin = (function() {
 		 var _pass;
 		 var getPass = function(){return this._pass;};
@@ -64,13 +62,10 @@ var app = (function(){
 			 	$('#admin_content #grade_mgmt').attr('src',app.img()+'/default/grademm.png').css('height','400px');
 			 	$('#admin_content #account_mgmt').attr('src',app.img()+'/default/bankmm.jpg').css('height','400px');
 			 	$('#admin_content h3').addClass('text_center')
-			 
 				$('#admin_nav').css('height','50px');
-				
 		 	};
 		 var onCreate = function(){
 			 setContentView();
-			 
 			 $('#admin_nav #member_mgmt #list').click(function(){controller.move('member','list');});
 			 $('#admin_nav #member_mgmt #findBy').click(function(){controller.move('member','findBy');});
 			 $('#admin_nav #member_mgmt #count').click(function(){controller.move('member','count');});
@@ -79,20 +74,17 @@ var app = (function(){
 			 $('#admin_nav #account_mgmt #delete').click(function(){;controller.move('bank','delete');});
 			 $('#admin_nav #account_mgmt #find').click(function(){controller.move('bank','find');});
 			 $('#admin_nav #account_mgmt #count').click(function(){controller.move('bank','count');});
-			 
 			 $('#admin_nav #grade_mgmt #list').click(function(){controller.move('grade','list');});
 			 $('#admin_nav #grade_mgmt #regist').click(function(){controller.move('grade','regist');});
 			 $('#admin_nav #grade_mgmt #update').click(function(){controller.move('grade','update');});
 			 $('#admin_nav #grade_mgmt #delete').click(function(){controller.move('grade','delete');});
 			 $('#admin_nav #grade_mgmt #count').click(function(){controller.move('grade','count');});
 			 $('#admin_nav #grade_mgmt #find').click(function(){controller.move('grade','find');});
-				
 				$('#grade_mgmt #regist').click(function(){alert('등록을 위해 회원리스트로 이동합니다');controller.move('member','list');});
 				$('#grade_mgmt #update').click(function(){alert('수정을 위해 회원리스트로 이동합니다');controller.move('member','list');});
 				$('#account_mgmt #list').click(function(){controller.move('bank','list');});
 				$('#account_mgmt #find').click(function(){controller.move('bank','find');});
 				$('#account_mgmt #count').click(function(){controller.move('bank','count');});
-			 
 		 };
 		 return {
 			 init : init,
@@ -154,9 +146,9 @@ var app = (function(){
 				 $('#user_header #a_delete').click(function(){controller.move('member', 'delete');});
 				 $('#go_user_home').click(function(){controller.move('member', 'content');});
 				 $('#user_content #kaup').addClass('cursor').click(function(){controller.move("member", "kaup");});	
-					$('#user_content_subject #major_subject_1 input[type="button"]').click(function(){controller.moveWithKey('subject', 'detail', key);});
-					$('#user_content #major_subject_2').click(function(){});
-					$('#user_content #major_subject_3').click(function(){});
+		 		 $('#user_content_subject #major_subject_1 input[type="button"]').click(function(){controller.moveWithKey('subject', 'detail', key);});
+		 		 $('#user_content #major_subject_2').click(function(){});
+				 $('#user_content #major_subject_3').click(function(){});
 		
 		}; 
 		return{
@@ -314,27 +306,11 @@ var app = (function(){
 				var ageTemp = parseInt(ssn.substring(0,2));
 				console.log("ageTemp    "+ageTemp);
 				switch (gender) {
-				case 1: case 5: 
-					setGender("남"); 
-					setAge(now-(1900+ageTemp));
-					console.log("1900+ageTemp    "+(1900+ageTemp));
-					break;
-				case 3: case 7:
-					setGender("남"); 
-					setAge(now-(2000+ageTemp));
-					break;
-				case 2: case 6:
-					setGender("여");
-					setAge(now-(1900+ageTemp));
-					console.log("1900+ageTemp    "+(1900+ageTemp));
-					break;
-				case 4: case 8:
-					setGender("여");
-					setAge(now-(2000+ageTemp));
-					break;
-				default:
-					setGender = "잘못된값을 입력하셨습니다";
-				}
+				case 1: case 5: setGender("남"); setAge(now-(1900+ageTemp));console.log("1900+ageTemp "+(1900+ageTemp));break;
+				case 3: case 7:setGender("남"); setAge(now-(2000+ageTemp));break;
+				case 2: case 6:setGender("여");setAge(now-(1900+ageTemp));console.log("1900+ageTemp "+(1900+ageTemp));break;
+				case 4: case 8:setGender("여");setAge(now-(2000+ageTemp));break;
+				default:setGender = "잘못된값을 입력하셨습니다";}
 				document.querySelector('#result_name').innerHTML=getName();
 				document.querySelector('#result_age').innerHTML=getAge();
 				document.querySelector('#result_gender').innerHTML=getGender();
@@ -365,7 +341,7 @@ var app = (function(){
 								alert('잘못된 정보입니다');	
 							} else {
 								alert('사랑합니다 '+data.name+'님');
-							var view = '<section id="user_content_service" class="box section-padded">'
+							var view ='<section id="user_content_service" class="box section-padded">'
 						+'<div>'
 						+'<div class="row text-center title">'
 						+'<h2>Services</h2>'
@@ -464,8 +440,10 @@ var app = (function(){
 						+'</div>'
 						+'</div>'
 						+'</section>';
-							//$('#pub_header').html(view);
+							$('#pub_header').empty().load(app.context()+'/member/logined/header');
 							$('#pub_article').html(view);
+							$('#logout').html(view);
+							
 							}
 						},
 						error : function(xhr,status,msg){
@@ -641,15 +619,12 @@ var util = (function(){
 var nav = (function(){
 	var init = function(){onCreate();};
 	var setContentView = function(){
-
 	$('#nav ul').addClass('list_style_none').addClass('over_hidden').addClass('bg_color_blue').css('margin','0').css('padding','0');
 	$('#nav li').addClass('float_left').addClass('display_inline').css('border-right','1px').css('solid','#bbb');
 	$('#nav li:last-child').addClass('border_right_none');
 	$('#nav .active').addClass('bg_color_black');
-	$('#nav li a').addClass('display_block').addClass('nav_color_white').addClass('text_center')
-	.addClass('text_decoration_none').css('padding','14px','16px');
+	$('#nav li a').addClass('display_block').addClass('nav_color_white').addClass('text_center').addClass('text_decoration_none').css('padding','14px','16px');
 	$('#nav li a:hover:not').addClass('nav_color_aaa');
-	
 	};
 	var onCreate = function(){
 		setContentView();

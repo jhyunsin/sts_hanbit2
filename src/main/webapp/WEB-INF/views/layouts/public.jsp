@@ -23,7 +23,7 @@
 <link rel="stylesheet" type="text/css" href="${css}/owl.css">
 <link rel="stylesheet" type="text/css" href="${css}/animate.css">
 <link rel="stylesheet" type="text/css" href="${css}/font/font-awesome-4.1.0/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="${font}/eleganticons/et-icons.css">
+<link rel="stylesheet" type="text/css" href="${css}/fonts/et-icons.css">
 <link rel="stylesheet" type="text/css" href="${css}/cardio.css">
 <script src="${js}/owl.carousel.min.js"></script>
 <script src="${js}/wow.min.js"></script>
