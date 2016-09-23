@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -54,7 +55,7 @@ public class MemberController {
 	public @ResponseBody MemberDTO Login(
 			@RequestParam("id")String id,
 			@RequestParam("pw")String pw,
-			HttpSession session
+			Model model
 			) {
 		logger.info("로그인시 넘어온 id {}",id);
 		logger.info("로그인시 넘어온 pw {}",pw);
@@ -67,7 +68,7 @@ public class MemberController {
 			return user;
 		}else{
 			logger.info("COntroller LOGIN","SUCCESS");
-			session.setAttribute("user", user);
+			model.addAttribute("user", user);
 			return user;
 		}
 	}
@@ -77,11 +78,21 @@ public class MemberController {
 		logger.info("GO TO {}","main");
 		return "admin:member/content.tiles";
 	}
-	
-	@RequestMapping("/signup")
-	public @ResponseBody Retval signup() {
-		logger.info("SIGN UP {}","EXEUTE");
+							
+	@RequestMapping(value="/signup",method=RequestMethod.POST,
+			consumes="application/json")
+	public @ResponseBody Retval signup(@RequestBody MemberDTO param) {
 		
+		logger.info("SIGN UP {}","EXEUTE");
+		logger.info("SIGN UP ID = {}",param.getId());
+		logger.info("SIGN UP PW = {}",param.getPw());
+		logger.info("SIGN UP NAME = {}",param.getName());
+		logger.info("SIGN UP SSN = {}",param.getSsn());
+		logger.info("SIGN UP EMAIL = {}",param.getEmail());
+		logger.info("SIGN UP PHONE = {}",param.getPhone());
+	//	retval.setMessage(service.regist(param));
+			retval.setMessage("success");
+			logger.info("SIGN UP REVAL = {}",retval.getMessage());
 		return retval;
 	} 
 	@RequestMapping("/check_dup/{id}")
@@ -93,6 +104,7 @@ public class MemberController {
 		}else{
 			retval.setFlag("FALSE");
 			retval.setMessage("입력하신 ID는 사용가능합니다");
+			retval.setTemp(id);
 		}
 		logger.info("RETVAL FLAG IS {}",retval.getFlag());
 		logger.info("RETVAL MSG IS {}",retval.getMessage());
@@ -106,9 +118,9 @@ public class MemberController {
 		return "admin:member/a_detail.tiles";
 	} 
 	@RequestMapping("/detail")
-	public String moveDetail() {
+	public @ResponseBody MemberDTO moveDetail(HttpSession session) {
 		logger.info("GO TO {}","detail");
-		return "user:member/detail.tiles";
+		return (MemberDTO) session.getAttribute("user");
 	} 
 	@RequestMapping("/update")
 	public String moveUpdate() {

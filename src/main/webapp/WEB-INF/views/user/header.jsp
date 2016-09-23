@@ -50,7 +50,7 @@
             <li><a id="a_mypage">마이페이지</a></li>
             <li><a id="a_detail">내정보보기</a></li>
             <li><a id="a_update">내 정보 수정</a></li>
-            <li><a id="a_delete">회원 탈퇴</a></li>
+            <li><a id="a_delete">회원탈퇴</a></li>
           </ul>
         </li>
       </ul>
@@ -61,5 +61,7 @@
 
 <script type="text/javascript">
 $('#logout').click(function(){alert('로그아웃');location.href= app.context()+'/member/logout';});
+$('#a_detail').click(function(){member.detail()});
+
 </script>
 
