@@ -11,9 +11,20 @@ public class AdminController {
 	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 	@RequestMapping("/main")
 	public String goMain() {
-		logger.info("==================AdminController! goMain..");
+		logger.info("AdminController! goMain..");
 		return "admin:admin/content.tiles";
 	}
 
+	@RequestMapping("/header")
+	public String loginedHeader(){
+		logger.info("THIS PATH IS {}", "ADMIN_HEADER");
+		return "admin/header.jsp";
+	}
+	
+	 @RequestMapping("/nav")
+	 public String adminNavi(){
+	  logger.info("THIS PATH IS {}", "ADMIN_NAV");
+	  return "admin/nav.jsp";
+	 }
 }
 

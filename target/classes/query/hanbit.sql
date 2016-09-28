@@ -217,18 +217,12 @@ BEGIN
 END insertExam;
 
 
-INSERT INTO member(id,pw,name,reg_date,ssn,email,profile_img)
-VALUES('lee','1','이순신','2016-07-01','800101-1','lee@test.com','lee.jpg');
-INSERT INTO member(id,pw,name,reg_date,ssn,email,profile_img)
-VALUES('hong1','1','홍길동','2015-07-01','901201-1','hong@test.com','hong.jpg');
-INSERT INTO member(id,pw,name,reg_date,ssn,email,profile_img)
-VALUES('you','1','유관순','2014-07-01','010701-4','you@test.com','you.jpg');
-INSERT INTO member(id,pw,name,reg_date,ssn,email,profile_img)
-VALUES('hong','1','홍길동','2015-07-01','301201-1','hoing2@test.com','hong.jpg');
-INSERT INTO member(id,pw,name,reg_date,ssn,email,profile_img)
-VALUES('hong3','1','홍길동','2015-07-01','501201-1','hong3@test.com','hong3.jpg');
-INSERT INTO member(id,pw,name,reg_date,ssn,email,profile_img)
-VALUES('choi','1','최진실','2015-07-01','501201-1','choi@test.com','choi.jpg');
+INSERT INTO member(id,pw,name,reg_date,ssn,email,profile_img)VALUES('lee','1','이순신','2016-07-01','800101-1','lee@test.com','lee.jpg');
+INSERT INTO member(id,pw,name,reg_date,ssn,email,profile_img)VALUES('hong1','1','홍길동','2015-07-01','901201-1','hong@test.com','hong.jpg');
+INSERT INTO member(id,pw,name,reg_date,ssn,email,profile_img)VALUES('you','1','유관순','2014-07-01','010701-4','you@test.com','you.jpg');
+INSERT INTO member(id,pw,name,reg_date,ssn,email,profile_img)VALUES('hong','1','홍길동','2015-07-01','301201-1','hoing2@test.com','hong.jpg');
+INSERT INTO member(id,pw,name,reg_date,ssn,email,profile_img)VALUES('hong3','1','홍길동','2015-07-01','501201-1','hong3@test.com','hong3.jpg');
+INSERT INTO member(id,pw,name,reg_date,ssn,email,profile_img)VALUES('choi','1','최진실','2015-07-01','501201-1','choi@test.com','choi.jpg');
 
 --READ ()// static 개념으로 접근한다
 SELECT * FROM member;-- list

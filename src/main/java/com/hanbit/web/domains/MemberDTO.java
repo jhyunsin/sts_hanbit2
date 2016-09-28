@@ -21,6 +21,13 @@ import lombok.ToString;
 @Data
 @ToString
 public class MemberDTO {
+	
+	
+	
+	
+	
+	
+	
 	@Getter @Setter private String id;
 	@Getter @Setter private String name;
 	@Getter @Setter private String ssn;

@@ -1,7 +1,6 @@
 package com.hanbit.web.services.impl;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.hanbit.web.controllers.AdminController;
 import com.hanbit.web.domains.Command;
 import com.hanbit.web.domains.MemberDTO;
+import com.hanbit.web.domains.Retval;
 import com.hanbit.web.domains.SubjectDTO;
 import com.hanbit.web.mappers.MemberMapper;
 import com.hanbit.web.services.MemberService;
@@ -46,16 +46,18 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public void update(MemberDTO mem) {
+	public String update(MemberDTO mem) {
 		// 3수정
 		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
 		int result = 0;
-		if (result ==1) {
-			member = this.findOne(null);
-		System.out.println("업데이트결과 성공");
+		String retval = "";
+		if (mapper.update(mem)!=0) {
+			retval = "success";
+		
 		}else{
-			System.out.println("업데이트결과 실패");
+			retval = "fail";
 		}
+		return retval;
 	
 	
 	}
@@ -69,12 +71,7 @@ public class MemberServiceImpl implements MemberService {
 		
 		}
 
-	@Override
-	public int count() {
-		// 컨트롤러에서 int count = service.count(); 만들고 서비스 / 임플 까지 타고 타고옴
-		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
-		return 0;//토스
-	}
+
 
 	@Override
 	public MemberDTO findOne(Command command) {
@@ -82,12 +79,7 @@ public class MemberServiceImpl implements MemberService {
 		return mapper.findOne(command);
 	}
 
-	@Override
-	public List<MemberDTO> list() {
-		// TODO Auto-generated method stub
-		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
-		return null;
-	}
+
 
 	@Override
 	public List<MemberDTO> findByName(String findName) {
@@ -115,19 +107,19 @@ public class MemberServiceImpl implements MemberService {
 		
 	}
 
-	@Override
-	public List<?> findBy(String keyword) {
-		// TODO Auto-generated method stub
-		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
-		return null;
-	}
+//	@Override
+//	public List<?> findBy(String keyword) {
+//		// TODO Auto-generated method stub
+//		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
+//		return null;
+//	}
 
-	@Override
-	public Map<?, ?> map() {
-		// TODO Auto-generated method stub
-		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
-		return null;
-	}
+//	@Override
+//	public Map<?, ?> map() {
+//		// TODO Auto-generated method stub
+//		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
+//		return null;
+//	}
 
 	@Override
 	public MemberDTO login(MemberDTO member) {
@@ -153,6 +145,28 @@ public class MemberServiceImpl implements MemberService {
 		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
 		return mapper.existId(id);
 	}
+
+
+	public List<?> list(Command command) {
+		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
+		return mapper.list(command);
+	}
+
+	@Override
+	public Retval count() {
+		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
+		return mapper.count();
+	}
+
+	@Override
+	public List<?> find(Command command) {
+		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
+		return mapper.find(command);
+	}
+
+
+
+	
 	
 	}
 

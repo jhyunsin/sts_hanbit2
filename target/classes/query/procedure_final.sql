@@ -1,5 +1,6 @@
 -- 메타
 select object_name from user_procedures order by object_name asc;
+select * from member;
 -- CREATE
 DROP SEQUENCE seq;
 DROP SEQUENCE art_seq;
@@ -370,7 +371,18 @@ BEGIN
 	VALUES(sp_mem_id,sp_pw,sp_name,sp_gender,sp_reg_date,sp_ssn,sp_email,sp_profile_img,sp_role,sp_phone,sp_major_seq);
 END insert_student;
 -- EXE_INSERT_STUDENT
-EXEC HANBIT.INSERT_STUDENT('hong','1','홍길동','MALE','2016-06-01','800101-1','hong@test.com','default.jpg','STUDENT','010-1234-5678','1001');
+EXEC HANBIT.INSERT_STUDENT('lee1','1','이순신','MALE','2000-06-01','800101-1','lee1@test.com','default.jpg','STUDENT','010-1111-5678','1001');
+EXEC HANBIT.INSERT_STUDENT('lee2','1','이정재','MALE','2001-06-01','800101-1','lee2@test.com','default.jpg','STUDENT','010-2222-5678','1001');
+EXEC HANBIT.INSERT_STUDENT('lee3','1','이민우','MALE','2002-06-01','800101-1','lee3@test.com','default.jpg','STUDENT','010-3333-5678','1001');
+EXEC HANBIT.INSERT_STUDENT('lee4','1','이을동','MALE','2003-06-01','800101-1','lee4@test.com','default.jpg','STUDENT','010-4444-5678','1001');
+EXEC HANBIT.INSERT_STUDENT('lee5','1','이기우','MALE','2004-06-01','800101-1','lee5@test.com','default.jpg','STUDENT','010-55555-5678','1001');
+EXEC HANBIT.INSERT_STUDENT('lee6','1','이나나','MALE','2005-06-01','800101-1','l336@test.com','default.jpg','STUDENT','010-6666-5678','1001');
+EXEC HANBIT.INSERT_STUDENT('lee7','1','이다다','MALE','2006-06-01','800101-1','lee7@test.com','default.jpg','STUDENT','010-7777-5678','1001');
+EXEC HANBIT.INSERT_STUDENT('lee8','1','이라라','MALE','2007-06-01','800101-1','lee8@test.com','default.jpg','STUDENT','010-8888-5678','1001');
+EXEC HANBIT.INSERT_STUDENT('lee9','1','이마맘','MALE','2008-06-01','800101-1','lee9@test.com','default.jpg','STUDENT','010-9999-5678','1001');
+EXEC HANBIT.INSERT_STUDENT('lee10','1','이저저','MALE','2009-06-01','800101-1','lee10@test.com','default.jpg','STUDENT','010-1010-5678','1001');
+EXEC HANBIT.INSERT_STUDENT('jang1','1','장일일','MALE','2009-01-01','800101-1','jang1@test.com','default.jpg','STUDENT','010-0111-5678','1001');
+EXEC HANBIT.INSERT_STUDENT('jang2','1','장이이','MALE','2009-02-01','800101-1','jang2@test.com','default.jpg','STUDENT','010-0222-5678','1001');
 -- SP_COUNT_STUDENT
 CREATE OR REPLACE PROCEDURE count_student(sp_count OUT NUMBER) AS 
 BEGIN SELECT COUNT(*) into sp_count FROM Member WHERE role='STUDENT'; commit; END count_student;
@@ -524,5 +536,22 @@ BEGIN
 	INSERT INTO Board(art_seq,category,title,reg_date,content) 
 	VALUES(sp_art_seq,sp_category,sp_title,sp_reg_date,sp_content);
 END insert_notice;
-Contact GitHub API Training Shop Blog About
-© 2016 GitHub, Inc. Terms Privacy Security Status Help
+
+-----------행정렬   ----> 페이징(페이스북에 1억명이 돌아갈수 있는 이유!)
+select t2.* from(
+select rownum seq,t.* from(
+select
+	m.mem_id id,
+	m.name name,
+	m.gender gender,
+	m.reg_date regDate,
+	m.ssn ssn,
+	m.email email,
+	m.profile_img profileImg,
+	m.role role,
+	m.phone phone,
+	m.major_seq majorSeq
+	from Member m order by reg_date desc) t)t2
+	where t2.seq between 1 and 12
+	order by t2.seq asc;
+	

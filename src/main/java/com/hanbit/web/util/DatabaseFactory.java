@@ -1,5 +1,6 @@
 package com.hanbit.web.util;
 
+import com.hanbit.web.constants.Values;
 
 /**
  * @date   : 2016. 7. 5.
@@ -15,12 +16,12 @@ public class DatabaseFactory {// 생성 자체를 공장한테 준다
 		
 		switch (vendor) {
 		case ORACLE:
-			driver = Constants.ORACLE_DRIVER;
-			url = Constants.ORACLE_URL;
+			driver = Values.ORACLE_DRIVER;
+			url = Values.ORACLE_URL;
 			break;
 		case MYSQL:
-			driver = Constants.MYSQL_DRIVER;
-			url = Constants.MYSQL_URL;
+			driver = Values.MYSQL_DRIVER;
+			url = Values.MYSQL_URL;
 			break;
 		case MSSQL:
 			

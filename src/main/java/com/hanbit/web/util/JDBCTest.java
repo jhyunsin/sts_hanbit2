@@ -7,6 +7,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.hanbit.web.constants.Values;
+
 /**
  * @date : 2016. 6. 30.
  * @author : 신재현
@@ -26,11 +28,11 @@ public class JDBCTest { //연결을 확인하는 작업
 		String sql = "select name,ssn from member where mem_id = 'lee'", result = "";// 안에 무슨 테이블이 있냐??
 		List<String> list = new ArrayList<String>();
 		try {
-			Class.forName(Constants.ORACLE_DRIVER);
+			Class.forName(Values.ORACLE_DRIVER);
 			con = DriverManager.getConnection(
-					Constants.ORACLE_URL, 
-					Constants.USER_ID, 
-					Constants.USER_PW);
+					Values.ORACLE_URL, 
+					Values.USER_ID, 
+					Values.USER_PW);
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(sql);
 			if (rs.next()) {

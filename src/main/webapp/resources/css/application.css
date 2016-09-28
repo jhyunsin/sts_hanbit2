@@ -47,7 +47,7 @@ a{cursor:pointer}
 #member_detail{border: 1px solid gray;width:100%;height:400px;margin:0 auto; border-collapse: collapse;}
 #member_detail tr{border: 1px solid gray;hetigh:20%}
 #member_detail tr td{border: 1px solid gray;}
-#member_list_table table {font-family: arial, sans-serif; border-collapse: collapse; width: 100%;}
+#member_list_table {font-family: arial, sans-serif; border-collapse: collapse; width: 100%;}
 #member_list_table td, th {border: 1px solid #dddddd; text-align: center; padding: 8px;}
 #member_list_table tr:nth-child(even) {background-color: #efeff5;}
 /* account id */

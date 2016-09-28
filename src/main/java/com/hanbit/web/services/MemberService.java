@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.hanbit.web.domains.Command;
 import com.hanbit.web.domains.MemberDTO;
-import com.hanbit.web.util.CommonService;
+import com.hanbit.web.domains.Retval;
 
 
 
@@ -21,34 +21,19 @@ import com.hanbit.web.util.CommonService;
  * @story :
  */
 @Component
-public interface MemberService extends CommonService {
+public interface MemberService {
 	public String regist(MemberDTO bean);
 	public MemberDTO findOne(Command command);
-
 	public MemberDTO show();
-
-	public void update(MemberDTO mem);
-
+	public String update(MemberDTO mem);
 	public void delete(MemberDTO mem);
-
-	public int count();
-
-
-	public List<MemberDTO> list();
-
+	public List<?> find(Command command);
+	public Retval count();
 	public List<MemberDTO> findByName(String findName);
-
 	public int genderCount(String gender);	
-	
 	public void logout(MemberDTO member);
-	
 	public MemberDTO login(MemberDTO member);
 	public int existId(String id);
+	public List<?> list(Command command);
+	
 }
-// String sqlCreate = "create table member("
-// + "id varchar2(20) primary key,"
-// + "name varchar2(20),"
-// + "ssn varchar2(20),"
-// + "pw varchar2(20),"
-// + "reg_date varchar2(20)"
-// + "),";

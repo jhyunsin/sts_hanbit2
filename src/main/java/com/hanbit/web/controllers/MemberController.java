@@ -1,5 +1,8 @@
 package com.hanbit.web.controllers;
 
+import java.util.HashMap;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -16,34 +19,41 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.hanbit.web.constants.Values;
 import com.hanbit.web.domains.Command;
 import com.hanbit.web.domains.MemberDTO;
 import com.hanbit.web.domains.Retval;
 import com.hanbit.web.services.impl.MemberServiceImpl;
+import com.hanbit.web.util.Pagination;
 
 @Controller  
 @SessionAttributes({"user","context","js","css","img"})
 @RequestMapping("/member")
 public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
+	public static int PG_SIZE = 5;
 	@Autowired MemberDTO member;
 	@Autowired MemberServiceImpl service;
 	@Autowired Command command;
 	@Autowired Retval retval;
-	@RequestMapping("/search/{option}/{keyword}")
-	public MemberDTO find(@PathVariable("option") String option,
-			@PathVariable("keyword")String keyword,
+	@RequestMapping("/search/{keyField}/{keyword}")
+	public MemberDTO find(
+			@PathVariable("keyword")String keyword,@PathVariable("keyField")String keyField,
 			Model model){
 		logger.info("TO SEARCH KEYWORD IS {} : "+keyword);
-		logger.info("TO SEARCH OPTION IS {} : "+option);
 		command.setKeyword(keyword);
-		command.setOption(option);
+		command.setKeyField(keyField);
 		return service.findOne(command);
 	}
 	@RequestMapping("/logined/header")
 	public String loginedHeader(){
 		logger.info("TO COUNT CONDITION IS : {}","LOGINED_HEADER");
 		return "user/header.jsp";
+	}
+	@RequestMapping("/admin/header")
+	public String adminHeader(){
+		logger.info("TO COUNT CONDITION IS : {}","admin_HEADER");
+		return "admin/header.jsp";
 	}
 	@RequestMapping(value="/count/{option}",method=RequestMethod.GET,consumes="application/json")
 	public Model count(@PathVariable("option") String option,Model model){
@@ -72,17 +82,22 @@ public class MemberController {
 			return user;
 		}
 	}
+	@RequestMapping(value="/unregist", method=RequestMethod.POST)
+	public @ResponseBody MemberDTO unregist(
+			@PathVariable String pw,
+			HttpSession session) {
+		logger.info("GO TO {}","멤버언레지");	
+		return (MemberDTO) session.getAttribute(null);
+	}
 	//---move---- // 
 	@RequestMapping("/main")
 	public String moveMain() {
 		logger.info("GO TO {}","main");
 		return "admin:member/content.tiles";
 	}
-							
 	@RequestMapping(value="/signup",method=RequestMethod.POST,
 			consumes="application/json")
 	public @ResponseBody Retval signup(@RequestBody MemberDTO param) {
-		
 		logger.info("SIGN UP {}","EXEUTE");
 		logger.info("SIGN UP ID = {}",param.getId());
 		logger.info("SIGN UP PW = {}",param.getPw());
@@ -90,9 +105,20 @@ public class MemberController {
 		logger.info("SIGN UP SSN = {}",param.getSsn());
 		logger.info("SIGN UP EMAIL = {}",param.getEmail());
 		logger.info("SIGN UP PHONE = {}",param.getPhone());
-	//	retval.setMessage(service.regist(param));
-			retval.setMessage("success");
-			logger.info("SIGN UP REVAL = {}",retval.getMessage());
+		retval.setMessage(service.regist(param));
+		logger.info("SIGN UP REVAL = {}",retval.getMessage());
+		return retval;
+	} 
+	@RequestMapping(value="/update",method=RequestMethod.POST)
+	public @ResponseBody Retval Update(@RequestBody MemberDTO param, HttpSession session) {
+		logger.info("GO TO {}","=======update========");
+		MemberDTO temp = (MemberDTO) session.getAttribute("user");
+		temp.setPw(param.getPw());
+		temp.setEmail(param.getEmail());
+		retval.setMessage(service.update(temp));
+		session.setAttribute("user", service.update(temp));
+		logger.info("update 비번 {}",param.getPw());
+		logger.info("update 이멜 {}",param.getEmail());
 		return retval;
 	} 
 	@RequestMapping("/check_dup/{id}")
@@ -110,6 +136,62 @@ public class MemberController {
 		logger.info("RETVAL MSG IS {}",retval.getMessage());
 		return retval;
 	} 
+	
+	@RequestMapping("/list/{pgNum}")
+	 public @ResponseBody HashMap<String, Object> list(@PathVariable String pgNum, Model model){
+	  logger.info("LIST pgNum {}", pgNum);
+	  int[] rows = new int[2];
+	  int[] pages = new int[3];
+	  HashMap<String, Object> map = new HashMap<String, Object>();
+	  Retval r = service.count();
+	  int totCount = r.getCount();
+	  logger.info("LIST totCount {}", totCount);
+	  rows = Pagination.getRows(totCount, Integer.parseInt(pgNum), Values.PG_SIZE);
+	  pages = Pagination.getPages(totCount, Integer.parseInt(pgNum));
+	  command.setStart(rows[0]);
+	  command.setEnd(rows[1]);
+	 /* model.addAttribute("list", service.list(command));
+	  model.addAttribute("pgSize", Values.PG_SIZE);
+	  model.addAttribute("totCount", totCount);
+	  model.addAttribute("totPg", pages[2]);
+	  model.addAttribute("pgNum", Integer.parseInt(pgNum));
+	  model.addAttribute("startPg", pages[0]);
+	  model.addAttribute("lastPg", pages[1]); */
+	  map.put("list", service.list(command));
+	  map.put("pgSize", Values.PG_SIZE);
+	  map.put("totCount", totCount);
+	  map.put("totPg", pages[2]);
+	  map.put("pgNum", Integer.parseInt(pgNum));
+	  map.put("startPg", pages[0]);
+	  map.put("lastPg", pages[1]);
+	  map.put("groupSize", Values.GROUP_SIZE);
+	  return map;
+	 }
+	@SuppressWarnings("unchecked")
+	@RequestMapping("/search")
+	public String search(
+			@RequestParam(value="keyField") String keyField, 
+			@RequestParam(value="keyword") String keyword, 
+			Model model){
+		logger.info("SEARCH keyField {}", keyField);
+		logger.info("SEARCH keyword {}", keyword);
+		command.setKeyField(keyField);
+		command.setKeyword(keyword);
+		List<MemberDTO> list = (List<MemberDTO>) service.find(command);
+		int[] pages = Pagination.getPages(list.size(), 1);
+		int[] rows = Pagination.getRows(list.size(), 1, Values.PG_SIZE);
+		model.addAttribute("pgSize", Values.PG_SIZE);
+		model.addAttribute("totCount", list.size());
+		model.addAttribute("totPg", pages[2]);
+		model.addAttribute("pgNum", 1);
+		model.addAttribute("startPg", pages[0]);
+		model.addAttribute("lastPg", pages[1]);
+		model.addAttribute("list", list);
+		System.out.println(list);
+		
+		model.addAttribute("list", service.find(command));
+		return "admin:member/list.tiles";
+	}
 	@RequestMapping("/a_detail")
 	public String moveDetail(@RequestParam("key")String key) {
 		logger.info("GO TO {}","A_detail");
@@ -122,11 +204,7 @@ public class MemberController {
 		logger.info("GO TO {}","detail");
 		return (MemberDTO) session.getAttribute("user");
 	} 
-	@RequestMapping("/update")
-	public String moveUpdate() {
-		logger.info("GO TO {}","update");
-		return "user:member/update.tiles";
-	} 
+	
 	@RequestMapping("/delete")
 	public String moveDelete() {
 		logger.info("GO TO {}","delete");
@@ -144,11 +222,11 @@ public class MemberController {
 		logger.info("SESSUIN IS {}","CLEAR");
 		return "redirect:/";
 	} 
-	@RequestMapping("/list")
-	public String moveList() {
-		logger.info("GO TO {}","list");
-		return "admin:member/list.tiles";
-	} 
+//	@RequestMapping("/list")
+//	public String moveList() {
+//		logger.info("GO TO {}","list");
+//		return "admin:member/list.tiles";
+//	} 
 	@RequestMapping("/findBy")
 	public String moveFindBy() {
 		logger.info("GO TO {}","findBy");
@@ -180,4 +258,5 @@ public class MemberController {
 	  logger.info("GO TO {}", "lotto");
 	  return "user:user/lotto.tiles";
 	 }
+	
 }

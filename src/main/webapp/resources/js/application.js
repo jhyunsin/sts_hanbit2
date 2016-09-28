@@ -66,7 +66,7 @@ var app = (function(){
 		 	};
 		 var onCreate = function(){
 			 setContentView();
-			 $('#admin_nav #member_mgmt #list').click(function(){controller.move('member','list');});
+			 $('#admin_nav #member_mgmt #list').click(function(){user.student_list(1);});
 			 $('#admin_nav #member_mgmt #findBy').click(function(){controller.move('member','findBy');});
 			 $('#admin_nav #member_mgmt #count').click(function(){controller.move('member','count');});
 			 $('#admin_nav #account_mgmt #list').click(function(){controller.move('bank','list');});
@@ -85,7 +85,12 @@ var app = (function(){
 				$('#account_mgmt #list').click(function(){controller.move('bank','list');});
 				$('#account_mgmt #find').click(function(){controller.move('bank','find');});
 				$('#account_mgmt #count').click(function(){controller.move('bank','count');});
+				$('#account_list_table .name').click(function(){controller.moveWithKey('member', 'a_detail', 'hong');});
+				$('#grade_list_table .name').click(function(){controller.moveWithKey('member', 'a_detail', 'hong');});
 		 };
+		 var _pass;
+			var getPass = function(){return this._pass;};
+			var setPass = function(pass){this._pass = pass;};
 		 return {
 			 init : init,
 			 setContentView : setContentView,
@@ -93,6 +98,9 @@ var app = (function(){
 			 getPass : getPass,
 		     setPass : setPass,
 		     check : function(){
+		    	controller.move('admin','main'); 
+		     },
+		     check2 : function(){
 		      setPass(1);
 		      var isAdmin = confirm('관리자입니까?');
 		      if (!isAdmin){
@@ -105,7 +113,10 @@ var app = (function(){
 		        alert('관리자 비번이 틀립니다');
 		       }
 		      }
-		     }
+		     },
+		     member_list : function(){
+			    	location.href = app.context() + '/member/list/1';
+			    }
 		 };
 		})();
 
@@ -153,7 +164,62 @@ var app = (function(){
 		}; 
 		return{
 		     init :init,  // 자바의 클래스 처럼 속성(은닉)과 기능으로 ..
-				 
+		     student_list : function(pgNum){
+		    	 $('#adm_header').empty().load(app.context()+'/admin/header');
+					$('#adm_nav').empty().load(app.context()+'/admin/nav');
+					$('#adm_article').empty();
+					$.getJSON(app.context() + '/member/list/' + pgNum, function(data){
+						var frame ='';
+						var startPg = data.startPg;
+						var lastPg = data.lastPg;
+						var pgSize = data.pgSize;
+						var totPg = data.totPg;
+						var groupSize = data.groupSize;
+						console.log('스타트 Page'+startPg);
+						console.log('라스트 Page'+startPg);
+						console.log('토탈페이지 Page'+totPg);
+						console.log('그룹사이즈 Page'+groupSize);
+					var student_list = '<div class ="box" style="padding-top: 0; width: 90%">'
+						+'<section style="height: 150px">'
+						+'<ul class="list-group">'
+						+'<li class="list-group-item">총 학생수 :'+data.totCount+' </li>'
+						+'</ul>'
+						+'<div class="panel panel-success">'
+						+'<div class="panel-heading" style="font-size: 25px;color: black">학생 목록</div>'
+						+'<table id="member_list_table">'
+						+'<tr>'
+						+'<th>ID</th>'
+						+'<th>성명</th>'
+						+'<th>등록일</th>'
+						+'<th>SSN</th>'
+						+'<th>이메일</th>'
+						+'<th>전화번호</th>'
+						+'<th>성적</th>'
+						+'</tr>'
+						+'<tbody>';
+					if (data.count==0) {
+						student_list+='<tr><td colpan=7>등록된 학생이 없습니다</td></tr>'
+					} else {
+						$.each(data.list,function(i,member){
+							student_list +=
+								'<tr>'
+								+'<td>'+member.id+'</td>'
+								+'<td><a class="name">'+member.name+'</a></td>'
+								+'<td>'+member.regDate+'</td>'
+								+'<td>'+member.birth+'</td>'
+								+'<td>'+member.email+'</td>'
+								+'<td>'+member.phone+'</td>'
+								+'<td><a class="regist">등록</a> / <a class="update">수정</a></td>'
+								+'</tr>'
+						});
+					}
+					student_list += '</tbody></table>'
+						var pagination= 
+						 '<nav aria-label="Page navigation">'
+						+'<ul class="pagination">';
+					$('#adm_article').html(student_list);
+					});
+		     } 
 		 };
 		})();
 
@@ -278,7 +344,7 @@ var app = (function(){
 			$('#delete').click(function(){controller.move('member','delete');});
 			$('#login').click(function(){controller.move('member','login');});
 			$('#logout').click(function(){controller.move('member','logout');});
-			$('#list').click(function(){controller.move('member','list');});
+//			$('#list').click(function(){controller.move('member','list');});
 			$('#findBy').click(function(){controller.move('member','findBy');});
 			$('#count').click(function(){controller.move('member','count');});
 			$('#member_find_form input[type="submit"]').click(function(){$('#member_find_form').submit();});
@@ -323,7 +389,6 @@ var app = (function(){
 			
 				$('#pub_article').html(LOGIN_FORM);
 				$('#login_btn').click(function(e){
-					alert('로그인버튼 진입');
 					e.preventDefault();
 					$.ajax({
 						url : app.context()+'/member/login',
@@ -432,16 +497,10 @@ var app = (function(){
 			      detail : function(){
 			    	  $('#pub_header').empty().load(app.context()+'/member/logined/header');			    	  
 			    	  $('#pub_article').html(DETAIL_FORM);			    	  
-			    	  
-			    	  $('#test').click(function(){
-			    		 
-				    	  $.ajax({
-				    		url : app.context()+'/member/detail',
-							dataType : 'json',
-							async : false,
-							success : function(data){
+				    	  $.getJSON(app.context()+'/member/detail',function(data){
 								  $('#member_detail #img').attr('src',app.img()+'/member/'+data.profileImg);
 						    	  $('#member_detail #id').text(data.id);
+						    	  $('#member_detail #pw').text(data.pw).hide();
 						    	  $('#member_detail #name').text(data.name);
 						    	  $('#member_detail #gender').text(data.gender);
 						    	  $('#member_detail #email').text(data.email);
@@ -449,16 +508,77 @@ var app = (function(){
 						    	  $('#member_detail #subject').text('과목');
 						    	  $('#member_detail #birth').text('생일');
 						    	  $('#member_detail #reg_date').text(data.regDate);
-							},
-							error : function(x,s,e){alert('detail_false'+e);}
+						    	  $('#go_update').click(function(){
+							    	 alert('업데이트진입2');
+						    		  $('#member_detail #u_pw').html('<input type="text" id="pw" value="'+data.pw+'">');
+							    	  $('#member_detail #u_email').html('<input type="text" id="email" value="'+data.email+'">');
+							    	//$('#member_detail #u_major').text('<input type="text" id="email" value="'+data.email+'">');
+							    	//$('#member_detail #u_subject').text('<input type="text" id="email" value="'+data.email+'">');
+						    	  $('#bt_box').html('<input type="button" value="확인" id="confirm" /><input type="button" value="취소" id="cancel" />');
+						    	  $('#confirm').click(function(){
+						    		  alert('확인버튼진입2');
+						    		  alert('변경 id : '+$('#member_detail #id').html());
+					    			  alert('변경 pw : '+$('#pw').val());
+					    			  alert('변경 이메일 : '+$('#email').val());
+						    		  var confirm_info = {
+											'id': $('#member_detail #id').html(),
+						    				  'pw' : $('#pw').val(),
+						    				  'email' : $('#email').val()
+												};
+						    		  
+						    		  $.ajax({
+						    		  url : app.context()+'/member/update',
+						    		  type : 'post',
+						    		  contentType : 'application/json',
+						    		  data : JSON.stringify(confirm_info),
+						    		  dataType : 'json',
+						    		  async : false,
+						    		  success : function(data){
+						    			  
+						    			  if (data.message==='success') {
+											member.detail();
+										} else {
+											alert('서버다녀왔는데실패함');
+										}  
+						    		  },
+						    		  error : function(x,s,m){
+						    			  alert('업데이트에러'+m);
+						    		  }
+						    		  
+						    		  
+						    		  });
+						    	  });
+						    	  });
+						    	  $('#go_unregist').click(function(){
+						    		  $('#pub_article').html(UNREGIST_FORM);
+						    	 $('unregist_bt').click(function(){
+						    		alert('탈퇴버튼');
+						    		 $.ajax({							
+							    			url : app.context()+'/member/unregist',
+							    		  	type : 'post',
+							    		  	data : {'pw':$('#u_pw').val()},
+							    		  	dataType : 'json',
+							    		  	success : function(data){
+							    		  		alert('비번비교');
+							    		  		if (data.message==='pw가 일치하지 않음') {
+							    		  		  $('#pub_header').empty().load(app.context()+'/member/logined/header');	
+							    		  			$('#pub_article').html(UNREGIST_FORM);
+												} else {
+													
+													location.href = app.context()+'/';
+												}
+							    		  	},
+							    			error : function(xhr,status,msg){
+												alert('회원탈퇴 시 에러발생'+msg); 
+											}
+							    		  });
+									});
+						    	  
+						    	  });
 				    	  });
-			    	  });
-			    	  
-			    	  			    	  
-			    	  
-			    	  
 			      }
-			   };   
+			   
+				};   
 			})();
 	var grade = (function(){
 		var init = function(){onCreate();};
@@ -569,7 +689,7 @@ var util = (function(){
 				  return typeof value === 'number' && isFinite(value)
 				},
 			pwChecker : function(value) {
-				var pw_regex = /^.*(?=.{4,10})(?=.*[a-zA-Z0-9]).*$/;
+				var pw_regex = /^.*(?=.{3,10})(?=.*[a-zA-Z0-9]).*$/;
 				return pw_regex.test(value)?"yes":"no";
 			}	
 		};
@@ -731,9 +851,84 @@ var STUDENT_MAIN =
 		+'</div>'
 		+'</div>'
 		+'</section>';
-	
+var STUDENT_LIST_TH = 
+	'<div class ="box" style="padding-top: 0; width: 90%">'
+	+'<section style="height: 150px">'
+	+'<ul class="list-group">'
+	+'<li class="list-group-item">총 학생수 : ${totCount}</li>'
+	+'</ul>'
+	+'<div class="panel panel-success">'
+	+'<div class="panel-heading" style="font-size: 25px;color: black">학생 목록</div>'
+	+'<table id="member_list_table">'
+	+'<tr>'
+	+'<th>ID</th>'
+	+'<th>성명</th>'
+	+'<th>등록일</th>'
+	+'<th>SSN</th>'
+	+'<th>이메일</th>'
+	+'<th>전화번호</th>'
+	+'<th>성적</th>'
+	+'</tr>'
+	+'<tbody>';
+var STUDENT_LIST_ROW = 
+//	+'<c:forEach items="${list}" var="member">'
+	 '<tr>'
+	+'<td>${member.id}</td>'
+	+'<td><a class="name">${member.name}</a></td>'
+	+'<td>${member.regDate}</td>'
+	+'<td>${member.ssn}</td>'
+	+'<td>${member.email}</td>'
+	+'<td>${member.phone}</td>'
+	+'<td><a class="regist">등록</a> / <a class="update">수정</a></td>'
+	+'</tr>';
+//	+'		  </c:forEach>'
+var STUDENT_LIST_END = 
+	 '</tbody>'
+	+'</table>';
+var aaaaa = 
+	'<nav aria-label="Page navigation">'
+	+'<ul class="pagination">'
+	+'<c:if test="${startPg - pgSize gt 0}">'
+	+'<li>'
+	+'<a href="${context}/member/list/${startPg-pgSize}" aria-label="Previous">'
+	+'<span aria-hidden="true">&laquo;</span>'
+	+'</a>'
+	+'</li>'
+	+'</c:if>'
+	+'<c:forEach begin="${startPg}" end="${lastPg}" step="1" varStatus="i">'
+	+'<c:choose>'
+	+'<c:when test="${i.index == pgNum}">'
+	+'<font color="red">${i.index}</font>'
+	+'</c:when>' 					
+	+'<c:otherwise>'
+	+'<a href="${context}/member/list/${i.index}">${i.index}</a>'
+	+'</c:otherwise>'
+	+'</c:choose>'
+	+'</c:forEach>'
+	+'<c:if test="${startPg + pgSize le totPg}">'
+	+'<li>'
+	+'<a href="${context}/member/list/${startPg-pgSize}" aria-label="Next">'
+	+'<span aria-hidden="true">&raquo;</span>'
+	+'</a>'
+	+'</li>'
+	+'</c:if>'
+	+'</ul>'
+	+'</nav>'
+	+'<div align="center">'
+	+'<form action="${context}/member/search" method="post">'
+	+'<select name="keyField" id="">'
+	+'<option value="name" selected>이름</option>'
+	+'<option value="mem_id">ID</option>'
+	+'</select>'
+	+'<input type="text" name="keyword"/>'
+	+'<input type="submit" name="검색"/>'
+	+'</form>'
+	+'</div>'
+	+'</div>'
+	+'</section>'
+	+'</div>';	
 var DETAIL_FORM =
-		+'<div class="box">'
+		'<div class="box">'
 		+'<h1>회원상세정보</h1>'
 		+'<table id="member_detail" class="table">'
 		+'<tr>'
@@ -744,18 +939,20 @@ var DETAIL_FORM =
 		+'<td id="id" style="width:40%"></td><tr>'
 		+'<td class="font_bold bg_color_yellow">이 름</td>'
 		+'<td id="name"></td></tr><tr>'
+		+'<td class="font_bold bg_color_yellow">비번</td>'
+		+'<td ><td id="u_pw"/></td></tr><tr>'
 		+'<td class="font_bold bg_color_yellow">성 별</td>'
-		+'<td id="gender">남자</td></tr><tr>'
+		+'<td id="gender"></td></tr><tr>'
 		+'<td class="font_bold bg_color_yellow">이메일</td>'
-		+'<td id="email" colspan="2"></td>'
+		+'<td id="u_email" colspan="2"></td>'
 		+'</tr>'
 		+'<tr>'
 		+'<td class="font_bold bg_color_yellow">전공과목</td>'
-		+'<td id="major" colspan="2"></td>'
+		+'<td id="u_major" colspan="2"></td>'
 		+'</tr>'
 		+'<tr>'
 		+'<td class="font_bold bg_color_yellow">수강과목</td>'
-		+'<td id="subject" colspan="2"></td>'
+		+'<td id="u_subject" colspan="2"></td>'
 		+'</tr>'
 		+'<tr>'
 		+'<td class="font_bold bg_color_yellow">생년월일</td>'
@@ -766,33 +963,45 @@ var DETAIL_FORM =
 		+'<td id="reg_date" colspan="2"></td>'
 		+'</tr>'
 		+'</table>'
-		+'<br /><input type="button" value="내정보보기" id="test"/>'
+		+'<br /><div id="bt_box">'
+		+'<input type="button" value="정보수정하러가기" id="go_update" />'
+		+'<input type="button" value="회원탈퇴" id="go_unregist" />'
+		+'</div>';
 		+'</div>';
 		
-	var UPDATE_FORM = 
-		+'<div class="box">'
-		+'<h1>회원상세정보</h1>'
-		+'<table id="member_detail" class="table">'
-		+'<tr><td rowspan="5" style="width:30%">'
-		+'<img src="${img}/default/home.png" alt="proImg" width="104"'
-		+'height="142"></td>'
-		+'<td style="width:20%" class="font_bold">ID</td>'
-		+'<td style="width:40%">${member.id}</td></tr><tr>'
-		+'<td class="font_bold">이 름</td>'
-		+'<td>${member.name}</td></tr><tr>'
-		+'<td class="font_bold">성 별</td>'
-		+'<td>남자</td></tr><tr>'
-		+'<td class="font_bold">이메일</td>'
-		+'<td colspan="2">${member.email}</td></tr><tr>'
-		+'<td class="font_bold">전공과목</td>'
-		+'<td colspan="2"></td></tr><tr>'
-		+'<td class="font_bold">수강과목</td>'
-		+'<td colspan="2"></td></tr><tr>'
-		+'<td class="font_bold">생년월일</td>'
-		+'<td colspan="2"></td></tr><tr>'
-		+'<td class="font_bold">등록일</td>'
-		+'<td colspan="2"></td></tr></table><br /></div>';
+//	var UPDATE_FORM = 
+//		'<div class="box">'
+//		+'<h1>회원상세정보</h1>'
+//		+'<table id="member_detail" class="table">'
+//		+'<tr><td rowspan="5" style="width:30%">'
+//		+'<img src="${img}/default/home.png" alt="proImg" width="104"'
+//		+'height="142"></td>'
+//		+'<td style="width:20%" class="font_bold">ID</td>'
+//		+'<td style="width:40%">${member.id}</td></tr><tr>'
+//		+'<td class="font_bold">이 름</td>'
+//		+'<td>${member.name}</td></tr><tr>'
+//		+'<td class="font_bold">성 별</td>'
+//		+'<td>남자</td></tr><tr>'
+//		+'<td class="font_bold">이메일</td>'
+//		+'<td colspan="2">${member.email}</td></tr><tr>'
+//		+'<td class="font_bold">전공과목</td>'
+//		+'<td colspan="2"></td></tr><tr>'
+//		+'<td class="font_bold">수강과목</td>'
+//		+'<td colspan="2"></td></tr><tr>'
+//		+'<td class="font_bold">생년월일</td>'
+//		+'<td colspan="2"></td></tr><tr>'
+//		+'<td class="font_bold">등록일</td>'
+//		+'<td colspan="2"></td></tr></table><br /></div>';
 		
+	var UNREGIST_FORM = 
+		'<div class="box">'
+		+'<h3>탈퇴하려면 비밀번호를 입력해주세요</h3>'
+		+'<div style="padding: 20px"></div>'
+		+'<form id="member_delete_form" class="navbar-form navbar-center" role="search">'
+		+'<embed style="width: 50px; height: 50px" src="'+app.img()+'/default/star.gif"></br>'
+		+'<div class="form-group">'
+		+'<input type="text" class="form-control" placeholder="PASSWORD"></div>'
+		+'<input id="unregist_bt" type="submit" class="btn btn-default" value="탈퇴"/></form></div>';
 		
 		
 var nav = (function(){
