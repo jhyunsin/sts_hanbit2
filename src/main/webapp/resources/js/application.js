@@ -3,12 +3,12 @@
 var app = (function(){
 		var init = function(context) {
 		session.init(context);
+		nav.init();
 		onCreate();
 		user.init();
 		member.init();
 		admin.init();
 		account.init();
-		nav.init();
 		grade.init();
 		};
 		var context = function() {return session.getContextPath();}
@@ -166,7 +166,7 @@ var app = (function(){
 		     init :init,  // 자바의 클래스 처럼 속성(은닉)과 기능으로 ..
 		     student_list : function(pgNum){
 		    	 $('#adm_header').empty().load(app.context()+'/admin/header');
-					$('#adm_nav').empty().load(app.context()+'/admin/nav');
+				$('#adm_nav').empty().load(app.context()+'/admin/nav');
 					$('#adm_article').empty();
 					$.getJSON(app.context() + '/member/list/' + pgNum, function(data){
 						var frame ='';
@@ -182,7 +182,7 @@ var app = (function(){
 					var student_list = '<div class ="box" style="padding-top: 0; width: 90%">'
 						+'<section style="height: 150px">'
 						+'<ul class="list-group">'
-						+'<li class="list-group-item">총 학생수 :'+data.totCount+' </li>'
+						+'<li class="list-group-item">총 학생수 : ' + data.totCount + '</li>'
 						+'</ul>'
 						+'<div class="panel panel-success">'
 						+'<div class="panel-heading" style="font-size: 25px;color: black">학생 목록</div>'
@@ -206,20 +206,75 @@ var app = (function(){
 								+'<td>'+member.id+'</td>'
 								+'<td><a class="name">'+member.name+'</a></td>'
 								+'<td>'+member.regDate+'</td>'
-								+'<td>'+member.birth+'</td>'
+								+'<td>'+member.ssn+'</td>'
 								+'<td>'+member.email+'</td>'
 								+'<td>'+member.phone+'</td>'
 								+'<td><a class="regist">등록</a> / <a class="update">수정</a></td>'
-								+'</tr>'
+								+'</tr>';
 						});
 					}
-					student_list += '</tbody></table>'
+					student_list += '</tbody></table>';
 						var pagination= 
 						 '<nav aria-label="Page navigation">'
 						+'<ul class="pagination">';
-					$('#adm_article').html(student_list);
+					//////
+						if((startPg-lastPg) > 0){
+							pagination += 
+								'<li>'
+								+'<a href="'+app.context()+'/member/list/'+(startPg-lastPg)+'" aria-label="Previous">'
+								+'<span aria-hidden="true">&laquo;</span>'
+								+'</a>'
+								+'</li>';
+						}
+						for(var i=startPg; i<=lastPg; i++){
+							if(i==pgNum){
+								pagination +='<font color="red">'+i+'</font>';
+							}else{
+								pagination += '<a href="#" onclick="user.student_list('+i+')">'+i+'</a>';
+							}
+						}
+						if(startPg + pgSize <= totPg){
+							pagination += 
+								'<li>'
+								+'<a href="'+app.context()+'/member/list/'+(startPg-pgSize)+'" aria-label="Next">'
+								+ '<span aria-hidden="true">&raquo;</span>'
+								+'</a>'
+								+'</li>';
+						}
+						pagination += '</ul></nav>'
+						var search_form =
+							'<div align="center">'
+							+'<form action="'+app.context()+'/member/search" method="post">'
+							+'<select name="keyField" id="keyField">'
+							+'<option value="name" selected>이름</option>'
+							+'<option value="mem_id">ID</option>'
+							+'</select>'
+							+'<input type="text" name="keyword">'
+							+'<input type="submit" value="검색">'
+							+'</form>'
+							+'</div>'
+							+'</div>'
+							+'</div>'
+							+'</section></div>';
+					///////	
+					frame += student_list;
+					frame += pagination;
+					frame += search_form;
+						$('#adm_article').html(frame);
+						$('#find_submit').click(function(){
+							if ($('#keyword').val().length>0) {
+								user.find_student($('#keyword').val());
+							} else {
+								alert('검색어를 입력해주세요');
+								$('#keyword').focus();
+								return false;
+							}
+						});
 					});
-		     } 
+		     },
+		     find_student : function(keyword){
+		    	 alert('검색어'+keyword);
+		     }
 		 };
 		})();
 
@@ -422,21 +477,20 @@ var app = (function(){
 							url : app.context()+'/member/check_dup/'+$('#id').val(),
 							success : function(data){
 								alert('중복체크결과'+data.message)
-								if (data.flag==="TRUE") {
+								if (data.flag==='TRUE') {
 									$('#id_box').html('<input type="text" id="id" placeholder="'+data.message+'"><input type="button" id="re_check" name="re_check" value="다시조회"/>');
 									member.init();
 								} else {
 									$('#id_box').html('<input type="text" id="id" value="'+data.temp+'"><input type="button" id="use_input_id" name="use_input_id" value="그대로사용"/>');
 									member.init();
-									$('use_input_id').clikc(function(){alert('그대로사용');});
 									var use_id = data.temp;
 									var password = $('#password').val();
-									$('bt_join').click(function(e){
+									$('#bt_join').click(function(e){
 										alert('조인33');
 										e.preventDefault();
 										alert('조인');
 										var join_info = {
-										'name': $('#name').val(),
+										'name': $('#username').val(),
 										'id' : $('#id').val(),
 										'pw' : $('#password').val(),
 										'ssn' : $('#ssn').val(),
@@ -500,10 +554,9 @@ var app = (function(){
 				    	  $.getJSON(app.context()+'/member/detail',function(data){
 								  $('#member_detail #img').attr('src',app.img()+'/member/'+data.profileImg);
 						    	  $('#member_detail #id').text(data.id);
-						    	  $('#member_detail #pw').text(data.pw).hide();
 						    	  $('#member_detail #name').text(data.name);
 						    	  $('#member_detail #gender').text(data.gender);
-						    	  $('#member_detail #email').text(data.email);
+						    	  $('#member_detail #u_email').text(data.email);
 						    	  $('#member_detail #major').text('전공');
 						    	  $('#member_detail #subject').text('과목');
 						    	  $('#member_detail #birth').text('생일');
@@ -551,20 +604,20 @@ var app = (function(){
 						    	  });
 						    	  $('#go_unregist').click(function(){
 						    		  $('#pub_article').html(UNREGIST_FORM);
-						    	 $('unregist_bt').click(function(){
+						    	 $('#unregist_bt').click(function(e){
+						    		 e.preventDefault();
 						    		alert('탈퇴버튼');
 						    		 $.ajax({							
 							    			url : app.context()+'/member/unregist',
 							    		  	type : 'post',
-							    		  	data : {'pw':$('#u_pw').val()},
+							    		  	data : {'pw':$('#unregist_pw').val()},
 							    		  	dataType : 'json',
 							    		  	success : function(data){
 							    		  		alert('비번비교');
-							    		  		if (data.message==='pw가 일치하지 않음') {
+							    		  		if (data.message==='fail') {
 							    		  		  $('#pub_header').empty().load(app.context()+'/member/logined/header');	
 							    		  			$('#pub_article').html(UNREGIST_FORM);
 												} else {
-													
 													location.href = app.context()+'/';
 												}
 							    		  	},
@@ -851,82 +904,82 @@ var STUDENT_MAIN =
 		+'</div>'
 		+'</div>'
 		+'</section>';
-var STUDENT_LIST_TH = 
-	'<div class ="box" style="padding-top: 0; width: 90%">'
-	+'<section style="height: 150px">'
-	+'<ul class="list-group">'
-	+'<li class="list-group-item">총 학생수 : ${totCount}</li>'
-	+'</ul>'
-	+'<div class="panel panel-success">'
-	+'<div class="panel-heading" style="font-size: 25px;color: black">학생 목록</div>'
-	+'<table id="member_list_table">'
-	+'<tr>'
-	+'<th>ID</th>'
-	+'<th>성명</th>'
-	+'<th>등록일</th>'
-	+'<th>SSN</th>'
-	+'<th>이메일</th>'
-	+'<th>전화번호</th>'
-	+'<th>성적</th>'
-	+'</tr>'
-	+'<tbody>';
-var STUDENT_LIST_ROW = 
-//	+'<c:forEach items="${list}" var="member">'
-	 '<tr>'
-	+'<td>${member.id}</td>'
-	+'<td><a class="name">${member.name}</a></td>'
-	+'<td>${member.regDate}</td>'
-	+'<td>${member.ssn}</td>'
-	+'<td>${member.email}</td>'
-	+'<td>${member.phone}</td>'
-	+'<td><a class="regist">등록</a> / <a class="update">수정</a></td>'
-	+'</tr>';
-//	+'		  </c:forEach>'
-var STUDENT_LIST_END = 
-	 '</tbody>'
-	+'</table>';
-var aaaaa = 
-	'<nav aria-label="Page navigation">'
-	+'<ul class="pagination">'
-	+'<c:if test="${startPg - pgSize gt 0}">'
-	+'<li>'
-	+'<a href="${context}/member/list/${startPg-pgSize}" aria-label="Previous">'
-	+'<span aria-hidden="true">&laquo;</span>'
-	+'</a>'
-	+'</li>'
-	+'</c:if>'
-	+'<c:forEach begin="${startPg}" end="${lastPg}" step="1" varStatus="i">'
-	+'<c:choose>'
-	+'<c:when test="${i.index == pgNum}">'
-	+'<font color="red">${i.index}</font>'
-	+'</c:when>' 					
-	+'<c:otherwise>'
-	+'<a href="${context}/member/list/${i.index}">${i.index}</a>'
-	+'</c:otherwise>'
-	+'</c:choose>'
-	+'</c:forEach>'
-	+'<c:if test="${startPg + pgSize le totPg}">'
-	+'<li>'
-	+'<a href="${context}/member/list/${startPg-pgSize}" aria-label="Next">'
-	+'<span aria-hidden="true">&raquo;</span>'
-	+'</a>'
-	+'</li>'
-	+'</c:if>'
-	+'</ul>'
-	+'</nav>'
-	+'<div align="center">'
-	+'<form action="${context}/member/search" method="post">'
-	+'<select name="keyField" id="">'
-	+'<option value="name" selected>이름</option>'
-	+'<option value="mem_id">ID</option>'
-	+'</select>'
-	+'<input type="text" name="keyword"/>'
-	+'<input type="submit" name="검색"/>'
-	+'</form>'
-	+'</div>'
-	+'</div>'
-	+'</section>'
-	+'</div>';	
+//var STUDENT_LIST_TH = 
+//	'<div class ="box" style="padding-top: 0; width: 90%">'
+//	+'<section style="height: 150px">'
+//	+'<ul class="list-group">'
+//	+'<li class="list-group-item">총 학생수는??? : ${totCount}</li>'
+//	+'</ul>'
+//	+'<div class="panel panel-success">'
+//	+'<div class="panel-heading" style="font-size: 25px;color: black">학생 목록</div>'
+//	+'<table id="member_list_table">'
+//	+'<tr>'
+//	+'<th>ID</th>'
+//	+'<th>성명</th>'
+//	+'<th>등록일</th>'
+//	+'<th>SSN</th>'
+//	+'<th>이메일</th>'
+//	+'<th>전화번호</th>'
+//	+'<th>성적</th>'
+//	+'</tr>'
+//	+'<tbody>';
+//var STUDENT_LIST_ROW = 
+////	+'<c:forEach items="${list}" var="member">'
+//	 '<tr>'
+//	+'<td>${member.id}</td>'
+//	+'<td><a class="name">${member.name}</a></td>'
+//	+'<td>${member.regDate}</td>'
+//	+'<td>${member.ssn}</td>'
+//	+'<td>${member.email}</td>'
+//	+'<td>${member.phone}</td>'
+//	+'<td><a class="regist">등록</a> / <a class="update">수정</a></td>'
+//	+'</tr>';
+////	+'		  </c:forEach>'
+//var STUDENT_LIST_END = 
+//	 '</tbody>'
+//	+'</table>';
+//var aaaaa = 
+//	'<nav aria-label="Page navigation">'
+//	+'<ul class="pagination">'
+//	+'<c:if test="${startPg - pgSize gt 0}">'
+//	+'<li>'
+//	+'<a href="${context}/member/list/${startPg-pgSize}" aria-label="Previous">'
+//	+'<span aria-hidden="true">&laquo;</span>'
+//	+'</a>'
+//	+'</li>'
+//	+'</c:if>'
+//	+'<c:forEach begin="${startPg}" end="${lastPg}" step="1" varStatus="i">'
+//	+'<c:choose>'
+//	+'<c:when test="${i.index == pgNum}">'
+//	+'<font color="red">${i.index}</font>'
+//	+'</c:when>' 					
+//	+'<c:otherwise>'
+//	+'<a href="${context}/member/list/${i.index}">${i.index}</a>'
+//	+'</c:otherwise>'
+//	+'</c:choose>'
+//	+'</c:forEach>'
+//	+'<c:if test="${startPg + pgSize le totPg}">'
+//	+'<li>'
+//	+'<a href="${context}/member/list/${startPg-pgSize}" aria-label="Next">'
+//	+'<span aria-hidden="true">&raquo;</span>'
+//	+'</a>'
+//	+'</li>'
+//	+'</c:if>'
+//	+'</ul>'
+//	+'</nav>'
+//	+'<div align="center">'
+//	+'<form action="${context}/member/search" method="post">'
+//	+'<select name="keyField" id="">'
+//	+'<option value="name" selected>이름</option>'
+//	+'<option value="mem_id">ID</option>'
+//	+'</select>'
+//	+'<input type="text" name="keyword"/>'
+//	+'<input type="submit" name="검색"/>'
+//	+'</form>'
+//	+'</div>'
+//	+'</div>'
+//	+'</section>'
+//	+'</div>';	
 var DETAIL_FORM =
 		'<div class="box">'
 		+'<h1>회원상세정보</h1>'
@@ -940,11 +993,11 @@ var DETAIL_FORM =
 		+'<td class="font_bold bg_color_yellow">이 름</td>'
 		+'<td id="name"></td></tr><tr>'
 		+'<td class="font_bold bg_color_yellow">비번</td>'
-		+'<td ><td id="u_pw"/></td></tr><tr>'
+		+'<td id="u_pw"></td></tr><tr>'
 		+'<td class="font_bold bg_color_yellow">성 별</td>'
 		+'<td id="gender"></td></tr><tr>'
 		+'<td class="font_bold bg_color_yellow">이메일</td>'
-		+'<td id="u_email" colspan="2"></td>'
+		+'<td id="u_email"></td>'
 		+'</tr>'
 		+'<tr>'
 		+'<td class="font_bold bg_color_yellow">전공과목</td>'
@@ -1000,7 +1053,7 @@ var DETAIL_FORM =
 		+'<form id="member_delete_form" class="navbar-form navbar-center" role="search">'
 		+'<embed style="width: 50px; height: 50px" src="'+app.img()+'/default/star.gif"></br>'
 		+'<div class="form-group">'
-		+'<input type="text" class="form-control" placeholder="PASSWORD"></div>'
+		+'<input id="unregist_pw" type="text" class="form-control" placeholder="PASSWORD"></div>'
 		+'<input id="unregist_bt" type="submit" class="btn btn-default" value="탈퇴"/></form></div>';
 		
 		

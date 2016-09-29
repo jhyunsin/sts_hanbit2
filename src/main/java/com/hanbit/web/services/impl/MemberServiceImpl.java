@@ -34,7 +34,16 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public String regist(MemberDTO member) {
 		// 1등록
-		return (sqlSession.getMapper(MemberMapper.class).insert(member)== 1)?"success":"fail";
+		System.out.println("id : "+member.getId());
+		System.out.println("pw : "+member.getPw());
+		System.out.println("Name : "+member.getName());
+		System.out.println("남여 : "+member.getGender());
+		System.out.println("등록일 : "+member.getRegDate());
+		System.out.println("ssn : "+member.getSsn());
+		System.out.println("email : "+member.getEmail());
+		System.out.println("PROFILE_IMG : "+member.getProfileImg());
+		System.out.println("phone : "+member.getPhone());
+		return (sqlSession.getMapper(MemberMapper.class).insert(member)!=0)?"success":"fail";
 	}
 		
 	@Override
@@ -63,11 +72,9 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public void delete(MemberDTO mem) {
+	public String delete(String id) {
 		// 4삭제
-		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
-		String result = "";
-	
+		return (sqlSession.getMapper(MemberMapper.class).delete(id)==1)?"success":"fail";
 		
 		}
 

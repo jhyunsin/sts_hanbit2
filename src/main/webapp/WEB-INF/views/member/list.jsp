@@ -7,7 +7,7 @@
 <div class ="box" style="padding-top: 0; width: 90%">
 	<section style="height: 150px">
 		<ul class="list-group">
-  			<li class="list-group-item">총 학생수 : ${totCount}</li>
+  			<li class="list-group-item">총 학생수jsp : ${totCount}</li>
 		</ul>
 	<div class="panel panel-success">
 	<div class="panel-heading" style="font-size: 25px;color: black">학생 목록</div>
@@ -74,5 +74,4 @@
 			</form>
 		</div>
 		</div>
-	</section>
-</div>
+	</section></div>

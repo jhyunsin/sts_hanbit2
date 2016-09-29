@@ -1,5 +1,7 @@
 package com.hanbit.web.controllers;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -82,13 +84,22 @@ public class MemberController {
 			return user;
 		}
 	}
-	@RequestMapping(value="/unregist", method=RequestMethod.POST)
-	public @ResponseBody MemberDTO unregist(
-			@PathVariable String pw,
-			HttpSession session) {
-		logger.info("GO TO {}","멤버언레지");	
-		return (MemberDTO) session.getAttribute(null);
-	}
+	 @RequestMapping(value="/unregist",method=RequestMethod.POST)
+	   public @ResponseBody Retval unRegist(@RequestParam("pw") String pw,HttpSession session) {
+	      logger.info("GO TO {}","unregist");
+	      MemberDTO temp = (MemberDTO) session.getAttribute("user");
+	      logger.info("넘어온 PW {}",pw);
+	      logger.info("세션 값 PW {}",temp.getPw());
+	      if(temp.getPw().equals(pw)){
+	        retval.setFlag(service.delete(temp.getId()));
+	        logger.info("revtal {}",retval);
+	         logger.info("비번 동일 {}",pw);
+	      }else{
+	         retval.setMessage("www");
+	         logger.info("비번 다름 {}",pw);
+	      }
+	      return retval;
+	   }
 	//---move---- // 
 	@RequestMapping("/main")
 	public String moveMain() {
@@ -101,14 +112,30 @@ public class MemberController {
 		logger.info("SIGN UP {}","EXEUTE");
 		logger.info("SIGN UP ID = {}",param.getId());
 		logger.info("SIGN UP PW = {}",param.getPw());
-		logger.info("SIGN UP NAME = {}",param.getName());
 		logger.info("SIGN UP SSN = {}",param.getSsn());
 		logger.info("SIGN UP EMAIL = {}",param.getEmail());
 		logger.info("SIGN UP PHONE = {}",param.getPhone());
+		String[] gen = param.getSsn().split("-");
+		String gender="",regDate =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(System.currentTimeMillis()));
+		int majorSeq=1001;
+        switch (Integer.parseInt(gen[1])) {
+		case 1: case 3: case 5: case 7:
+			gender="MALE";
+			break;
+		default:
+			gender="FEMALE";
+			break;
+		}
+		param.setGender(gender);
+		param.setRegDate(regDate);
+		param.setMajorSeq(majorSeq);
+		param.setProfileImg(param.getId()+".jpg");
+		logger.info("SIGN UP GENDER = {}",param.getGender());
+		logger.info("SIGN UP REGDATE = {}",param.getRegDate());
 		retval.setMessage(service.regist(param));
-		logger.info("SIGN UP REVAL = {}",retval.getMessage());
+		//retval.setMessage("success");
 		return retval;
-	} 
+	}
 	@RequestMapping(value="/update",method=RequestMethod.POST)
 	public @ResponseBody Retval Update(@RequestBody MemberDTO param, HttpSession session) {
 		logger.info("GO TO {}","=======update========");

@@ -9,7 +9,7 @@ import com.hanbit.web.domains.Retval;
 
 public interface MemberMapper {
 	public int insert(MemberDTO member);
-	public int delete(MemberDTO member);
+	public int delete(String id);
 	public int update(MemberDTO member);
 	public List<?> list(Command command);
 	public MemberDTO findOne(Command command);

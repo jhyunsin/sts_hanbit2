@@ -26,7 +26,7 @@ public interface MemberService {
 	public MemberDTO findOne(Command command);
 	public MemberDTO show();
 	public String update(MemberDTO mem);
-	public void delete(MemberDTO mem);
+	public String delete(String id);
 	public List<?> find(Command command);
 	public Retval count();
 	public List<MemberDTO> findByName(String findName);

@@ -52,14 +52,14 @@ select
 			gender as gender
 		from member where ${keyField} = #{keyword}
 	</select>
- <select id="count" resultType="int">
+ <select id="count" resultType="com.hanbit.web.domains.Retval">
  select count(*) as count from member</select>
  <select id="existId" parameterType="string" resultType="int">
  select count(*) as count from member where mem_id = #{id}</select>
 <insert id="insert" parameterType="com.hanbit.web.domains.MemberDTO">
-insert into member(id,pw,name,reg_date,ssn,email,profile_img,phone)values(#{id},#{pw},#{name},#{regDate},#{ssn},#{email},#{profile},#{phone})</insert>
+insert into member(mem_id,pw,name,gender,reg_date,ssn,email,profile_img,phone)values(#{id},#{pw},#{name},#{gender},#{regDate},#{ssn},#{email},#{profileImg},#{phone})</insert>
 <update id="update" parameterType="com.hanbit.web.domains.MemberDTO">
 update member set pw= #{pw} , email = #{email} where mem_id = #{id}</update>
-<delete id="delete" parameterType="com.hanbit.web.domains.MemberDTO">
-delete from member where id = #{id} and pw=#{pw}</delete>
+<delete id="delete" parameterType="string">
+delete from member where mem_id = #{id}</delete>
 </mapper>
